@@ -1,0 +1,5 @@
+2009-02-04  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Initial upload to TYPO3 Forge
+	* Cleanup (CGL, while loops, globals)
+	* Factor out method makeUrl
