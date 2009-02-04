@@ -43,6 +43,10 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	var $conf = array();
 	var $cObj;
 	
+	var $languagesUids = array();
+	var $forwardParams;
+	var $localTemplate;
+	
 	/**
 	 * The constructor returns the language menu
 	 * 
@@ -52,12 +56,11 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	 */
 	 
 	function main($content,$conf)	{
-		global $TSFE;
 		
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
-		$this->linkVars = $TSFE->linkVars;
+		$this->linkVars = $GLOBALS['TSFE']->linkVars;
 		
 		$this->staticInfo = t3lib_div::makeInstance('tx_staticinfotables_pi1');
 		$this->staticInfo->init();
@@ -69,34 +72,35 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		$useSelfLanguageTitle = ($useSysLanguageTitle || $useIsoLanguageCountryCode) ? 0 : $useSelfLanguageTitle;
 		
 			// We check if extension realURL is installed and configured in TS template
-		$this->realUrlLoaded = t3lib_extMgm::isLoaded('realurl', 0) && $TSFE->config['config']['tx_realurl_enable'];
+		$this->realUrlLoaded = t3lib_extMgm::isLoaded('realurl', 0) && $GLOBALS['TSFE']->config['config']['tx_realurl_enable'];
 		$this->rlmp_language_detectionLoaded = t3lib_extMgm::isLoaded('rlmp_language_detection', 0);
 		
-		$localTempl = new t3lib_TStemplate;
+		$this->localTemplate = new t3lib_TStemplate;
 		
 		$removeParams = t3lib_div::trimExplode(',', $this->conf['removeParams'], 1);
-		$forwardParams = $this->local_add_vars($GLOBALS['HTTP_GET_VARS'], $removeParams);
-		$forwardParams .= $this->local_add_vars($GLOBALS['HTTP_POST_VARS'], $removeParams);
-		$TSFE->linkVars = $this->remove_vars($TSFE->linkVars, $removeParams);
+		$this->forwardParams = $this->local_add_vars($GLOBALS['HTTP_GET_VARS'], $removeParams);
+		$this->forwardParams .= $this->local_add_vars($GLOBALS['HTTP_POST_VARS'], $removeParams);
+		$GLOBALS['TSFE']->linkVars = $this->remove_vars($GLOBALS['TSFE']->linkVars, $removeParams);
 		
 		$tableA = 'sys_language';
 		$tableB = 'static_languages';
 		
 		$languagesUidsList = trim($this->cObj->data['tx_srlanguagemenu_languages']) ? trim($this->cObj->data['tx_srlanguagemenu_languages']) : trim($this->conf['languagesUidsList']);
 		$languages = array();
-		$languagesUids = array();
 		$languagesLabels = array();
 			// Set default language
 		$defaultLanguageISOCode = trim($this->conf['defaultLanguageISOCode']) ?  strtoupper(trim($this->conf['defaultLanguageISOCode'])) : 'EN';
 		$defaultCountryISOCode = trim($this->conf['defaultCountryISOCode']) ?  strtoupper(trim($this->conf['defaultCountryISOCode'])) : '';
 		$languages[] = strtolower($defaultLanguageISOCode).($defaultCountryISOCode?'_'.$defaultCountryISOCode:'');
-		$languagesUids[] = '0';
+		$this->languagesUids[] = '0';
 		if ($useIsoLanguageCountryCode) {
 			$languagesLabels[] = strtolower($defaultLanguageISOCode).($defaultCountryISOCode?'-'.strtolower($defaultCountryISOCode):'');
 		} else {
 			$languagesLabels[] = $this->staticInfo->getStaticInfoName('LANGUAGES', strtoupper($languages['0']),'','',$useSelfLanguageTitle);
+			if (!$languagesLabels['0'] && $defaultCountryISOCode) {
+				$languagesLabels['0'] = $this->staticInfo->getStaticInfoName('LANGUAGES', strtoupper($defaultLanguageISOCode),'','',$useSelfLanguageTitle);
+			}
 		}
-		
 			// Get the language codes and labels for the languages set in the plugin list
 		$selectFields = $tableA . '.uid, ' . $tableA . '.title, ' . $tableB . '.lg_iso_2, ' . $tableB . '.lg_name_en, ' . $tableB . '.lg_country_iso_2';
 		$table = $tableA . ' LEFT JOIN ' . $tableB . ' ON ' . $tableA . '.static_lang_isocode=' . $tableB . '.uid';
@@ -110,9 +114,9 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		$whereClause .= $this->cObj->enableFields ($tableA);
 		$whereClause .= $this->cObj->enableFields ($tableB);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($selectFields, $table, $whereClause);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))   {
+		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			if ($row['lg_iso_2'] != $defaultLanguageISOCode || $row['lg_country_iso_2'] != $defaultCountryISOCode) {
-				$languagesUids[] = $row['uid'];
+				$this->languagesUids[] = $row['uid'];
 				$languages[] = strtolower($row['lg_iso_2']).($row['lg_country_iso_2']?'_'.$row['lg_country_iso_2']:'');
 				if ($useIsoLanguageCountryCode) {
 					$languagesLabels[] =  strtolower($row['lg_iso_2']).($row['lg_country_iso_2']?'-'.strtolower($row['lg_country_iso_2']):'');
@@ -129,10 +133,10 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			// Select all pages_language_overlay records on the current page. Each represents a possibility for a language.
 		$langArr = array();
 		$table = 'pages_language_overlay';
-		$whereClause = 'pid=' . $TSFE->id . ' ';
-		$whereClause .= $TSFE->sys_page->enableFields($table);
+		$whereClause = 'pid=' . $GLOBALS['TSFE']->id . ' ';
+		$whereClause .= $GLOBALS['TSFE']->sys_page->enableFields($table);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT sys_language_uid', $table, $whereClause);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))	{
+		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$langArr[$row['sys_language_uid']] = $row['sys_language_uid'];
 		}
 		
@@ -144,11 +148,11 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			
 				// initialize linkvars
 			if (!$this->realUrlLoaded) {
-				if (strstr($TSFE->linkVars, '&L=')) {
-					$TSFE->linkVars = ereg_replace('&L=[0-9]*' , '', $TSFE->linkVars);
+				if (strstr($GLOBALS['TSFE']->linkVars, '&L=')) {
+					$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , '', $GLOBALS['TSFE']->linkVars);
 				}
-				if (!$this->rlmp_language_detectionLoaded) $TSFE->linkVars = ereg_replace('&L=0' , '', $TSFE->linkVars);
-				$LD = $localTempl->linkData($TSFE->page,'','','','',$forwardParams,'0');
+				if (!$this->rlmp_language_detectionLoaded) $GLOBALS['TSFE']->linkVars = ereg_replace('&L=0' , '', $GLOBALS['TSFE']->linkVars);
+				$LD = $this->localTemplate->linkData($GLOBALS['TSFE']->page,'','','','',$this->forwardParams,'0');
 				$uri = $LD['totalURL'];
 			}
 			
@@ -163,29 +167,28 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$selected = '';
 					$this->selectorEmpty = true;
 						// If 'Hide default translation of page' is set, do not show the default language
-					if ($TSFE->page['l18n_cfg']&1) {
+					if ($GLOBALS['TSFE']->page['l18n_cfg']&1) {
 						unset($languages[0]);
 					}
-					reset($languages);
-					while( list($key,$val) = each($languages)) {
+					foreach ($languages as $key => $val) {
 						if($this->realUrlLoaded) {
-							if(strstr($TSFE->linkVars, '&L=')) {            
-								$TSFE->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$languagesUids[$key], $TSFE->linkVars);
+							if(strstr($GLOBALS['TSFE']->linkVars, '&L=')) {            
+								$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$this->languagesUids[$key], $GLOBALS['TSFE']->linkVars);
 							} else {
-								$TSFE->linkVars .= '&L='.$languagesUids[$key];
+								$GLOBALS['TSFE']->linkVars .= '&L='.$this->languagesUids[$key];
 							}
-							$LD = $localTempl->linkData($TSFE->page,'','','','',$forwardParams,'0');
+							$LD = $this->localTemplate->linkData($GLOBALS['TSFE']->page,'','','','',$this->forwardParams,'0');
 							$uri = $LD['totalURL'];
-							if(!$key || $langArr[$languagesUids[$key]]) {
+							if(!$key || $langArr[$this->languagesUids[$key]]) {
 									// CAG JR: We extend the $names array with the lang key to not destroy the CSS in the option tags
 									// CAG JR: We add the directory of the current website instead of assuming that it is in the vHost's root dir
 								$names[$key][$this->getWebsiteDir().$uri] = $languagesLabels[$key];
-								$selected = ($TSFE->sys_language_uid==$languagesUids[$key])?$this->getWebsiteDir().$uri: $selected;
+								$selected = ($GLOBALS['TSFE']->sys_language_uid==$this->languagesUids[$key])?$this->getWebsiteDir().$uri: $selected;
 							}
 						} else {
-							if(!$key || $langArr[$languagesUids[$key]]) {
-								$names[$languagesUids[$key]] = $languagesLabels[$key];
-								$selected = ($TSFE->sys_language_uid==$languagesUids[$key])?$languagesUids[$key]: $selected;
+							if(!$key || $langArr[$this->languagesUids[$key]]) {
+								$names[$this->languagesUids[$key]] = $languagesLabels[$key];
+								$selected = ($GLOBALS['TSFE']->sys_language_uid==$this->languagesUids[$key])?$this->languagesUids[$key]: $selected;
 							}
 						}
 					}
@@ -222,19 +225,18 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$markerArray = array();
 
 					$firstItem = true;
-					reset($languages);
-					while( list($key,$val) = each($languages)) {
-						if(strstr($TSFE->linkVars, '&L=')) {
-							$TSFE->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$languagesUids[$key], $TSFE->linkVars);
+					foreach ($languages as $key => $val) {
+						if(strstr($GLOBALS['TSFE']->linkVars, '&L=')) {
+							$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$this->languagesUids[$key], $GLOBALS['TSFE']->linkVars);
 						} else {
-							$TSFE->linkVars .= '&L='.$languagesUids[$key];
+							$GLOBALS['TSFE']->linkVars .= '&L='.$this->languagesUids[$key];
 						}
-						if(!$this->rlmp_language_detectionLoaded) $TSFE->linkVars = ereg_replace('&L=0' , '', $TSFE->linkVars);
-						$LD = $localTempl->linkData($TSFE->page,'','','','',$forwardParams,'0');
+						if(!$this->rlmp_language_detectionLoaded) $GLOBALS['TSFE']->linkVars = ereg_replace('&L=0' , '', $GLOBALS['TSFE']->linkVars);
+						$LD = $this->localTemplate->linkData($GLOBALS['TSFE']->page,'','','','',$this->forwardParams,'0');
 						$uri = $LD['totalURL'];
 						$label = $languagesLabels[$key];
-						$current = ($TSFE->sys_language_uid == $languagesUids[$key]);
-						$inactive = (($key && !$langArr[$languagesUids[$key]]) || (!$key && $TSFE->page['l18n_cfg']&1));
+						$current = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]);
+						$inactive = (($key && !$langArr[$this->languagesUids[$key]]) || (!$key && $GLOBALS['TSFE']->page['l18n_cfg']&1));
 						if (($current && $this->conf['link.']['CUR.']['doNotLinkIt']) || ($inactive && $this->conf['link.']['INACT.']['doNotLinkIt'])) {
 							$linkItem = $label;
 						} else {
@@ -268,7 +270,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$markerArray = array();
 
 					if( trim($this->conf['englishFlagFile']) ) {
-						$flagsDir = dirname($TSFE->tmpl->getFileName(trim($this->conf['englishFlagFile']))).'/';
+						$flagsDir = dirname($GLOBALS['TSFE']->tmpl->getFileName(trim($this->conf['englishFlagFile']))).'/';
 					}
 					if( !$flagsDir ) {
 						$flagsDir = t3lib_extMgm::extPath($this->extKey).'flags/';
@@ -277,18 +279,17 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 						// Set each icon. If the language is the current, red arrow is printed to the left. If the language is NOT found, the icon is dimmed.
 					$flags = array();
 					$firstItem = true;
-					reset($languages);
-					while( list($key,$val) = each($languages)) {
-						if(strstr($TSFE->linkVars, '&L=')) {
-							$TSFE->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$languagesUids[$key], $TSFE->linkVars);
+					foreach ($languages as $key => $val) {
+						if(strstr($GLOBALS['TSFE']->linkVars, '&L=')) {
+							$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$this->languagesUids[$key], $GLOBALS['TSFE']->linkVars);
 						} else {
-							$TSFE->linkVars .= '&L='.$languagesUids[$key];
+							$GLOBALS['TSFE']->linkVars .= '&L='.$this->languagesUids[$key];
 						}
-						if(!$this->rlmp_language_detectionLoaded) $TSFE->linkVars = ereg_replace('&L=0' , '', $TSFE->linkVars);
-						$LD = $localTempl->linkData($TSFE->page,'','','','',$forwardParams,'0');
+						if(!$this->rlmp_language_detectionLoaded) $GLOBALS['TSFE']->linkVars = ereg_replace('&L=0' , '', $GLOBALS['TSFE']->linkVars);
+						$LD = $this->localTemplate->linkData($GLOBALS['TSFE']->page,'','','','',$this->forwardParams,'0');
 						$uri = $LD['totalURL'];
-						$current = ($TSFE->sys_language_uid == $languagesUids[$key]);
-						$inactive = (($key && !$langArr[$languagesUids[$key]]) || (!$key && $TSFE->page['l18n_cfg']&1));
+						$current = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]);
+						$inactive = (($key && !$langArr[$this->languagesUids[$key]]) || (!$key && $GLOBALS['TSFE']->page['l18n_cfg']&1));
 							// flag item
 						if (($current && $this->conf['flag.']['CUR.']['doNotLinkIt']) || ($inactive && $this->conf['flag.']['INACT.']['doNotLinkIt'])) {
 							$item = '<img src="' . $flagsDir .($this->conf['alternateFlags.'][$languages[$key]]?$this->conf['alternateFlags.'][$languages[$key]]:$languages[$key]).($inactive?'_d':'') . '.gif" title="'.$languagesLabels[$key].'" alt="'.$languagesLabels[$key].'"'.$this->pi_classParam('flag').' />';
@@ -331,7 +332,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		}
 		// </Ian Foulds>
 		
-		$TSFE->linkVars = $this->linkVars;
+		$GLOBALS['TSFE']->linkVars = $this->linkVars;
 		return $this->pi_wrapInBaseClass($content);
 		
 	} // end of main
@@ -339,8 +340,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	function local_add_vars2($vars,$path) {
 		$res='';
 		if (isset($vars) && is_array($vars)) {
-			reset ($vars);
-			while (list ($key, $val) = each ($vars)) {
+			foreach ($vars as $key => $val) {
 				if (!is_array($val)) {
 					$res .= '&'.$path.'['.rawurlencode($key).']'.'='.rawurlencode($val);
 				} else {
@@ -354,8 +354,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	function local_add_vars($vars, $varNames) {
 		$res='';
 		if (isset($vars) && is_array($vars)) {
-			reset ($vars);
-			while (list ($key, $val) = each ($vars)) {
+			foreach ($vars as $key => $val) {
 				if (is_array($val)) {
 					if (!in_array($key,$varNames)) {
 						$res .= $this->local_add_vars2($val, rawurlencode($key));
@@ -419,7 +418,6 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		
 		$selector = '<select size="1" '.$nameAttribute.$classAttribute.$titleAttribute.$onchangeAttribute.' id="sr_language_menu_select">'.chr(10);
 		$selected = (trim($selected)) ? trim($selected) : '';
-		reset($names);
 		$selected = $selected ? $selected : key($names);
 		if( count($names) > 0 )	{
 			$selector .= $this->optionsConstructor($names, $selected);
@@ -447,11 +445,10 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			}
 		}
 			// </Masi>
-		reset($names);
 		// CAG JR: We traverse the extended $names Array to have the language's uid in case of RealURL
 		if ($this->realUrlLoaded) {
 			foreach ($names as $langUid => $langOptions) {
-				while (list($value,$name)=each($langOptions))    {
+				foreach ($langOptions as $value => $name) {
 						// don't show current language if showCurrent=0
 					if ($selected != $value || $this->conf['list.']['showCurrent']) {
 						$options  .= '<option value="'.$value.'"'.$this->pi_classParam('option-'.$langUid);
@@ -465,7 +462,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 				}
 			}
 		} else {
-			while(list($value,$name)=each($names))	{
+			foreach ($names as $value => $name) {
 					// don't show current language if showCurrent=0
 				if ($selected != $value || $this->conf['list.']['showCurrent']) {
 					$options  .= '<option value="'.$value.'"'.$this->pi_classParam('option-'.$value);
@@ -488,14 +485,13 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	 */
 		// CAG JR: Function to get the directory in which the script / website is executed 
 	function getWebsiteDir() {
-		global $TSFE;
 		
 			// Standard is the webroot which is okay for non-realUrl sites in any case as there is a different handling in changing the language via SELECT box
 		$websiteDir = '/';
 		
 			// For realURL we need the path segment after host and domain as set in config.baseURL 
 		if ($this->realUrlLoaded) {
-			$baseUrlParts = parse_url($TSFE->config['config']['baseURL']);
+			$baseUrlParts = parse_url($GLOBALS['TSFE']->config['config']['baseURL']);
 			$websiteDir = $baseUrlParts['path'];
 		}
 		return $websiteDir;
