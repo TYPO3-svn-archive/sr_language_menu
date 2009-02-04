@@ -3,3 +3,4 @@
 	* Initial upload to TYPO3 Forge
 	* Cleanup (CGL, while loops, globals)
 	* Factor out method makeUrl
+	* Simplify method optionsConstructor and more cleanup

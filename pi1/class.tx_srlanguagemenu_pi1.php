@@ -159,18 +159,9 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					}
 					foreach ($languages as $key => $val) {
 						$uri = $this->makeUrl($key);
-						if ($this->realUrlLoaded) {
-							if(!$key || $langArr[$this->languagesUids[$key]]) {
-									// CAG JR: We extend the $names array with the lang key to not destroy the CSS in the option tags
-									// CAG JR: We add the directory of the current website instead of assuming that it is in the vHost's root dir
-								$names[$key][$this->getWebsiteDir().$uri] = $languagesLabels[$key];
-								$selected = ($GLOBALS['TSFE']->sys_language_uid==$this->languagesUids[$key])?$this->getWebsiteDir().$uri: $selected;
-							}
-						} else {
-							if (!$key || $langArr[$this->languagesUids[$key]]) {
-								$names[$this->languagesUids[$key]] = $languagesLabels[$key];
-								$selected = ($GLOBALS['TSFE']->sys_language_uid==$this->languagesUids[$key])?$this->languagesUids[$key]: $selected;
-							}
+						if (!$key || $langArr[$this->languagesUids[$key]]) {
+							$names[$key][($this->realUrlLoaded ? $this->getWebsiteDir().$uri : $uri)] = $languagesLabels[$key];
+							$selected = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]) ? ($this->realUrlLoaded ? $this->getWebsiteDir().$uri : $uri) : $selected;
 						}
 					}
 
@@ -194,9 +185,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 
 					$content = $this->cObj->substituteMarkerArrayCached($template, $subpartArray, array(), array());
 					break;
-
 				case 2:
-
 					// <Francois Suter> List of links display option
 					$templateMarker = '###TEMPLATE_2###';
 					$template = $this->cObj->getSubpart($this->templateCode, $templateMarker);
@@ -235,7 +224,6 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 
 				case 0:
 				default:
-
 					$templateMarker = '###TEMPLATE_0###';
 					$template = $this->cObj->getSubpart($this->templateCode, $templateMarker);
 					$subpartArray = array();
@@ -358,32 +346,28 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	 * @return	string		A set of HTML <select> and <option> tags
 	 */
 	 
-	function buildLanguageSelector($names, $name='L', $class='', $title='', $selected='', $submit=0)	{
-		$nameAttribute = (trim($name)) ? 'name="'.trim($name).'" ' : '';
-		$classAttribute = (trim($class)) ? 'class="'.trim($class).'" ' : '';
-		$titleAttribute = (trim($title)) ? 'title="'.trim($title).'" ' : '';
+	function buildLanguageSelector($names, $name='L', $class='', $title='', $selected='', $submit=0) {
+		$nameAttribute = (trim($name)) ? 'name="' . trim($name) . '" ' : '';
+		$classAttribute = (trim($class)) ? 'class="' . trim($class) . '" ' : '';
+		$titleAttribute = (trim($title)) ? 'title="' . trim($title) . '" ' : '';
 		$onchangeAttribute = '';
-		
-		if( $submit ) {
-			if( $submit == 1 ) {
-				$onchangeAttribute = 'onchange="'.trim($this->conf['onChangeAttribute']).'" ';
+		if ($submit) {
+			if ($submit == 1) {
+				$onchangeAttribute = 'onchange="' . trim($this->conf['onChangeAttribute']) . '" ';
 			} else {
-					// <Masi>
 				$onchangeAttribute = 'onchange="';
 				if ($this->conf['list.']['header']) {
 					$onchangeAttribute .= 'if (this.options[this.selectedIndex].value == \'\') return;';
 				}
-				$onchangeAttribute .= $submit.'" ';
-					// </Masi>
+				$onchangeAttribute .= $submit . '" ';
 			}
 		}
-		
-		$selector = '<select size="1" '.$nameAttribute.$classAttribute.$titleAttribute.$onchangeAttribute.' id="sr_language_menu_select">'.chr(10);
+		$selector = '<select size="1" ' . $nameAttribute . $classAttribute . $titleAttribute . $onchangeAttribute . ' id="sr_language_menu_select">' . chr(10);
 		$selected = (trim($selected)) ? trim($selected) : '';
 		$selected = $selected ? $selected : key($names);
-		if( count($names) > 0 )	{
+		if (count($names) > 0) {
 			$selector .= $this->optionsConstructor($names, $selected);
-			$selector .= '</select>'.chr(10);
+			$selector .= '</select>' . chr(10);
 		} else {
 			$selector = '';
 		}
@@ -399,36 +383,19 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	 */
 	function optionsConstructor($names, $selected='') {
 		$options = '';
-			// <Masi>
-		if ($this->conf['list.']['header'])	{
+			// Use a header, if configured
+		if ($this->conf['list.']['header']) {
 			$options .= '<option value ="">'.$this->pi_getLL('select_language').'</option>';
 			if ($this->conf['list.']['separator'])	{
 				$options .= '<option value ="">'.$this->conf['list.']['separator'].'</option>';
 			}
 		}
-			// </Masi>
-		// CAG JR: We traverse the extended $names Array to have the language's uid in case of RealURL
-		if ($this->realUrlLoaded) {
-			foreach ($names as $langUid => $langOptions) {
-				foreach ($langOptions as $value => $name) {
-						// don't show current language if showCurrent=0
-					if ($selected != $value || $this->conf['list.']['showCurrent']) {
-						$options  .= '<option value="'.$value.'"'.$this->pi_classParam('option-'.$langUid);
-							// don't pre-select language when using a header
-						if (!$this->conf['list.']['header'] && $selected == $value) {
-							$options  .= ' selected="selected"';
-						}
-						$options  .= '>'.$name.'</option>'.chr(10);
-						$this->selectorEmpty = false;
-					}
-				}
-			}
-		} else {
-			foreach ($names as $value => $name) {
-					// don't show current language if showCurrent=0
+		foreach ($names as $langUid => $langOptions) {
+			foreach ($langOptions as $value => $name) {
+					// Don't show current language if showCurrent=0
 				if ($selected != $value || $this->conf['list.']['showCurrent']) {
-					$options  .= '<option value="'.$value.'"'.$this->pi_classParam('option-'.$value);
-						// don't pre-select language when using a header
+					$options  .= '<option value="'.$value.'"'.$this->pi_classParam('option-'.$langUid);
+						// Don't pre-select language when using a header
 					if (!$this->conf['list.']['header'] && $selected == $value) {
 						$options  .= ' selected="selected"';
 					}
@@ -439,18 +406,15 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		}
 		return $options;
 	}
-	
+
 	/**
 	 * Gets the directory in which the website resides.
 	 *
 	 * @return    string        Either '/' or e.g. '/myWebsiteDir/'
 	 */
-		// CAG JR: Function to get the directory in which the script / website is executed 
 	function getWebsiteDir() {
-		
 			// Standard is the webroot which is okay for non-realUrl sites in any case as there is a different handling in changing the language via SELECT box
 		$websiteDir = '/';
-		
 			// For realURL we need the path segment after host and domain as set in config.baseURL 
 		if ($this->realUrlLoaded) {
 			$baseUrlParts = parse_url($GLOBALS['TSFE']->config['config']['baseURL']);
