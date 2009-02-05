@@ -44,6 +44,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	var $cObj;
 	
 	var $languagesUids = array();
+	var $languagesExternalUrls = array();
 	var $forwardParams;
 	var $localTemplate;
 	
@@ -129,7 +130,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$languagesLabels['0'] =  $row['title'];
 			}
 		}
-		
+
 			// Select all pages_language_overlay records on the current page. Each represents a possibility for a language.
 		$langArr = array();
 		$table = 'pages_language_overlay';
@@ -138,6 +139,15 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT sys_language_uid', $table, $whereClause);
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$langArr[$row['sys_language_uid']] = $row['sys_language_uid'];
+		}
+			// Add configured external url's for missing overlay records.
+		if (is_array($this->conf['useExternalUrl.'])) {
+			foreach ($languages as $key => $val) {
+				if ($key && !$langArr[$this->languagesUids[$key]] && $this->conf['useExternalUrl.'][$val]) {
+					$this->languagesExternalUrls[$key] = $this->conf['useExternalUrl.'][$val];
+					$langArr[$this->languagesUids[$key]] = $this->languagesUids[$key];
+				}
+			}
 		}
 
 		if (!$this->conf['hideIfNoAltLanguages'] || (count($langArr) > 0)) {
@@ -160,13 +170,13 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					foreach ($languages as $key => $val) {
 						$uri = $this->makeUrl($key);
 						if (!$key || $langArr[$this->languagesUids[$key]]) {
-							$names[$key][($this->realUrlLoaded ? $this->getWebsiteDir().$uri : $uri)] = $languagesLabels[$key];
-							$selected = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]) ? ($this->realUrlLoaded ? $this->getWebsiteDir().$uri : $uri) : $selected;
+							$names[$key][(($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $uri)] = $languagesLabels[$key];
+							$selected = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]) ? (($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $uri) : $selected;
 						}
 					}
 
-					$questionMark = strstr($uri, '?') ? '' : '?';
 					if (!$this->realUrlLoaded) {
+						$questionMark = strstr($uri, '?') ? '' : '?';
 						$subpartArray['###LANGUAGE_SELECT###'] =  $this->buildLanguageSelector($names, 'L', '', $this->pi_getLL('select_language'), $selected, 'if(' . ($this->rlmp_language_detectionLoaded?'true':'false') . ' || this.options[this.selectedIndex].value != \'0\') { top.location.replace(\'' . htmlspecialchars($uri . $questionMark . '&L=') . '\' + this.options[this.selectedIndex].value ); } else { top.location.replace(\'' . htmlspecialchars($uri) .  '\'); }' );
 					} else {
 						$subpartArray['###LANGUAGE_SELECT###'] =  $this->buildLanguageSelector($names, 'L', '', $this->pi_getLL('select_language'), $selected, 'top.location.replace(this.options[this.selectedIndex].value );' );
@@ -186,7 +196,6 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$content = $this->cObj->substituteMarkerArrayCached($template, $subpartArray, array(), array());
 					break;
 				case 2:
-					// <Francois Suter> List of links display option
 					$templateMarker = '###TEMPLATE_2###';
 					$template = $this->cObj->getSubpart($this->templateCode, $templateMarker);
 					$subpartArray = array();
@@ -220,8 +229,6 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$subpartArray['###LINK_LIST###'] = ($this->conf['links.']['stdWrap.']) ? $this->cObj->stdWrap($subpartArray['###LINK_LIST###'], $this->conf['links.']['stdWrap.'])  : $subpartArray['###LINK_LIST###'];
 					$content = $this->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, array());
 					break;
-					// </Francois Suter>
-
 				case 0:
 				default:
 					$templateMarker = '###TEMPLATE_0###';
@@ -231,13 +238,12 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$flagEntrySubpart = $this->cObj->getSubpart($template, '###FLAG_ENTRY###');
 					$markerArray = array();
 
-					if( trim($this->conf['englishFlagFile']) ) {
-						$flagsDir = dirname($GLOBALS['TSFE']->tmpl->getFileName(trim($this->conf['englishFlagFile']))).'/';
+					if (trim($this->conf['englishFlagFile'])) {
+						$flagsDir = dirname($GLOBALS['TSFE']->tmpl->getFileName(trim($this->conf['englishFlagFile']))) . '/';
 					}
-					if( !$flagsDir ) {
-						$flagsDir = t3lib_extMgm::extPath($this->extKey).'flags/';
+					if (!$flagsDir) {
+						$flagsDir = t3lib_extMgm::extPath($this->extKey) . 'flags/';
 					}
-
 						// Set each icon. If the language is the current, red arrow is printed to the left. If the language is NOT found, the icon is dimmed.
 					$flags = array();
 					$firstItem = true;
@@ -430,6 +436,9 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	 * @return   	string  the url
 	 */
 	function makeUrl($key) {
+		if ($this->languagesExternalUrls[$key]) {
+			return $this->languagesExternalUrls[$key];
+		}
 		if (strstr($GLOBALS['TSFE']->linkVars, '&L=')) {
 			$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$this->languagesUids[$key], $GLOBALS['TSFE']->linkVars);
 		} else {

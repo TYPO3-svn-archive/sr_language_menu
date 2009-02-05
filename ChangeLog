@@ -4,3 +4,4 @@
 	* Cleanup (CGL, while loops, globals)
 	* Factor out method makeUrl
 	* Simplify method optionsConstructor and more cleanup
+	* Added feature useExternalUrl
