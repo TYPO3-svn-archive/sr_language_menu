@@ -105,13 +105,12 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			// Get the language codes and labels for the languages set in the plugin list
 		$selectFields = $tableA . '.uid, ' . $tableA . '.title, ' . $tableB . '.lg_iso_2, ' . $tableB . '.lg_name_en, ' . $tableB . '.lg_country_iso_2';
 		$table = $tableA . ' LEFT JOIN ' . $tableB . ' ON ' . $tableA . '.static_lang_isocode=' . $tableB . '.uid';
-			// <Francois Suter> Ignore IN clause if language list is empty. This means that all languages found in the sys_language table will be used
+			// Ignore IN clause if language list is empty. This means that all languages found in the sys_language table will be used
 		if (!empty($languagesUidsList)) {
 			$whereClause = $tableA . '.uid IN (' . $languagesUidsList . ') ';
-		}else {
+		} else {
 			$whereClause = '1=1 ';
 		}
-			// </Francois Suter>
 		$whereClause .= $this->cObj->enableFields ($tableA);
 		$whereClause .= $this->cObj->enableFields ($tableB);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($selectFields, $table, $whereClause);
@@ -130,7 +129,6 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$languagesLabels['0'] =  $row['title'];
 			}
 		}
-
 			// Select all pages_language_overlay records on the current page. Each represents a possibility for a language.
 		$langArr = array();
 		$table = 'pages_language_overlay';
@@ -143,9 +141,17 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			// Add configured external url's for missing overlay records.
 		if (is_array($this->conf['useExternalUrl.'])) {
 			foreach ($languages as $key => $val) {
-				if ($key && !$langArr[$this->languagesUids[$key]] && $this->conf['useExternalUrl.'][$val]) {
-					$this->languagesExternalUrls[$key] = $this->conf['useExternalUrl.'][$val];
-					$langArr[$this->languagesUids[$key]] = $this->languagesUids[$key];
+				if ($key) {
+					if (!$langArr[$this->languagesUids[$key]]) {
+						if ($this->conf['useExternalUrl.'][$val]) {
+							$this->languagesExternalUrls[$key] = $this->conf['useExternalUrl.'][$val];
+							$langArr[$this->languagesUids[$key]] = $this->languagesUids[$key];
+						}
+					} else {
+						if ($this->conf['useExternalUrl.'][$val] && ($this->conf['useExternalUrl.'][$val. '.']['force'] || $this->conf['forceUseOfExternalUrl'])) {
+							$this->languagesExternalUrls[$key] = $this->conf['useExternalUrl.'][$val];
+						}
+					}
 				}
 			}
 		}
