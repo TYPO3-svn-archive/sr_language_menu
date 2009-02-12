@@ -138,6 +138,21 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		ksort($languages);
 		ksort($this->languagesUids);
 		ksort($languagesLabels);
+			// Show current language first, if configured
+		if ($this->conf['showCurrentFirst']) {
+			$key = array_search($GLOBALS['TSFE']->sys_language_uid, $this->languagesUids);
+			if ($key) {
+				$code = $languages[$key];
+				$uid = $this->languagesUids[$key];
+				$label = $languagesLabels[$key];
+				unset($languages[$key]);
+				unset($this->languagesUids[$key]);
+				unset($languagesLabels[$key]);
+				array_unshift($languages, $code);
+				array_unshift($this->languagesUids, $uid);
+				array_unshift($languagesLabels, $label);
+			}
+		}
 			// Select all pages_language_overlay records on the current page. Each represents a possibility for a language.
 		$langArr = array();
 		$table = 'pages_language_overlay';
@@ -150,7 +165,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			// Add configured external url's for missing overlay records.
 		if (is_array($this->conf['useExternalUrl.'])) {
 			foreach ($languages as $key => $val) {
-				if ($key) {
+				if ($this->languagesUids[$key]) {
 					if (!$langArr[$this->languagesUids[$key]]) {
 						if ($this->conf['useExternalUrl.'][$val]) {
 							$this->languagesExternalUrls[$key] = $this->conf['useExternalUrl.'][$val];
@@ -184,7 +199,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					}
 					foreach ($languages as $key => $val) {
 						$uri = $this->makeUrl($key);
-						if (!$key || $langArr[$this->languagesUids[$key]]) {
+						if (!$this->languagesUids[$key] || $langArr[$this->languagesUids[$key]]) {
 							$names[$key][(($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $uri)] = $languagesLabels[$key];
 							$selected = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]) ? (($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $uri) : $selected;
 						}
@@ -223,7 +238,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 						$uri = $this->makeUrl($key);
 						$label = $languagesLabels[$key];
 						$current = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]);
-						$inactive = (($key && !$langArr[$this->languagesUids[$key]]) || (!$key && $GLOBALS['TSFE']->page['l18n_cfg']&1));
+						$inactive = (($this->languagesUids[$key] && !$langArr[$this->languagesUids[$key]]) || (!$this->languagesUids[$key] && $GLOBALS['TSFE']->page['l18n_cfg']&1));
 						if (($current && $this->conf['link.']['CUR.']['doNotLinkIt']) || ($inactive && $this->conf['link.']['INACT.']['doNotLinkIt'])) {
 							$linkItem = $label;
 						} else {
@@ -265,7 +280,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					foreach ($languages as $key => $val) {
 						$uri = $this->makeUrl($key);
 						$current = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]);
-						$inactive = (($key && !$langArr[$this->languagesUids[$key]]) || (!$key && $GLOBALS['TSFE']->page['l18n_cfg']&1));
+						$inactive = (($this->languagesUids[$key] && !$langArr[$this->languagesUids[$key]]) || (!$this->languagesUids[$key] && $GLOBALS['TSFE']->page['l18n_cfg']&1));
 							// flag item
 						if (($current && $this->conf['flag.']['CUR.']['doNotLinkIt']) || ($inactive && $this->conf['flag.']['INACT.']['doNotLinkIt'])) {
 							$item = '<img src="' . $flagsDir .($this->conf['alternateFlags.'][$languages[$key]]?$this->conf['alternateFlags.'][$languages[$key]]:$languages[$key]).($inactive?'_d':'') . '.gif" title="'.$languagesLabels[$key].'" alt="'.$languagesLabels[$key].'"'.$this->pi_classParam('flag').' />';

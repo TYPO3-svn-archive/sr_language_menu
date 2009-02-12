@@ -17,6 +17,7 @@ plugin.tx_srlanguagemenu_pi1 {
 
 	defaultLayout = {$plugin.tx_srlanguagemenu_pi1.defaultLayout}
 	showLinkWithFlag = {$plugin.tx_srlanguagemenu_pi1.showLinkWithFlag}
+	showCurrentFirst = {$plugin.tx_srlanguagemenu_pi1.showCurrentFirst}
 
 	flag.NO.stdWrap.wrap = <div class="NO"> | </div>
 	flag.INACT.doNotLinkIt = {$plugin.tx_srlanguagemenu_pi1.doNotLinkInactive}

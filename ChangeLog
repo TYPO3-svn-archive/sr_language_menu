@@ -1,6 +1,7 @@
 2009-02-11  Stanislas Rolland  <typo3@sjbr.ca>
 
-	* Fixed bug: sort languages in the order specified by the plugin record or TS setup. Thanks to Marco Bamert.
+	* Fixed bug: Sort languages in the order specified by the plugin record or TS setup. Thanks to Marco Bamert.
+	* Added feature: New constant showCurrentFirst. Thanks to Patric Pesch.
 
 2009-02-10  Stanislas Rolland  <typo3@sjbr.ca>
 

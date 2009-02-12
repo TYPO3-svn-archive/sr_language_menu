@@ -65,4 +65,7 @@ plugin.tx_srlanguagemenu_pi1 {
 
     # cat=plugin.tx_srlanguagemenu_pi1/enable/09; type=boolean; label= Show both links and flags: If enabled, when using the flags layout, both flags and links will be shown.
 	showLinkWithFlag = 0
+
+    # cat=plugin.tx_srlanguagemenu_pi1/enable/11; type=boolean; label= Show the current language first: If enabled, the current language is always the first item shown in the menu.
+	showCurrentFirst = 0
 }
