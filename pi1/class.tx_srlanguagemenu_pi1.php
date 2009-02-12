@@ -187,6 +187,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			$layout = $this->cObj->data['tx_srlanguagemenu_type'] ? $this->cObj->data['tx_srlanguagemenu_type'] : trim($this->conf['defaultLayout']);
 			switch ($layout) {
 				case 1:
+						// Drop-down layout
 					$templateMarker = '###TEMPLATE_1###';
 					$template = $this->cObj->getSubpart($this->templateCode, $templateMarker);
 					$subpartArray = array();
@@ -226,8 +227,12 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					$content = $this->cObj->substituteMarkerArrayCached($template, $subpartArray, array(), array());
 					break;
 				case 2:
+						// Links layout
 					$templateMarker = '###TEMPLATE_2###';
 					$template = $this->cObj->getSubpart($this->templateCode, $templateMarker);
+					$linksListHeader = $this->conf['links.']['header'] ? $this->pi_getLL('select_language') : '';
+					$linksListHeader = ($linksListHeader && $this->conf['links.']['header.']['stdWrap.']) ? $this->cObj->stdWrap($linksListHeader, $this->conf['links.']['header.']['stdWrap.']) : $linksListHeader;
+					$template = $this->cObj->substituteMarker($template, '###LINK_SELECT_LANGUAGE###', $linksListHeader);
 					$subpartArray = array();
 					$subpartArray['###LINK_LIST###'] = '';
 					$linkEntrySubpart = $this->cObj->getSubpart($template, '###LINK_ENTRY###');
@@ -261,6 +266,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 					break;
 				case 0:
 				default:
+						// Flags layout
 					$templateMarker = '###TEMPLATE_0###';
 					$template = $this->cObj->getSubpart($this->templateCode, $templateMarker);
 					$subpartArray = array();

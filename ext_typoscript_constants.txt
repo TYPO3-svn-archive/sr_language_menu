@@ -42,7 +42,7 @@ plugin.tx_srlanguagemenu_pi1 {
     # cat=plugin.tx_srlanguagemenu_pi1//03; type=string; label= Parameters that should not be forwarded: List of parameters that should not be forwarded when linking to another language.
 	removeParams = user,pass
 
-    # cat=plugin.tx_srlanguagemenu_pi1/enable/10; type=boolean; label= Add a header to the selection list: If enabled, when the layout is a selection list, a header will be added at the top of the list. 
+    # cat=plugin.tx_srlanguagemenu_pi1/enable/10; type=boolean; label= Add a header to the selection list: If enabled, when the layout is a selection list, a header will be added at the top of the list.
 	addSelectionListHeader = 1
 
     # cat=plugin.tx_srlanguagemenu_pi1//09; type=string; label= Selection list separator: Separator between the selection list and its header, if the selection list header is enabled.
@@ -68,4 +68,7 @@ plugin.tx_srlanguagemenu_pi1 {
 
     # cat=plugin.tx_srlanguagemenu_pi1/enable/11; type=boolean; label= Show the current language first: If enabled, the current language is always the first item shown in the menu.
 	showCurrentFirst = 0
+
+    # cat=plugin.tx_srlanguagemenu_pi1/enable/12; type=boolean; label= Add a header in front of the list of links: If enabled, when the layout is a list of links, a header will be added at the top of the list.
+	addLinksListHeader = 0
 }

@@ -2,6 +2,7 @@
 
 	* Fixed bug: Sort languages in the order specified by the plugin record or TS setup. Thanks to Marco Bamert.
 	* Added feature: New constant showCurrentFirst. Thanks to Patric Pesch.
+	* Added feature: New constant addLinksListHeader and new marker ###LINK_SELECT_LANGUAGE###. Thanks to Ingo Schmitt.
 
 2009-02-10  Stanislas Rolland  <typo3@sjbr.ca>
 
