@@ -72,7 +72,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		$useSelfLanguageTitle = trim($this->conf['useSelfLanguageTitle']) ? trim($this->conf['useSelfLanguageTitle']) : 0;
 		$useSelfLanguageTitle = ($useSysLanguageTitle || $useIsoLanguageCountryCode) ? 0 : $useSelfLanguageTitle;
 		
-			// We check if extension realURL is installed and configured in TS template
+			// Check if extension realURL is installed and configured in TS template
 		$this->realUrlLoaded = t3lib_extMgm::isLoaded('realurl', 0) && $GLOBALS['TSFE']->config['config']['tx_realurl_enable'];
 		$this->rlmp_language_detectionLoaded = t3lib_extMgm::isLoaded('rlmp_language_detection', 0);
 		
@@ -114,21 +114,30 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		$whereClause .= $this->cObj->enableFields ($tableA);
 		$whereClause .= $this->cObj->enableFields ($tableB);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($selectFields, $table, $whereClause);
+			// If $languagesUidsList is not empty, the languages will be sorted in the order it specifies
+		$languagesUidsArray = t3lib_div::trimExplode(',', $languagesUidsList, 1);
+		$index = 0;
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			if ($row['lg_iso_2'] != $defaultLanguageISOCode || $row['lg_country_iso_2'] != $defaultCountryISOCode) {
-				$this->languagesUids[] = $row['uid'];
-				$languages[] = strtolower($row['lg_iso_2']).($row['lg_country_iso_2']?'_'.$row['lg_country_iso_2']:'');
+				$index++;
+				$key = array_search($row['uid'], $languagesUidsArray);
+				$key = ($key !== FALSE) ? $key+1 : $index;
+				$this->languagesUids[$key] = $row['uid'];
+				$languages[$key] = strtolower($row['lg_iso_2']).($row['lg_country_iso_2']?'_'.$row['lg_country_iso_2']:'');
 				if ($useIsoLanguageCountryCode) {
-					$languagesLabels[] =  strtolower($row['lg_iso_2']).($row['lg_country_iso_2']?'-'.strtolower($row['lg_country_iso_2']):'');
+					$languagesLabels[$key] =  strtolower($row['lg_iso_2']).($row['lg_country_iso_2']?'-'.strtolower($row['lg_country_iso_2']):'');
 				} elseif ($useSysLanguageTitle) {
-					$languagesLabels[] =  $row['title'];
+					$languagesLabels[$key] =  $row['title'];
 				} else {
-					$languagesLabels[] =  $this->staticInfo->getStaticInfoName('LANGUAGES', $row['lg_iso_2'].($row['lg_country_iso_2']?'_'.$row['lg_country_iso_2']:''),'','',$useSelfLanguageTitle);
+					$languagesLabels[$key] =  $this->staticInfo->getStaticInfoName('LANGUAGES', $row['lg_iso_2'].($row['lg_country_iso_2']?'_'.$row['lg_country_iso_2']:''),'','',$useSelfLanguageTitle);
 				}
-			} elseif($useSysLanguageTitle) {
+			} elseif ($useSysLanguageTitle) {
 					$languagesLabels['0'] =  $row['title'];
 			}
 		}
+		ksort($languages);
+		ksort($this->languagesUids);
+		ksort($languagesLabels);
 			// Select all pages_language_overlay records on the current page. Each represents a possibility for a language.
 		$langArr = array();
 		$table = 'pages_language_overlay';
@@ -157,9 +166,9 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 		}
 
 		if (!$this->conf['hideIfNoAltLanguages'] || (count($langArr) > 0)) {
-				// get the template
+				// Get the template
 			$this->templateCode = $this->cObj->fileResource($this->conf['templateFile']);
-				// get the specified layout
+				// Get the specified layout
 			$layout = $this->cObj->data['tx_srlanguagemenu_type'] ? $this->cObj->data['tx_srlanguagemenu_type'] : trim($this->conf['defaultLayout']);
 			switch ($layout) {
 				case 1:
