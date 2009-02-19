@@ -1,3 +1,11 @@
+2009-02-19  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Fixed bug introduced in 1.5.0: Incorrect links in droplown list when not using realUrl
+
+2009-02-12  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Tagging version 1.5.0 published to TER
+
 2009-02-11  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fixed bug: Sort languages in the order specified by the plugin record or TS setup. Thanks to Marco Bamert.

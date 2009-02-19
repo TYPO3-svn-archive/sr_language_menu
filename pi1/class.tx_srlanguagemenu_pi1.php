@@ -199,10 +199,10 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 						unset($languages[0]);
 					}
 					foreach ($languages as $key => $val) {
-						$uri = $this->makeUrl($key);
+						$uri = $this->makeUrl($key, !$this->realUrlLoaded);
 						if (!$this->languagesUids[$key] || $langArr[$this->languagesUids[$key]]) {
-							$names[$key][(($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $uri)] = $languagesLabels[$key];
-							$selected = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]) ? (($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $uri) : $selected;
+							$names[$key][(($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $this->languagesUids[$key])] = $languagesLabels[$key];
+							$selected = ($GLOBALS['TSFE']->sys_language_uid == $this->languagesUids[$key]) ? (($this->realUrlLoaded && !$this->languagesExternalUrls[$key]) ? $this->getWebsiteDir().$uri : $this->languagesUids[$key]) : $selected;
 						}
 					}
 
@@ -469,16 +469,17 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	 * Makes the url
 	 *
 	 * @param	string	$key: the ordinal number of the language for which an url should be made
+	 * @param	boolean	$noLVariable: if set, the url is built without the L variable
 	 * @return   	string  the url
 	 */
-	function makeUrl($key) {
+	function makeUrl($key, $noLVariable=0) {
 		if ($this->languagesExternalUrls[$key]) {
 			return $this->languagesExternalUrls[$key];
 		}
 		if (strstr($GLOBALS['TSFE']->linkVars, '&L=')) {
-			$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , '&L='.$this->languagesUids[$key], $GLOBALS['TSFE']->linkVars);
+			$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , ($noLVariable ? '' : '&L='.$this->languagesUids[$key]), $GLOBALS['TSFE']->linkVars);
 		} else {
-			$GLOBALS['TSFE']->linkVars .= '&L='.$this->languagesUids[$key];
+			$GLOBALS['TSFE']->linkVars .= $noLVariable ? '' : '&L='.$this->languagesUids[$key];
 		}
 		if (!$this->rlmp_language_detectionLoaded) {
 			$GLOBALS['TSFE']->linkVars = ereg_replace('&L=0' , '', $GLOBALS['TSFE']->linkVars);
@@ -488,7 +489,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sr_language_menu/pi1/class.tx_srlanguagemenu_pi1.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sr_language_menu/pi1/class.tx_srlanguagemenu_pi1.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sr_language_menu/pi1/class.tx_srlanguagemenu_pi1.php']);
 }
 ?>
