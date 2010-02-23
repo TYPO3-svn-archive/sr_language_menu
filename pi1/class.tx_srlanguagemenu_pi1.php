@@ -3,7 +3,7 @@
 *  Copyright notice
 *
 *  (c) 1999-2003 Kasper Skaarhoej (kasper@typo3.com)
-*  (c) 2004-2009 Stanislas Rolland <typo3(arobas)sjbr.ca>
+*  (c) 2004-2010 Stanislas Rolland <typo3(arobas)sjbr.ca>
 *  All rights reserved
 *
 *  This script is part of the Typo3 project. The Typo3 project is 
@@ -477,12 +477,12 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 			return $this->languagesExternalUrls[$key];
 		}
 		if (strstr($GLOBALS['TSFE']->linkVars, '&L=')) {
-			$GLOBALS['TSFE']->linkVars = ereg_replace('&L=[0-9]*' , ($noLVariable ? '' : '&L='.$this->languagesUids[$key]), $GLOBALS['TSFE']->linkVars);
+			$GLOBALS['TSFE']->linkVars = preg_replace('/&L=[0-9]*/' , ($noLVariable ? '' : '&L='.$this->languagesUids[$key]), $GLOBALS['TSFE']->linkVars);
 		} else {
 			$GLOBALS['TSFE']->linkVars .= $noLVariable ? '' : '&L='.$this->languagesUids[$key];
 		}
 		if (!$this->rlmp_language_detectionLoaded) {
-			$GLOBALS['TSFE']->linkVars = ereg_replace('&L=0' , '', $GLOBALS['TSFE']->linkVars);
+			$GLOBALS['TSFE']->linkVars = preg_replace('/&L=0/' , '', $GLOBALS['TSFE']->linkVars);
 		}
 		$LD = $this->localTemplate->linkData($GLOBALS['TSFE']->page,'','','','',$this->forwardParams,'0');
 		return $LD['totalURL'];
