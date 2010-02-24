@@ -1,6 +1,7 @@
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fixed bugtracker issue #12033: Deprecated function ereg_replace on PHP 5.3.0
+	* Version 1.5.2 published to TER
 
 2009-02-19  Stanislas Rolland  <typo3@sjbr.ca>
 
