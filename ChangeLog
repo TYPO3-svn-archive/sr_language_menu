@@ -1,3 +1,10 @@
+2010-04-21  Prakash A Bhat  <typo3@chandanweb.com>
+
+	* Added a utility library class for performing various utility operations
+	* Entire code converted to PHP 5 and utilizing maximum OOPS concepts
+	* Code base made cleaner with the possibility to have any type of output using template.
+	* Care taken to make sure new code is fully compliant with all old settings, and old templates.
+
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fixed bugtracker issue #12033: Deprecated function ereg_replace on PHP 5.3.0
