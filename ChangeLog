@@ -9,6 +9,7 @@
 	* Added feature #49074: Add domain model for system languages and pages language overlays
 	* Added feature #49074: Add Fluid templates
 	* Added feature #49074: Add Extbase menu controller
+	* Added feature #49074: Add Fluid widget menu view helper
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
