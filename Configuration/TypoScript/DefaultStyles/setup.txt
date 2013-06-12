@@ -1,0 +1,3 @@
+ # Include default styles for SrLanguageMenu
+
+page.includeCSS.tx_srlanguagemenu = EXT:sr_language_menu/Resources/Public/StyleSheets/SrLanguageMenu.css

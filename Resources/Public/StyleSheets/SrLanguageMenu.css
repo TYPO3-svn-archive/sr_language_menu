@@ -1,0 +1,59 @@
+/* Default style sheet for SrLanguageMenu */
+.tx-srlanguagemenu,
+.tx-srlanguagemenu .links-list-header {
+	font-family: Verdana, sans-serif;
+	line-height: 100%;
+	margin-top: 8px;
+	padding: 0;
+	text-indent: 0;
+}
+.tx-srlanguagemenu .CUR,
+.tx-srlanguagemenu .NO,
+.tx-srlanguagemenu .INACT {
+	float: left;
+	font-size: .8em;
+	margin: 0 5px;
+}
+.tx-srlanguagemenu .CUR a,
+.tx-srlanguagemenu .NO a,
+.tx-srlanguagemenu .INACT a {
+	background-color: transparent;
+	font-weight: bold;
+	text-decoration: none;
+}
+.tx-srlanguagemenu .CUR a:focus,
+.tx-srlanguagemenu .CUR a:hover,
+.tx-srlanguagemenu .CUR a:active,
+.tx-srlanguagemenu .NO a:focus,
+.tx-srlanguagemenu .NO a:hover,
+.tx-srlanguagemenu .NO a:active,
+.tx-srlanguagemenu .INACT a:focus,
+.tx-srlanguagemenu .INACT a:hover,
+.tx-srlanguagemenu .INACT a:active {
+	color: #333333;
+}
+.tx-srlanguagemenu .CUR a.flag:before,
+.tx-srlanguagemenu .CUR a.linked-language:before {
+	content: url(../Images/current.gif);
+	padding-right: 3px;
+}
+
+.tx-srlanguagemenu-links .SPC:before {
+	content: "|";
+	padding-right: 3px;
+}
+.tx-srlanguagemenu fieldset {
+}
+.tx-srlanguagemenu fieldset legend {
+}
+.tx-srlanguagemenu fieldset label {
+	display: none;
+}
+.tx-srlanguagemenu fieldset select {
+	background-color: #009933;
+	color: white;
+	font-size: .8em;
+}
+.tx-srlanguagemenu fieldset option {
+	padding: 2px 5px 0 2px;
+}
