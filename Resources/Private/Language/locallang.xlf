@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-06-04T15:57:02Z" product-name="sr_language_menu">
+		<header/>
+		<body>
+			<trans-unit id="select_language" xml:space="preserve">
+				<source>Choose a language</source>
+			</trans-unit>
+			<trans-unit id="form_fieldset_legend" xml:space="preserve">
+				<source>Choose a language</source>
+			</trans-unit>
+			<trans-unit id="form_select_label" xml:space="preserve">
+				<source>Choose a language</source>
+			</trans-unit>
+			<trans-unit id="pi1_title" xml:space="preserve">
+				<source>Language Selection</source>
+			</trans-unit>
+			<trans-unit id="pi1_plus_wiz_description" xml:space="preserve">
+				<source>Adds a selection list of languages.</source>
+			</trans-unit>
+			<trans-unit id="settings.title" xml:space="preserve">
+				<source>Menu settings</source>
+			</trans-unit>
+			<trans-unit id="settings.languages" xml:space="preserve">
+				<source>Languages to select from:</source>
+			</trans-unit>
+			<trans-unit id="settings.layout.I.0" xml:space="preserve">
+				<source>Flags</source>
+			</trans-unit>
+			<trans-unit id="settings.layout.I.1" xml:space="preserve">
+				<source>Dropdown list</source>
+			</trans-unit>
+			<trans-unit id="settings.layout.I.2" xml:space="preserve">
+				<source>Links</source>
+			</trans-unit>
+			<trans-unit id="settings.layout" xml:space="preserve">
+				<source>Menu layout</source>
+			</trans-unit>
+			<trans-unit id="view.template" xml:space="preserve">
+				<source>Template</source>
+			</trans-unit>
+			<trans-unit id="view.templateRootPath" xml:space="preserve">
+				<source>Path to template root</source>
+			</trans-unit>
+			<trans-unit id="view.layoutRootPath" xml:space="preserve">
+				<source>Path to template layouts</source>
+			</trans-unit>
+			<trans-unit id="view.partialRootPath" xml:space="preserve">
+				<source>Path to template partials</source>
+			</trans-unit>
+			<trans-unit id="CType" xml:space="preserve">
+				<source>Language Selection</source>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle" xml:space="preserve">
+				<source>Language title to use</source>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.0" xml:space="preserve">
+				<source>Translated language name from Static Info Tables</source>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.1" xml:space="preserve">
+				<source>Language name in the language itself from Static Info Tables</source>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.2" xml:space="preserve">
+				<source>Language name from web site languages table</source>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.3" xml:space="preserve">
+				<source>Language and country ISO codes</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

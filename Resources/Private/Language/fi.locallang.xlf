@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fi" datatype="plaintext" original="messages" date="2013-06-04T15:57:02Z" product-name="sr_language_menu">
+		<header/>
+		<body>
+			<trans-unit id="select_language" xml:space="preserve" approved="yes">
+				<source>Choose a language</source>
+				<target>Valitse kieli</target>
+			</trans-unit>
+			<trans-unit id="form_fieldset_legend" xml:space="preserve" approved="yes">
+				<source>Choose a language</source>
+				<target>Valitse kieli</target>
+			</trans-unit>
+			<trans-unit id="form_select_label" xml:space="preserve" approved="yes">
+				<source>Choose a language</source>
+				<target>Valitse kieli</target>
+			</trans-unit>
+			<trans-unit id="pi1_title" xml:space="preserve" approved="yes">
+				<source>Language Selection</source>
+				<target>Kielivalinta</target>
+			</trans-unit>
+			<trans-unit id="pi1_plus_wiz_description" xml:space="preserve" approved="yes">
+				<source>Adds a selection list of languages.</source>
+				<target>Lisää valintalistan kielistä</target>
+			</trans-unit>
+			<trans-unit id="settings.title" xml:space="preserve" approved="yes">
+				<source>Menu settings</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="settings.languages" xml:space="preserve" approved="yes">
+				<source>Languages to select from:</source>
+				<target>Valittavat kielet:</target>
+			</trans-unit>
+			<trans-unit id="settings.layout.I.0" xml:space="preserve" approved="yes">
+				<source>Flags</source>
+				<target>Liput</target>
+			</trans-unit>
+			<trans-unit id="settings.layout.I.1" xml:space="preserve" approved="yes">
+				<source>Dropdown list</source>
+				<target>Alasveto lista</target>
+			</trans-unit>
+			<trans-unit id="settings.layout.I.2" xml:space="preserve" approved="yes">
+				<source>Links</source>
+				<target>Linkit</target>
+			</trans-unit>
+			<trans-unit id="settings.type" xml:space="preserve" approved="yes">
+				<source>Menu layout</source>
+				<target>Ulkoasun muoto</target>
+			</trans-unit>
+			<trans-unit id="settings.templateRootPath" xml:space="preserve" approved="yes">
+				<source>Path to template root</source>
+				<target></target>
+			</trans-unit>
+			<trans-unit id="CType" xml:space="preserve" approved="yes">
+				<source>Language Selection</source>
+				<target>Kielivalinta</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
