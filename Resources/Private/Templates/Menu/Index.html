@@ -1,0 +1,5 @@
+<f:if condition="{settings.showMenu}">
+	<f:if condition="{options->f:count()} > 0">
+		<f:render partial="{settings.layout}" arguments="{options: options, settings: settings}" />
+	</f:if>
+</f:if>

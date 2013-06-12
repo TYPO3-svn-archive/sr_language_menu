@@ -1,0 +1,25 @@
+<f:comment>Select option template</f:comment>
+<f:if condition="{option.isCurrent}">
+	<f:then>
+		<f:if condition="{settings.list.showCurrent}">
+			<f:if condition="{option.externalUrl}">
+				<f:then>
+					<option value="{f:uri.external(uri: '{option.externalUrl}')}" {f:if(condition: '{settings.list.header}', then: '', else: ' selected="selected"')}>{option.title}</option>
+				</f:then>
+				<f:else>
+					<option value="{f:uri.page(additionalParams: {L: '{option.uid}'}, addQueryString: '1', argumentsToBeExcludedFromQueryString: '{settings.removeParams}')}" {f:if(condition: '{settings.list.header}', then: '', else: ' selected="selected"')}>{option.title}</option>
+				</f:else>
+			</f:if>
+		</f:if>
+	</f:then>
+	<f:else>
+		<f:if condition="{option.externalUrl}">
+			<f:then>
+				<option value="{f:uri.external(uri: '{option.externalUrl}')}">{option.title}</option>
+			</f:then>
+			<f:else>
+				<option value="{f:uri.page(additionalParams: {L: '{option.uid}'}, addQueryString: '1', argumentsToBeExcludedFromQueryString: '{settings.removeParams}')}">{option.title}</option>
+			</f:else>
+		</f:if>
+	</f:else>
+</f:if>

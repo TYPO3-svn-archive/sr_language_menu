@@ -1,0 +1,9 @@
+<f:comment>Rendering of linked language</f:comment>
+<f:if condition="{option.externalUrl}">
+	<f:then>
+		<f:link.external uri="{option.externalUrl}" class="linked-language" target="{settings.target}">{option.title}</f:link.external>
+	</f:then>
+	<f:else>
+		<f:link.page additionalParams="{L: '{option.uid}'}" addQueryString="1" argumentsToBeExcludedFromQueryString="{settings.removeParams}" class="linked-language" target="{settings.target}">{option.title}</f:link.page>
+	</f:else>
+</f:if>

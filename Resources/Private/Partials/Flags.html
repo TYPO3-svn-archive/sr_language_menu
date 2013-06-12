@@ -1,0 +1,43 @@
+<div class="tx-srlanguagemenu tx-srlanguagemenu-flags">
+	<f:for each="{options}" iteration="optionIterator" as="option">
+		<f:if condition="{option.isCurrent}">
+			<f:then>
+				<f:if condition="{settings.flags.showCurrent}">
+					<div class="CUR{f:if(condition: optionIterator.index, then: ' SPC')}">
+						<f:if condition="{settings.flags.doNotLinkCurrent}">
+							<f:then>
+								<f:render partial="UnlinkedFlag" arguments="{option: option, settings: settings, flag: option.activeFlag}" />
+							</f:then>
+							<f:else>
+								<f:render partial="LinkedFlag" arguments="{option: option, settings: settings, flag: option.activeFlag}" />
+							</f:else>
+						</f:if>
+					</div>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:if condition="{option.isAvailable}">
+					<f:then>
+						<div class="NO{f:if(condition: optionIterator.index, then: ' SPC')}">
+							<f:render partial="LinkedFlag" arguments="{option: option, settings: settings, flag: option.activeFlag}" />
+						</div>
+					</f:then>
+					<f:else>
+						<f:if condition="{settings.flags.showInactive}">
+							<div class="INACT{f:if(condition: optionIterator.index, then: ' SPC')}">
+								<f:if condition="{settings.flags.doNotLinkInactive}">
+									<f:then>
+										<f:render partial="UnlinkedFlag" arguments="{option: option, settings: settings, flag: option.inactiveFlag}" />
+									</f:then>
+									<f:else>
+										<f:render partial="LinkedFlag" arguments="{option: option, settings: settings, flag: option.inactiveFlag}" />
+									</f:else>
+								</f:if>
+							</div>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+	</f:for>
+</div>

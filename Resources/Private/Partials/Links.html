@@ -1,0 +1,46 @@
+<div class="tx-srlanguagemenu tx-srlanguagemenu-links">
+	<f:if condition="settings.links.header">
+		<div class="links-list-header">{f:translate(key:'select_language')}</div>
+	</f:if>
+	<f:for each="{options}" iteration="optionIterator" as="option">
+		<f:if condition="{option.isCurrent}">
+			<f:then>
+				<f:if condition="{settings.links.showCurrent}">
+					<div class="CUR{f:if(condition: optionIterator.index, then: ' SPC')}">
+						<f:if condition="{settings.links.doNotLinkCurrent}">
+							<f:then>
+								<f:render partial="UnlinkedLanguage" arguments="{option: option, settings: settings}" />
+							</f:then>
+							<f:else>
+								<f:render partial="LinkedLanguage" arguments="{option: option, settings: settings}" />
+							</f:else>
+						</f:if>
+					</div>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:if condition="{option.isAvailable}">
+					<f:then>
+						<div class="NO{f:if(condition: optionIterator.index, then: ' SPC')}">
+							<f:render partial="LinkedLanguage" arguments="{option: option, settings: settings, flag: option.activeFlag}" />
+						</div>
+					</f:then>
+					<f:else>
+						<f:if condition="{settings.links.showInactive}">
+							<div class="INACT{f:if(condition: optionIterator.index, then: ' SPC')}">
+								<f:if condition="{settings.links.doNotLinkInactive}">
+									<f:then>
+										<f:render partial="UnlinkedLanguage" arguments="{option: option, settings: settings}" />
+									</f:then>
+									<f:else>
+										<f:render partial="LinkedLanguage" arguments="{option: option, settings: settings}" />
+									</f:else>
+								</f:if>
+							</div>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+	</f:for>
+</div>
