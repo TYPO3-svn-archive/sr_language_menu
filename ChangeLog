@@ -16,6 +16,7 @@
 	* Added feature #49074: Reconfigure the extension in ext_tables.php and ext_localconf.php
 	* Added feature #49074: Require TYPO3 6.0 and Static Info Tables 6.0
 	* Added feature #49074: Set version to 6.0.0
+	* Added feature #49074: Add update script to convert tt_content and sys_template records
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
