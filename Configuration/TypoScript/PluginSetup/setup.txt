@@ -1,0 +1,122 @@
+plugin.tx_srlanguagemenu {
+	settings {
+
+		useSysLanguageTitle = {$plugin.tx_srlanguagemenu.useSysLanguageTitle}
+		useSelfLanguageTitle = {$plugin.tx_srlanguagemenu.useSelfLanguageTitle}
+		useIsoLanguageCountryCode = {$plugin.tx_srlanguagemenu.useIsoLanguageCountryCode}
+
+		defaultLanguageISOCode = {$plugin.tx_srlanguagemenu.defaultLanguageISOCode}
+		defaultCountryISOCode = {$plugin.tx_srlanguagemenu.defaultCountryISOCode}
+		languagesUidsList = {$plugin.tx_srlanguagemenu.languagesUidsList}
+		languages = {$plugin.tx_srlanguagemenu.languagesUidsList}
+
+		hideIfNoAltLanguages = {$plugin.tx_srlanguagemenu.hideIfNoAltLanguages}
+
+		target = {$plugin.tx_srlanguagemenu.target}
+		removeParams = {$plugin.tx_srlanguagemenu.removeParams}
+
+		defaultLayout = {$plugin.tx_srlanguagemenu.defaultLayout}
+		showLinkWithFlag = {$plugin.tx_srlanguagemenu.showLinkWithFlag}
+		showCurrentFirst = {$plugin.tx_srlanguagemenu.showCurrentFirst}
+		pointerImage = {$plugin.tx_srlanguagemenu.pointerImage}
+
+		flag.NO.stdWrap.wrap = <div class="NO"> | </div>
+		flag.INACT.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
+		flag.INACT.stdWrap.wrap = <div class="INACT"> | </div>
+		flag.INACT.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showInactive}
+		flag.CUR.stdWrap.wrap = <div class="CUR"><img src="{$plugin.tx_srlanguagemenu.pointerImage}"  alt="" style="width:7px; height:10px;" /> | </div>
+		flag.CUR.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
+		flag.CUR.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showCurrent}
+		flags.stdWrap.split {
+			token = {$plugin.tx_srlanguagemenu.token}
+			##wrap =  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|   |   
+			wrap =  | 
+		}
+		flags.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
+		flags.doNotLinkCurrent = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
+		flags.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
+		flags.doNotLinkInactive = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
+	
+		list.header = {$plugin.tx_srlanguagemenu.addSelectionListHeader}
+		list.separator =  {$plugin.tx_srlanguagemenu.selectionListSeparator}
+		list.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
+		list.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
+	
+
+		link.NO.stdWrap.wrap = <div class="NO"> | </div>
+		link.INACT.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
+		link.INACT.stdWrap.wrap = <div class="INACT"> | </div>
+		link.INACT.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showInactive}
+		link.CUR.stdWrap.wrap = <div class="CUR"><img src="{$plugin.tx_srlanguagemenu.pointerImage}"  alt="" style="width:7px; height:10px;" /> |  </div>
+		link.CUR.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
+		link.CUR.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showCurrent}
+		links.stdWrap.split {
+			token = {$plugin.tx_srlanguagemenu.token}
+			wrap =  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|   |   
+		}
+		
+		links.header = {$plugin.tx_srlanguagemenu.addLinksListHeader}
+		links.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
+		links.doNotLinkCurrent = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
+		links.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
+		links.doNotLinkInactive = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
+
+
+		englishFlagFile = {$plugin.tx_srlanguagemenu.englishFlagFile}
+
+	    # 	alternateFlags {
+	    # 		fr = fr_CA
+	    # 		es = es_MX
+	    # 	}
+	}
+
+	view {
+		templateRootPath = {$plugin.tx_srlanguagemenu.view.templateRootPath}
+		partialRootPath = {$plugin.tx_srlanguagemenu.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
+		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.templateRootPath = {$plugin.tx_srlanguagemenu.view.templateRootPath}
+	}
+
+	widgets {
+  		languageMenu = USER
+  		languageMenu {
+		    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		    pluginName = LanguageMenu
+		    extensionName = SrLanguageMenu
+		    controller = Menu
+		    action = show
+		    settings =< tx_srlanguagemenu.settings
+		    persistence =< tx_srlanguagemenu.persistence
+  		}
+  	}
+}
+
+config.tx_extbase {
+	persistence {
+		classes {
+			SJBR\SrLanguageMenu\Domain\Model\Page {
+				mapping {
+					tableName = pages
+				}
+			}
+			SJBR\SrLanguageMenu\Domain\Model\PageLanguageOverlay {
+				mapping {
+					tableName = pages_language_overlay
+					columns {
+						pid.mapOnProperty = page
+						sys_language_uid.mapOnProperty = language
+					}
+				}
+			}
+			SJBR\SrLanguageMenu\Domain\Model\SystemLanguage {
+				mapping {
+					tableName = sys_language
+					columns {
+						title.mapOnProperty = title
+						static_lang_isocode.mapOnProperty = isoLanguage
+					}
+				}
+			}
+		}
+	}
+}

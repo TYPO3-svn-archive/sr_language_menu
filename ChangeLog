@@ -4,6 +4,7 @@
 	* Added feature #49074: Move flags to Resources/Public/Images/Flags directory
 	* Added feature #49074: Import current language icon to Resources/Public/Images directory
 	* Added feature #49074: Add flexform for configuration of plugin as content element
+	* Added feature #49074: Move TypoScript to static template
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
