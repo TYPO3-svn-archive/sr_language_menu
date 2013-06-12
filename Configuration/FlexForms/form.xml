@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:lang/locallang_core.xlf:labels.generalTab</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.layout>
+						<TCEforms>
+							<exclude>0</exclude>
+							<label>LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout</label>
+							<config>
+								<type>radio</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.0</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.layout>
+					<settings.languages>
+						<TCEforms>
+							<label>LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languages</label>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>sys_language</allowed>
+								<size>5</size>
+								<maxitems>50</maxitems>
+								<show_thumbs>1</show_thumbs>
+							</config>
+						</TCEforms>
+					</settings.languages>
+					<settings.languageTitle>
+						<TCEforms>
+							<label>LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle</label>
+							<config>
+								<type>radio</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.0</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.3</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+								</items>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</settings.languageTitle>
+				</el>
+			</ROOT>
+		</sDEF>
+		<sTemplate>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:view.template</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<view.templateRootPath>
+						<TCEforms>
+							<exclude>0</exclude>
+							<label>LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:view.templateRootPath</label>
+							<config>
+								<type>input</type>
+								<size>150</size>
+								<default>EXT:sr_language_menu/Resources/Private/Templates/</default>
+							</config>
+						</TCEforms>
+					</view.templateRootPath>
+					<view.partialRootPath>
+						<TCEforms>
+							<exclude>0</exclude>
+							<label>LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:view.partialRootPath</label>
+							<config>
+								<type>input</type>
+								<size>150</size>
+								<default>EXT:sr_language_menu/Resources/Private/Partials/</default>
+							</config>
+						</TCEforms>
+					</view.partialRootPath>
+					<view.layoutRootPath>
+						<TCEforms>
+							<exclude>0</exclude>
+							<label>LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:view.layoutRootPath</label>
+							<config>
+								<type>input</type>
+								<size>150</size>
+								<default>EXT:sr_language_menu/Resources/Private/Layouts/</default>
+							</config>
+						</TCEforms>
+					</view.layoutRootPath>
+				</el>
+			</ROOT>
+		</sTemplate>
+	</sheets>
+</T3DataStructure>

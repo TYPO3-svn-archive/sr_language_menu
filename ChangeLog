@@ -3,6 +3,7 @@
 	* Added feature #49074: Migrate language file to xliff and move them to Resources/Private/Language directory
 	* Added feature #49074: Move flags to Resources/Public/Images/Flags directory
 	* Added feature #49074: Import current language icon to Resources/Public/Images directory
+	* Added feature #49074: Add flexform for configuration of plugin as content element
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
