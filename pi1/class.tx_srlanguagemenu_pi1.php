@@ -278,7 +278,7 @@ class tx_srlanguagemenu_pi1 extends tslib_pibase {
 						$flagsDir = dirname($GLOBALS['TSFE']->tmpl->getFileName(trim($this->conf['englishFlagFile']))) . '/';
 					}
 					if (!$flagsDir) {
-						$flagsDir = t3lib_extMgm::extPath($this->extKey) . 'flags/';
+						$flagsDir = t3lib_extMgm::extPath($this->extKey) . 'Resources/Public/Flags/';
 					}
 						// Set each icon. If the language is the current, red arrow is printed to the left. If the language is NOT found, the icon is dimmed.
 					$flags = array();
