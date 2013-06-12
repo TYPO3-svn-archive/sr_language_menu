@@ -283,8 +283,8 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		}
 
 		// Flags directory
-		$this->settings['flagsDirectory'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extensionKey) . 'Resources/Public/Images/Flags/';
-		if (trim($this->settings['englishFlagFile'])) {
+		$this->settings['flagsDirectory'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->extensionKey) . 'Resources/Public/Images/Flags/';
+		if ($this->settings['englishFlagFile']) {
 			$this->settings['flagsDirectory'] = dirname($GLOBALS['TSFE']->tmpl->getFileName(trim($this->settings['englishFlagFile']))) . '/';
 		}
 
