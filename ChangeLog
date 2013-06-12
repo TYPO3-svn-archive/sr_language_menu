@@ -11,6 +11,7 @@
 	* Added feature #49074: Add Extbase menu controller
 	* Added feature #49074: Add Fluid widget menu view helper
 	* Added feature #49074: Move new content element wizard configuration to Page TSConfig
+	* Added feature #49074: Change type of columns of old plugin in tt_content
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
