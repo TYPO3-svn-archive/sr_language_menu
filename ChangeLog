@@ -8,6 +8,7 @@
 	* Added feature #49074: Move default CSS styles to own static template and external file
 	* Added feature #49074: Add domain model for system languages and pages language overlays
 	* Added feature #49074: Add Fluid templates
+	* Added feature #49074: Add Extbase menu controller
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
