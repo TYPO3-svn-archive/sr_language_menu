@@ -1,6 +1,7 @@
 plugin.tx_srlanguagemenu {
 	settings {
 
+		languageTitle = {$plugin.tx_srlanguagemenu.languageTitle}
 		useSysLanguageTitle = {$plugin.tx_srlanguagemenu.useSysLanguageTitle}
 		useSelfLanguageTitle = {$plugin.tx_srlanguagemenu.useSelfLanguageTitle}
 		useIsoLanguageCountryCode = {$plugin.tx_srlanguagemenu.useIsoLanguageCountryCode}

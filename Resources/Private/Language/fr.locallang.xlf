@@ -49,7 +49,31 @@
 			</trans-unit>
 			<trans-unit id="settings.layout.constants" xml:space="preserve">
 				<source>Menu layout: Default layout to be used, if no layout is otherwise provided to the plugin</source>
-				<target>Présentation du menu: Présentation utilisée, si aucune présentation n'est spécifiée au greffon d'une autre manière</target>
+				<target>Présentation du menu: Présentation à utiliser, si aucune présentation n'est spécifiée au greffon d'une autre manière</target>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle" xml:space="preserve">
+				<source>Language title to use</source>
+				<target>Libellés des langues</target>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.constants" xml:space="preserve">
+				<source>Language title to use: The labels to use for the languages in the menu</source>
+				<target>Libellés des langues: Les libellés à utiliser pour les langues dans le menu</target>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.0" xml:space="preserve">
+				<source>Translated language name from Static Info Tables</source>
+				<target>Nom de la langue traduit dans la langue de la page courante selon Static Info Tables</target>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.1" xml:space="preserve">
+				<source>Language name in the language itself from Static Info Tables</source>
+				<target>Nom de la langue dans la langue elle-même selon Static Info Tables</target>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.2" xml:space="preserve">
+				<source>Language name from web site languages table</source>
+				<target>Nom de la langue selon la table des Langues du site Web</target>
+			</trans-unit>
+			<trans-unit id="settings.languageTitle.I.3" xml:space="preserve">
+				<source>Language and country ISO codes</source>
+				<target>Codes ISO de la langue et, s'il y a lieu, du pays</target>
 			</trans-unit>
 			<trans-unit id="settings.templateRootPath" xml:space="preserve" approved="yes">
 				<source>Path to template root</source>

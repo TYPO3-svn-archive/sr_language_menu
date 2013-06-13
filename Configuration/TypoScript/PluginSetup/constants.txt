@@ -1,36 +1,39 @@
 plugin.tx_srlanguagemenu {
 
-    # cat=plugin.tx_srlanguagemenu/enable/01; type=boolean; label= Use the sys_language title: If enabled, the title field of table sys_language will be used instead of the language name from the static_languages table.
+    # cat=plugin.tx_srlanguagemenu//05; type=options[LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.0=0,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.1=1,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.2=2,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.I.3=3]; label= LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.languageTitle.constants
+	languageTitle = 0
+
+    # cat=plugin.tx_srlanguagemenu/enable/01; type=boolean; label= Use the Web site language title: DEPRECATED - Use property languageTitle instead.
 	useSysLanguageTitle = 0
 
-    # cat=plugin.tx_srlanguagemenu/enable/02; type=boolean; label= Use the language's self name: If enabled, the name of the language will be displayed in the language itself. Ignored if either useSysLanguageTitle or useIsoLanguageCountryCode is set.
+    # cat=plugin.tx_srlanguagemenu/enable/02; type=boolean; label= Use the language's self name: DEPRECATED - Use property languageTitle instead.
 	useSelfLanguageTitle = 1
 
-    # cat=plugin.tx_srlanguagemenu/enable/03; type=boolean; label= Use the ISO language and country codes: If enabled, the ISO language code and, possibly, the country code will be used instead of the language name from the static_languages table. Ignored if useSysLanguageTitle is set. 
+    # cat=plugin.tx_srlanguagemenu/enable/03; type=boolean; label= Use the ISO language and country codes: DEPRECATED - Use property languageTitle instead.
 	useIsoLanguageCountryCode = 0
 
-    # cat=plugin.tx_srlanguagemenu//04; type=string; label= Language ISO-2 code of default site language: Language ISO-2 code of site language when sys_language_uid = 0.
+    # cat=plugin.tx_srlanguagemenu//01; type=string; label= Language ISO-2 code of default site language: Language ISO-2 code of site language when sys_language_uid = 0.
 	defaultLanguageISOCode = EN
 
-    # cat=plugin.tx_srlanguagemenu//05; type=string; label= Country ISO-2 code of default site language: Country ISO-2 code of site language when sys_language_uid = 0.
+    # cat=plugin.tx_srlanguagemenu//02; type=string; label= Country ISO-2 code of default site language: Country ISO-2 code of site language when sys_language_uid = 0.
 	defaultCountryISOCode = 
 
-    # cat=plugin.tx_srlanguagemenu/file/02; type=file[gif]; label= File name of the English language flag: All flags should be in the same directory as this one.
+    # cat=plugin.tx_srlanguagemenu/file/02; type=file[gif,png]; label= File name of the English language flag: All flags should be in the same directory as this one.
 	englishFlagFile = EXT:sr_language_menu/Resources/Public/Images/Flags/en.gif
 
-    # cat=plugin.tx_srlanguagemenu//06; type=string; label= List of uids of language records from table sys_language: This list will be used by default to build the list of languages to select from, if no list is otherwise provided to the plugin.
+    # cat=plugin.tx_srlanguagemenu//04; type=string; label= List of uids of language records from table sys_language: This list will be used by default to build the list of languages to select from, if no list is otherwise provided to the plugin.
 	languagesUidsList = 
 
-    # cat=plugin.tx_srlanguagemenu//01; type=options[LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.0=0,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.1=1,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.2=2]; label= LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.constants
+    # cat=plugin.tx_srlanguagemenu//03; type=options[LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.0=0,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.1=1,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.2=2]; label= LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.constants
 	defaultLayout = 0
 
     # cat=plugin.tx_srlanguagemenu/enable/04; type=boolean; label= Hide selection if no alt languages: If enabled, the selection list or menu is hidden if no alternative languages are present on the current page. 
 	hideIfNoAltLanguages = 0
 
-    # cat=plugin.tx_srlanguagemenu//02; type=string; label= Target of the menu links: The target to be used in the menu links, if any.
+    # cat=plugin.tx_srlanguagemenu//07; type=string; label= Target of the menu links: The target to be used in the menu links, if any.
 	target = 
 
-    # cat=plugin.tx_srlanguagemenu//03; type=string; label= Parameters that should not be forwarded: List of parameters that should not be forwarded when linking to another language.
+    # cat=plugin.tx_srlanguagemenu//06; type=string; label= Parameters that should not be forwarded: List of parameters that should not be forwarded when linking to another language.
 	removeParams = user,pass
 
     # cat=plugin.tx_srlanguagemenu/enable/10; type=boolean; label= Add a header to the selection list: If enabled, when the layout is a selection list, a header will be added at the top of the list.

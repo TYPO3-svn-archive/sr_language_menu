@@ -57,6 +57,9 @@
 			<trans-unit id="settings.languageTitle" xml:space="preserve">
 				<source>Language title to use</source>
 			</trans-unit>
+			<trans-unit id="settings.languageTitle.constants" xml:space="preserve">
+				<source>Language title to use: The labels to use for the languages in the menu</source>
+			</trans-unit>
 			<trans-unit id="settings.languageTitle.I.0" xml:space="preserve">
 				<source>Translated language name from Static Info Tables</source>
 			</trans-unit>
