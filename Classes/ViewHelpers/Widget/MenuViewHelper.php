@@ -31,8 +31,20 @@ namespace SJBR\SrLanguageMenu\ViewHelpers\Widget;
  * = Example =
  *
  * <code title="full configuration">
- * <languageMenu:widget.menu languages="0,2,3" layout="1" />
+ * <languageMenu:widget.menu languages="0,2,3" layout="Flags" languageTitle="1" />
  * </code>
+ *
+ * The widget accepts three arguments:
+ *	languages: the list of uid's of system language records you want to see in the menu;
+ *	layout: a keyword for the layout you want the menu to be rendered with:
+ *		Flags (a list of flags),
+ *		Select (a selector box),
+ *		Links (a list of links)
+ *	languageTitle: the labels you want to use for the languages:
+ *		0 (the name of the language localized in the language of the current page),
+ *		1 (the name of the language in the language itself),
+ *		2 (the name of the language as set in the system language record in the TYPO3 backend),
+ *		3 (the ISO language and, possibly, country codes of the language) 
  */
 class MenuViewHelper extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper {
 

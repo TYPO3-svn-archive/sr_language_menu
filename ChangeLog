@@ -23,6 +23,7 @@
 	* Follow-up to feature #49074: Remove pointer image from TS static template. Was moved to CSS styles.
 	* Follow-up to feature #49074: Remove stdwrap configuration of lists of flags and links. Use Fluid templates.
 	* Follow-up to feature #49074: Remove links separator from TS template. Use CSS styles.
+	* Follow-up to feature #49074: Adjust documentation of the menu widget view helper.
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
