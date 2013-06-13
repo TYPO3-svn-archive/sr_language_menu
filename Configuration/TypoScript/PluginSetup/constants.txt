@@ -27,9 +27,6 @@ plugin.tx_srlanguagemenu {
     # cat=plugin.tx_srlanguagemenu/enable/04; type=boolean; label= Hide selection if no alt languages: If enabled, the selection list or menu is hidden if no alternative languages are present on the current page. 
 	hideIfNoAltLanguages = 0
 
-    # cat=plugin.tx_srlanguagemenu//07; type=string; label= Separator between links: String to be used in stdWrap as separator between links.
-	separator = &nbsp;
-
     # cat=plugin.tx_srlanguagemenu//02; type=string; label= Target of the menu links: The target to be used in the menu links, if any.
 	target = 
 
