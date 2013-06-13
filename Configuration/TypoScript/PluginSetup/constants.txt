@@ -24,7 +24,7 @@ plugin.tx_srlanguagemenu {
     # cat=plugin.tx_srlanguagemenu//06; type=string; label= List of uids of language records from table sys_language: This list will be used by default to build the list of languages to select from, if no list is otherwise provided to the plugin.
 	languagesUidsList = 
 
-    # cat=plugin.tx_srlanguagemenu//01; type=string; label= Default layout: Default layout to be used, if no layout is otherwise provided to the plugin. 0 = list of flags, 1=selection list, 2 = list of links
+    # cat=plugin.tx_srlanguagemenu//01; type=options[LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.0=0,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.1=1,LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.I.2=2]; label= LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:settings.layout.constants
 	defaultLayout = 0
 
     # cat=plugin.tx_srlanguagemenu/enable/04; type=boolean; label= Hide selection if no alt languages: If enabled, the selection list or menu is hidden if no alternative languages are present on the current page. 

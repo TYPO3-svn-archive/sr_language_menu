@@ -55,7 +55,7 @@ class MenuViewHelper extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelp
 
 	/**
 	 * @param string $languages
-	 * @param integer $layout
+	 * @param string $layout
 	 * @param integer $languageTitle	 
 	 * @return string
 	 */

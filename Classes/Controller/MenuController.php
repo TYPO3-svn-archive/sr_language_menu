@@ -272,14 +272,17 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			}
 		}
 		
-		// Map numeric layout to word
+		// Map numeric layout to keyword
 		if (!isset($this->settings['layout'])) {
 			$this->settings['layout'] = $this->settings['defaultLayout'];
 		}
-		$layouts = array('Flags', 'Select', 'Links');
-		$this->settings['layout'] = $layouts[$this->settings['layout']];
-		if (!$this->settings['layout']) {
-			$this->settings['layout'] = 'Flags';
+		$allowedLayouts = array('Flags', 'Select', 'Links');
+		// Allow keyword values coming from Fluid widget... and perhaps from TS setup
+		if (!in_array($this->settings['layout'], $allowedLayouts)) {
+			$this->settings['layout'] = $allowedLayouts[$this->settings['layout']];
+			if (!$this->settings['layout']) {
+				$this->settings['layout'] = 'Flags';
+			}
 		}
 
 		// Flags directory

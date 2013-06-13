@@ -43,9 +43,13 @@
 				<source>Links</source>
 				<target>Liens</target>
 			</trans-unit>
-			<trans-unit id="settings.type" xml:space="preserve" approved="yes">
+			<trans-unit id="settings.layout" xml:space="preserve" approved="yes">
 				<source>Menu layout</source>
-				<target>Présentation</target>
+				<target>Présentation du menu</target>
+			</trans-unit>
+			<trans-unit id="settings.layout.constants" xml:space="preserve">
+				<source>Menu layout: Default layout to be used, if no layout is otherwise provided to the plugin</source>
+				<target>Présentation du menu: Présentation utilisée, si aucune présentation n'est spécifiée au greffon d'une autre manière</target>
 			</trans-unit>
 			<trans-unit id="settings.templateRootPath" xml:space="preserve" approved="yes">
 				<source>Path to template root</source>

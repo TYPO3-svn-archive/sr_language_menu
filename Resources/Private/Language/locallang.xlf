@@ -36,6 +36,9 @@
 			<trans-unit id="settings.layout" xml:space="preserve">
 				<source>Menu layout</source>
 			</trans-unit>
+			<trans-unit id="settings.layout.constants" xml:space="preserve">
+				<source>Menu layout: Default layout to be used, if no layout is otherwise provided to the plugin</source>
+			</trans-unit>
 			<trans-unit id="view.template" xml:space="preserve">
 				<source>Template</source>
 			</trans-unit>
