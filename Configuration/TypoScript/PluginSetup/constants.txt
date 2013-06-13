@@ -42,9 +42,6 @@ plugin.tx_srlanguagemenu {
     # cat=plugin.tx_srlanguagemenu//09; type=string; label= Selection list separator: Separator between the selection list and its header, if the selection list header is enabled.
 	selectionListSeparator = ----------
 
-    # cat=plugin.tx_srlanguagemenu//08; type=string; label= StdWrap split token: Token to be used in stdWrap split.
-	token = |
-
     # cat=plugin.tx_srlanguagemenu/enable/05; type=boolean; label= Show current language: If enabled, the current language is shown in the language menu.
 	showCurrent = 1
 

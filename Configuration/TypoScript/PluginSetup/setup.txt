@@ -19,18 +19,6 @@ plugin.tx_srlanguagemenu {
 		showLinkWithFlag = {$plugin.tx_srlanguagemenu.showLinkWithFlag}
 		showCurrentFirst = {$plugin.tx_srlanguagemenu.showCurrentFirst}
 
-		flag.NO.stdWrap.wrap = <div class="NO"> | </div>
-		flag.INACT.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
-		flag.INACT.stdWrap.wrap = <div class="INACT"> | </div>
-		flag.INACT.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showInactive}
-		flag.CUR.stdWrap.wrap = <div class="CUR"><img src="{$plugin.tx_srlanguagemenu.pointerImage}"  alt="" style="width:7px; height:10px;" /> | </div>
-		flag.CUR.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
-		flag.CUR.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showCurrent}
-		flags.stdWrap.split {
-			token = {$plugin.tx_srlanguagemenu.token}
-			##wrap =  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|   |   
-			wrap =  | 
-		}
 		flags.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
 		flags.doNotLinkCurrent = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
 		flags.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
@@ -40,26 +28,12 @@ plugin.tx_srlanguagemenu {
 		list.separator =  {$plugin.tx_srlanguagemenu.selectionListSeparator}
 		list.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
 		list.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
-	
 
-		link.NO.stdWrap.wrap = <div class="NO"> | </div>
-		link.INACT.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
-		link.INACT.stdWrap.wrap = <div class="INACT"> | </div>
-		link.INACT.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showInactive}
-		link.CUR.stdWrap.wrap = <div class="CUR"><img src="{$plugin.tx_srlanguagemenu.pointerImage}"  alt="" style="width:7px; height:10px;" /> |  </div>
-		link.CUR.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
-		link.CUR.stdWrap.if.isTrue = {$plugin.tx_srlanguagemenu.showCurrent}
-		links.stdWrap.split {
-			token = {$plugin.tx_srlanguagemenu.token}
-			wrap =  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|  | <div class="SPC"> {$plugin.tx_srlanguagemenu.separator} </div> |*|   |   
-		}
-		
 		links.header = {$plugin.tx_srlanguagemenu.addLinksListHeader}
 		links.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
 		links.doNotLinkCurrent = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
 		links.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
 		links.doNotLinkInactive = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
-
 
 		englishFlagFile = {$plugin.tx_srlanguagemenu.englishFlagFile}
 

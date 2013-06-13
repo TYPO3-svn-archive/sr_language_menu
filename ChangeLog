@@ -19,8 +19,9 @@
 	* Added feature #49074: Add update script to convert tt_content and sys_template records
 	* Fixed bug #49077: Extend Extbase class until issue #47192 is fixed in core
 	* Follow-up to feature #49074: Fix default path to flags
-	* Follow-up to feature #49074: Improve ease of configuration a menu layout in TS constants and Fluid widget
+	* Follow-up to feature #49074: Improve ease of configuration a menu layout in TS constants and Fluid widget.
 	* Follow-up to feature #49074: Remove pointer image from TS static template. Was moved to CSS styles.
+	* Follow-up to feature #49074: Remove stdwrap configuration of lists of flags and links. Use Fluid templates.
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
