@@ -201,8 +201,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			
 			// Set paths to flags
 			$partialFlagFileName = $this->settings['flagsDirectory'] . ($this->settings['alternateFlags'][$option['combinedIsoCode']] ? $this->settings['alternateFlags'][$option['combinedIsoCode']] : $option['combinedIsoCode']);
-			$option['activeFlag'] = $partialFlagFileName . '.gif';
-			$option['inactiveFlag'] = $partialFlagFileName . '_d.gif';
+			$option['flagFile'] = $partialFlagFileName . '.png';
 
 			// Set availability of overlay
 			$option['isAvailable'] = in_array($option['uid'], $availableOverlays);

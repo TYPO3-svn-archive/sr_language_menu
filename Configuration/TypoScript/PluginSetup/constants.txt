@@ -18,8 +18,8 @@ plugin.tx_srlanguagemenu {
     # cat=plugin.tx_srlanguagemenu//02; type=string; label= Country ISO-2 code of default site language: Country ISO-2 code of site language when sys_language_uid = 0.
 	defaultCountryISOCode = 
 
-    # cat=plugin.tx_srlanguagemenu/file/02; type=file[gif,png]; label= File name of the English language flag: All flags should be in the same directory as this one.
-	englishFlagFile = EXT:sr_language_menu/Resources/Public/Images/Flags/en.gif
+    # cat=plugin.tx_srlanguagemenu/file/02; type=file[png]; label= File name of the English language flag: All flags should be in the same directory as this one.
+	englishFlagFile = EXT:sr_language_menu/Resources/Public/Images/Flags/en.png
 
     # cat=plugin.tx_srlanguagemenu//04; type=string; label= List of uids of language records from table sys_language: This list will be used by default to build the list of languages to select from, if no list is otherwise provided to the plugin.
 	languagesUidsList = 

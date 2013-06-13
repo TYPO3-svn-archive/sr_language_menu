@@ -1,3 +1,7 @@
+2013-06-13  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Added feature #49108: Improve flags
+
 2013-06-12  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Added feature #49074: Migrate language file to xliff and move them to Resources/Private/Language directory

@@ -6,10 +6,10 @@
 					<div class="CUR{f:if(condition: optionIterator.index, then: ' SPC')}">
 						<f:if condition="{settings.flags.doNotLinkCurrent}">
 							<f:then>
-								<f:render partial="UnlinkedFlag" arguments="{option: option, settings: settings, flag: option.activeFlag}" />
+								<f:render partial="UnlinkedFlag" arguments="{option: option, settings: settings}" />
 							</f:then>
 							<f:else>
-								<f:render partial="LinkedFlag" arguments="{option: option, settings: settings, flag: option.activeFlag}" />
+								<f:render partial="LinkedFlag" arguments="{option: option, settings: settings}" />
 							</f:else>
 						</f:if>
 					</div>
@@ -19,7 +19,7 @@
 				<f:if condition="{option.isAvailable}">
 					<f:then>
 						<div class="NO{f:if(condition: optionIterator.index, then: ' SPC')}">
-							<f:render partial="LinkedFlag" arguments="{option: option, settings: settings, flag: option.activeFlag}" />
+							<f:render partial="LinkedFlag" arguments="{option: option, settings: settings}" />
 						</div>
 					</f:then>
 					<f:else>
@@ -27,10 +27,10 @@
 							<div class="INACT{f:if(condition: optionIterator.index, then: ' SPC')}">
 								<f:if condition="{settings.flags.doNotLinkInactive}">
 									<f:then>
-										<f:render partial="UnlinkedFlag" arguments="{option: option, settings: settings, flag: option.inactiveFlag}" />
+										<f:render partial="UnlinkedFlag" arguments="{option: option, settings: settings}" />
 									</f:then>
 									<f:else>
-										<f:render partial="LinkedFlag" arguments="{option: option, settings: settings, flag: option.inactiveFlag}" />
+										<f:render partial="LinkedFlag" arguments="{option: option, settings: settings}" />
 									</f:else>
 								</f:if>
 							</div>
