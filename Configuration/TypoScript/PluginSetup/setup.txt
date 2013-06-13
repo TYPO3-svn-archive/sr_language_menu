@@ -18,7 +18,6 @@ plugin.tx_srlanguagemenu {
 		defaultLayout = {$plugin.tx_srlanguagemenu.defaultLayout}
 		showLinkWithFlag = {$plugin.tx_srlanguagemenu.showLinkWithFlag}
 		showCurrentFirst = {$plugin.tx_srlanguagemenu.showCurrentFirst}
-		pointerImage = {$plugin.tx_srlanguagemenu.pointerImage}
 
 		flag.NO.stdWrap.wrap = <div class="NO"> | </div>
 		flag.INACT.doNotLinkIt = {$plugin.tx_srlanguagemenu.doNotLinkInactive}

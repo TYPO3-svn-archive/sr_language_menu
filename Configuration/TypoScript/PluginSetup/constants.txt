@@ -18,9 +18,6 @@ plugin.tx_srlanguagemenu {
     # cat=plugin.tx_srlanguagemenu/file/02; type=file[gif]; label= File name of the English language flag: All flags should be in the same directory as this one.
 	englishFlagFile = EXT:sr_language_menu/Resources/Public/Images/Flags/en.gif
 
-    # cat=plugin.tx_srlanguagemenu/file/03; type=string; label= File name of the pointer image: The pointer may be used in stdWrap to highlight the currently displayed language.
-	pointerImage = typo3/gfx/content_client.gif
-
     # cat=plugin.tx_srlanguagemenu//06; type=string; label= List of uids of language records from table sys_language: This list will be used by default to build the list of languages to select from, if no list is otherwise provided to the plugin.
 	languagesUidsList = 
 
