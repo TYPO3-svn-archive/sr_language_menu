@@ -51,15 +51,14 @@ plugin.tx_srlanguagemenu {
 	}
 
 	widgets {
-  		languageMenu = USER
-  		languageMenu {
+  		menu = USER
+  		menu {
 		    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
 		    pluginName = LanguageMenu
 		    extensionName = SrLanguageMenu
 		    controller = Menu
-		    action = show
+		    action = index
 		    settings =< tx_srlanguagemenu.settings
-		    persistence =< tx_srlanguagemenu.persistence
   		}
   	}
 }

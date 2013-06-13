@@ -25,6 +25,7 @@
 	* Follow-up to feature #49074: Remove links separator from TS template. Use CSS styles.
 	* Follow-up to feature #49074: Adjust documentation of the menu widget view helper.
 	* Follow-up to feature #49074: Fix glitch in configuration flexform.
+	* Follow-up to feature #49074: Correction to the TypoScript menu widget
 
 2010-02-23  Stanislas Rolland  <typo3@sjbr.ca>
 
