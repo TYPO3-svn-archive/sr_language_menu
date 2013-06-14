@@ -292,10 +292,21 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 		// 'Hide default translation of page' configuration option
 		$this->settings['hideIfDefaultLanguage'] = \TYPO3\CMS\Core\Utility\GeneralUtility::hideIfDefaultLanguage($GLOBALS['TSFE']->page['l18n_cfg']);
-		
+
+		// Adjust parameters to remove
+		$this->settings['removeParams'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['removeParams'], TRUE);
 		// Add L to url parameters to remove
-		$this->settings['removeParams'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['removeParams'], 1);
 		$this->settings['removeParams'] = array_merge($this->settings['removeParams'], array('L'));
+		// Add disallowed url query parameters
+		if ($this->settings['allowedParams']) {
+			$allowedParams = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['allowedParams'], TRUE);
+			$allowedParams = array_merge($allowedParams, array('L', 'id', 'type', 'MP'));
+			$allowedParams = array_merge($allowedParams, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $GLOBALS['TSFE']->config['config']['linkVars'], TRUE));
+			$disallowedParams = array_diff(array_keys($GLOBALS['HTTP_GET_VARS']), $allowedParams);
+			// Add disallowed parameters to parameters to remove
+			$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
+		}
+
 	}
 
 	/**

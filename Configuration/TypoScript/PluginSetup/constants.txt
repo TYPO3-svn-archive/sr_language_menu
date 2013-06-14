@@ -30,11 +30,14 @@ plugin.tx_srlanguagemenu {
     # cat=plugin.tx_srlanguagemenu/enable/04; type=boolean; label= Hide selection if no alt languages: If enabled, the selection list or menu is hidden if no alternative languages are present on the current page. 
 	hideIfNoAltLanguages = 0
 
-    # cat=plugin.tx_srlanguagemenu//07; type=string; label= Target of the menu links: The target to be used in the menu links, if any.
-	target = 
-
     # cat=plugin.tx_srlanguagemenu//06; type=string; label= Parameters that should not be forwarded: List of parameters that should not be forwarded when linking to another language.
 	removeParams = user,pass
+	
+    # cat=plugin.tx_srlanguagemenu//07; type=string; label= Parameters that are allowed to be forwarded: If specified, only parameters in this list or in config.linkVars may be forwarded when linking to another language.
+	allowedParams =
+
+    # cat=plugin.tx_srlanguagemenu//08; type=string; label= Target of the menu links: The target to be used in the menu links, if any.
+	target = 
 
     # cat=plugin.tx_srlanguagemenu/enable/10; type=boolean; label= Add a header to the selection list: If enabled, when the layout is a selection list, a header will be added at the top of the list.
 	addSelectionListHeader = 1

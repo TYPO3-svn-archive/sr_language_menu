@@ -1,3 +1,7 @@
+2013-06-14  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Fixed bug #8681: In combination with realurl it's possible to spam the realurl cache
+
 2013-06-13  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Added feature #49108: Improve flags
