@@ -1,3 +1,18 @@
+<f:comment>
+The following objects are available in the Fluid template:
+	- settings: an object providing all the properties of the plugin settings, plus the additional property showMenu: whether or not the menu should be rendered;
+	- options: an array, each element of which is an option of the menu.
+Each option has the following properties:
+	- uid: the uid of the Website language;
+	- isoCodeA2: the ISO code of the language;
+	- countryIsoCodeA2: the ISO country code of the language variant;
+	- combinedIsoCode: the combination of isoCodeA2, lower case, and of countryIsoCodeA2, if present, uppercase, joined by an undescore;
+	- title: the language label;
+	- flagFile: the path to the flag file;
+	- isAvailable: whether or not a translation of the current page is available in the language;
+	- externalUrl: external url to be used in place of the current page id;
+	 -isCurrent: whether or not the page is currently rendered in the language.
+</f:comment>
 <f:if condition="{settings.showMenu}">
 	<f:if condition="{options->f:count()} > 0">
 		<f:render partial="{settings.layout}" arguments="{options: options, settings: settings}" />

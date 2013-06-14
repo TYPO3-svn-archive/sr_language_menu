@@ -1,6 +1,7 @@
 2013-06-14  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fixed bug #8681: In combination with realurl it's possible to spam the realurl cache
+	* Added feature #6651: Add stdWrap to label (how-to example added to manual)
 
 2013-06-13  Stanislas Rolland  <typo3@sjbr.ca>
 

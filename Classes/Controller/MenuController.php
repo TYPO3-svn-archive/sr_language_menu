@@ -306,7 +306,6 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			// Add disallowed parameters to parameters to remove
 			$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
 		}
-
 	}
 
 	/**
