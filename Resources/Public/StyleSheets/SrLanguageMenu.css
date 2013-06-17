@@ -60,11 +60,15 @@
 .tx-srlanguagemenu fieldset {
 }
 .tx-srlanguagemenu fieldset legend {
-	background: url(../Images/language.png) no-repeat 2px 50%;
-	padding: 0 2px 2px 20px;
+	/*background: url(../Images/language.png) no-repeat 2px 50%;
+	padding: 0 2px 2px 20px;*/
 }
 .tx-srlanguagemenu fieldset label {
 	display: none;
+}
+.tx-srlanguagemenu fieldset img.tx-srlanguagemenu-language-icon {
+	margin-right: 3px;
+	vertical-align: middle;
 }
 .tx-srlanguagemenu fieldset select {
 	background-color: #009933;

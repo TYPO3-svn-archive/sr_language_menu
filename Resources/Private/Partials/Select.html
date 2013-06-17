@@ -2,7 +2,7 @@
 	<fieldset>
 		<legend>{f:translate(key:'form_fieldset_legend')}</legend>
 		<label for="sr_language_menu_select">{f:translate(key:'form_select_label')}</label>
-		<select id="sr_language_menu_select" title="{f:translate(key: 'select_language', extensionName: 'SrLanguageMenu')}" onchange="if (this.options[this.selectedIndex].value == '') return;top.location.replace(this.options[this.selectedIndex].value );">
+		<img src="{f:uri.resource(path: 'Images/language.png')}" class="tx-srlanguagemenu-language-icon" /><select id="sr_language_menu_select" title="{f:translate(key: 'select_language', extensionName: 'SrLanguageMenu')}" onchange="if (this.options[this.selectedIndex].value == '') return;top.location.replace(this.options[this.selectedIndex].value );">
 			<f:if condition="{settings.list.header}">
 				<option value ="">{f:translate(key:'select_language')}</option>
 				<f:if condition="{settings.list.separator}">

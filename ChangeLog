@@ -2,6 +2,7 @@
 
 	* Require TYPO3 6.0.6 and Static Info Tables version 6.0.4
 	* Update manual
+	* Follow-up to feature #49172: Change default style of language selector
 
 2013-06-16  Stanislas Rolland  <typo3@sjbr.ca>
 
