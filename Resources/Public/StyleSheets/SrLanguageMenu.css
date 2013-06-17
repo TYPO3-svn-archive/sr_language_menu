@@ -34,7 +34,7 @@
 }
 .tx-srlanguagemenu .CUR a.flag:before,
 .tx-srlanguagemenu .CUR a.linked-language:before {
-	content: url(../Images/current.gif);
+	content: url(../Images/current.png);
 	padding-right: 3px;
 }
 
