@@ -295,8 +295,8 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 		// Adjust parameters to remove
 		$this->settings['removeParams'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['removeParams'], TRUE);
-		// Add L to url parameters to remove
-		$this->settings['removeParams'] = array_merge($this->settings['removeParams'], array('L'));
+		// Add L and cHash to url parameters to remove
+		$this->settings['removeParams'] = array_merge($this->settings['removeParams'], array('L', 'cHash'));
 		// Add disallowed url query parameters
 		if ($this->settings['allowedParams']) {
 			$allowedParams = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['allowedParams'], TRUE);

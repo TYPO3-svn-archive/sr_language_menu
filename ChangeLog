@@ -4,6 +4,7 @@
 	* Added feature #49170: Convert current language icon to png
 	* Added feature #49171: Change the extension icon for the standard Language icon
 	* Added feature #49172: Change default style of language selector
+	* Fixed bug #32047: Language menu uses wrong cHash
 
 2013-06-14  Stanislas Rolland  <typo3@sjbr.ca>
 
