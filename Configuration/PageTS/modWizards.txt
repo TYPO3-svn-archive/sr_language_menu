@@ -1,5 +1,5 @@
 mod.wizards.newContentElement.wizardItems.special.elements.srlanguagemenu_languagemenu {
-	icon = EXT:sr_language_menu/ext_icon.gif
+	icon = EXT:sr_language_menu/Resources/Public/Images/language.png
 	title = LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:pi1_title
 	description = LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:pi1_plus_wiz_description
 	tt_content_defValues {

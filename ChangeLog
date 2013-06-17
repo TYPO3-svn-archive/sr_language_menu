@@ -1,7 +1,8 @@
-2013-06-14  Stanislas Rolland  <typo3@sjbr.ca>
+2013-06-16  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Follow-up to feature #49074: Add "Upgrading to version 6.0" section to manual
 	* Added feature #49170: Convert current language icon to png
+	* Added feature #49171: Change the extension icon for the standard Language icon
 
 2013-06-14  Stanislas Rolland  <typo3@sjbr.ca>
 
