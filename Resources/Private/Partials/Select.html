@@ -5,9 +5,9 @@
 		<select id="sr_language_menu_select" title="{f:translate(key: 'select_language', extensionName: 'SrLanguageMenu')}" onchange="if (this.options[this.selectedIndex].value == '') return;top.location.replace(this.options[this.selectedIndex].value );">
 			<f:if condition="{settings.list.header}">
 				<option value ="">{f:translate(key:'select_language')}</option>
-			</f:if>
-			<f:if condition="{settings.list.separator}">
-				<option value ="">{settings.list.separator}</option>
+				<f:if condition="{settings.list.separator}">
+					<option value ="">{settings.list.separator}</option>
+				</f:if>
 			</f:if>
 			<f:for each="{options}" as="option">
 				<f:if condition="{option.uid} == 0">

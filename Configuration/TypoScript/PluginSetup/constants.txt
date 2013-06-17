@@ -40,7 +40,7 @@ plugin.tx_srlanguagemenu {
 	target = 
 
     # cat=plugin.tx_srlanguagemenu/enable/10; type=boolean; label= Add a header to the selection list: If enabled, when the layout is a selection list, a header will be added at the top of the list.
-	addSelectionListHeader = 1
+	addSelectionListHeader = 0
 
     # cat=plugin.tx_srlanguagemenu//09; type=string; label= Selection list separator: Separator between the selection list and its header, if the selection list header is enabled.
 	selectionListSeparator = ----------
