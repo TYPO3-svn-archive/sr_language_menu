@@ -15,6 +15,10 @@
 				<source>Choose a language</source>
 				<target>Sprache wählen</target>
 			</trans-unit>
+			<trans-unit id="translationNotAvailable" xml:space="preserve">
+				<source>This page is not available in %1$s</source>
+				<target>Diese Seite nicht vorhanden auf %1$s</target>
+			</trans-unit>
 			<trans-unit id="pi1_title" xml:space="preserve" approved="yes">
 				<source>Language Selection</source>
 				<target>Sprachauswahl</target>

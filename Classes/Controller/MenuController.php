@@ -205,6 +205,14 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 			// Set availability of overlay
 			$option['isAvailable'] = in_array($option['uid'], $availableOverlays);
+			$option['notAvailableTitle'] = $option['title'];
+			if (!$option['isAvailable']) {
+				// Switch localization target language
+				\SJBR\SrLanguageMenu\Utility\LocalizationUtility::setAlternateLanguage($option['combinedIsoCode'], $this->extensionName);
+				$option['notAvailableTitle'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('translationNotAvailable', $this->extensionName, array($systemLanguage->getIsoLanguage()->getLocalName()));
+				// Restore configured localization target language
+				\SJBR\SrLanguageMenu\Utility\LocalizationUtility::restoreConfiguredLanguage($this->extensionName);
+			}
 
 			// Add configured external url for missing overlay record
 			if ($this->settings['useExternalUrl'][$option['combinedIsoCode']] || is_array($this->settings['useExternalUrl'][$option['combinedIsoCode']])) {
