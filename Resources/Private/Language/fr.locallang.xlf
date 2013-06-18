@@ -83,6 +83,34 @@
 				<source>Language Selection</source>
 				<target>Choix de langue</target>
 			</trans-unit>
+			<trans-unit id="update.upgradeTo6" xml:space="preserve">
+				<source>Upgrade to version 6.0</source>
+				<target>Migration à la version 6.0</target>
+			</trans-unit>
+			<trans-unit id="update.warning" xml:space="preserve">
+				<source>Warning!</source>
+				<target>Avertissement!</target>
+			</trans-unit>
+			<trans-unit id="update.changesToDatabase" xml:space="preserve">
+				<source>This script will make changes to the database that will not work with versions of the extension lower than 6.0.</source>
+				<target>Ce script apportera à la base de données des modifications qui ne fonctionneront pas avec les versions de cette extension antérieures à la version 6.0.</target>
+			</trans-unit>
+			<trans-unit id="update.update" xml:space="preserve">
+				<source>Update</source>
+				<target>Mettre à jour</target>
+			</trans-unit>
+			<trans-unit id="update.elementsUpdated" xml:space="preserve">
+				<source>%1$d language menu elements were updated.</source>
+				<target>%1$d éléments de contenu de type "Choix de langue" ont été mis à jour.</target>
+			</trans-unit>
+			<trans-unit id="update.templatesUpdated" xml:space="preserve">
+				<source>%1$d TypoScript templates were updated. Please verify the plugin configuration. You may need to move array _LOCAL_LANG from plugin.tx_srlanguagemenu.settings to plugin.tx_srlanguagemenu.</source>
+				<target>%1$d gabarits TypoScript ont été mis à jour. Veuillez vérifier la configuration du greffon. Il est possible que vous ayez à déplacer le tableau _LOCAL_LANG depuis plugin.tx_srlanguagemenu.settings vers plugin.tx_srlanguagemenu.</target>
+			</trans-unit>
+			<trans-unit id="update.pleaseRead" xml:space="preserve">
+				<source>Please read the manual for more information regarding the upgrade to version 6.0 of this extension.</source>
+				<target>Vous trouverez dans le manuel plus d'informations concernant la migration à la version 6.0 de cette extension.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

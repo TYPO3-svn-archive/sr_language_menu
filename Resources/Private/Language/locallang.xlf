@@ -72,6 +72,27 @@
 			<trans-unit id="settings.languageTitle.I.3" xml:space="preserve">
 				<source>Language and country ISO codes</source>
 			</trans-unit>
+			<trans-unit id="update.upgradeTo6" xml:space="preserve">
+				<source>Upgrade to version 6.0</source>
+			</trans-unit>
+			<trans-unit id="update.warning" xml:space="preserve">
+				<source>Warning!</source>
+			</trans-unit>
+			<trans-unit id="update.changesToDatabase" xml:space="preserve">
+				<source>This script will make changes to the database that will not work with versions of the extension lower than 6.0.</source>
+			</trans-unit>
+			<trans-unit id="update.update" xml:space="preserve">
+				<source>Update</source>
+			</trans-unit>
+			<trans-unit id="update.elementsUpdated" xml:space="preserve">
+				<source>%1$d language menu elements were updated.</source>
+			</trans-unit>
+			<trans-unit id="update.templatesUpdated" xml:space="preserve">
+				<source>%1$d TypoScript templates were updated. Please verify the plugin configuration. You may need to move array _LOCAL_LANG from plugin.tx_srlanguagemenu.settings to plugin.tx_srlanguagemenu.</source>
+			</trans-unit>
+			<trans-unit id="update.pleaseRead" xml:space="preserve">
+				<source>Please read the manual for more information regarding the upgrade to version 6.0 of this extension.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

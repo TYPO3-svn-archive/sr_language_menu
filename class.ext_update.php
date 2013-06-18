@@ -1,4 +1,6 @@
 <?php
+use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /***************************************************************
 *  Copyright notice
 *
@@ -32,10 +34,20 @@ class ext_update {
 	 * @return string  HTML
 	 */
 	public function main() {
-		$messages = array();	
-		$messages[] = $this->updatePluginInstances();
-		$messages[] = $this->updateTsTemplates();
-		return implode('<br /><br />', $messages);
+		$content = array();
+		$content[] = '<h3>' . LocalizationUtility::translate('update.upgradeTo6', 'SrLanguageMenu') . '</h3>';
+		if (GeneralUtility::_GP('proceed')) {	
+			$content[] = $this->updatePluginInstances();
+			$content[] = $this->updateTsTemplates();
+			$content[] = '<p>' . LocalizationUtility::translate('update.pleaseRead', 'SrLanguageMenu') . '</p>';
+		} else {
+			$linkThisScript = GeneralUtility::linkThisScript();
+			$content[] = '<form name="sr_language_menu_ext_update_form" action="' . $linkThisScript . '" method="post">';
+			$content[] = '<p><strong>' . LocalizationUtility::translate('update.warning', 'SrLanguageMenu') . '</strong><br />' . LocalizationUtility::translate('update.changesToDatabase', 'SrLanguageMenu') . '</p>';
+			$content[] = '<input type="submit" name="proceed" value="' . LocalizationUtility::translate('update.update', 'SrLanguageMenu') . '"  onclick="this.form.action=\'' . GeneralUtility::slashJS($linkThisScript) . '\';submit();" />';
+			$content[]= '</form>';
+		}
+		return implode(LF, $content);
 	}
 
 	/**
@@ -89,8 +101,8 @@ class ext_update {
 			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tt_content', 'uid=' . intval($row['uid']), $update);
 		}
 
-		$message = count($pluginInstances) . ' language menu elements were updated.';
-		return $message;
+		$message = LocalizationUtility::translate('update.elementsUpdated', 'SrLanguageMenu', array(count($pluginInstances)));
+		return '<p>' . $message . '</p>';
 	}
 
 	/**
@@ -105,17 +117,19 @@ class ext_update {
 			'sys_template',
 			'1=1'
 		);
-
+		$count = 0;
 		foreach ($tsTemplates as $row) {
-			$update = array(
-                    		'constants' => str_replace('tx_srlanguagemenu_pi1', 'tx_srlanguagemenu', $row['constants']),
-                    		'config' => str_replace('plugin.tx_srlanguagemenu_pi1', 'plugin.tx_srlanguagemenu.settings', $row['config'])
-			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_template', 'uid=' . intval($row['uid']), $update);
+			if (strstr($row['constants'], 'tx_srlanguagemenu_pi1') !== FALSE || strstr($row['config'], 'tx_srlanguagemenu_pi1') !== FALSE) {
+				$update = array(
+					'constants' => str_replace('tx_srlanguagemenu_pi1', 'tx_srlanguagemenu', $row['constants']),
+					'config' => str_replace('plugin.tx_srlanguagemenu_pi1', 'plugin.tx_srlanguagemenu.settings', $row['config'])
+				);
+				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_template', 'uid=' . intval($row['uid']), $update);
+				$count++;
+			}
 		}
-
-		$message = count($tsTemplates) . ' TypoScript templates were updated. Please verify the plugin configuration. You may need to move array _LOCAL_LANG from plugin.tx_srlanguagemenu.settings to plugin.tx_srlanguagemenu.';
-		return $message;
+		$message = LocalizationUtility::translate('update.templatesUpdated', 'SrLanguageMenu', array($count));
+		return '<p>' . $message . '</p>';
 	}
 
 	public function access() {
