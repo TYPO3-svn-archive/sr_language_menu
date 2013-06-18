@@ -163,7 +163,10 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		// Add default language
 		$availableOverlays[] = 0;
 		foreach ($pageLanguageOverlays as $pageLanguageOverlay) {
-			$availableOverlays[] = $pageLanguageOverlay->getLanguage()->getUid();
+			// The overlay may refer to a deleted Website language
+			if (is_object($pageLanguageOverlay->getLanguage())) {
+				$availableOverlays[] = $pageLanguageOverlay->getLanguage()->getUid();
+			}
 		}
 		
 		// Do not show menu if hideIfNoAltLanguages is set and there are no alternate languages
