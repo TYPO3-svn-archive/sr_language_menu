@@ -4,6 +4,7 @@
 	* Update manual
 	* Follow-up to feature #49172: Change default style of language selector
 	* Follow-up to feature #49074: Improve and localize the update script dialog
+	* Fixed bug #10233: Hungarian translation bug
 
 2013-06-16  Stanislas Rolland  <typo3@sjbr.ca>
 

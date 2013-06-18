@@ -5,15 +5,15 @@
 		<body>
 			<trans-unit id="select_language" xml:space="preserve" approved="yes">
 				<source>Choose a language</source>
-				<target>Nyelv véllasztása</target>
+				<target>Nyelv választása</target>
 			</trans-unit>
 			<trans-unit id="form_fieldset_legend" xml:space="preserve" approved="yes">
 				<source>Choose a language</source>
-				<target>Nyelv véllasztása</target>
+				<target>Nyelv választása</target>
 			</trans-unit>
 			<trans-unit id="form_select_label" xml:space="preserve" approved="yes">
 				<source>Choose a language</source>
-				<target>Nyelv véllasztása</target>
+				<target>Nyelv választása</target>
 			</trans-unit>
 			<trans-unit id="pi1_title" xml:space="preserve" approved="yes">
 				<source>Language Selection</source>
