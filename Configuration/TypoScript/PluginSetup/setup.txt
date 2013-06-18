@@ -30,6 +30,7 @@ plugin.tx_srlanguagemenu {
 		list.separator =  {$plugin.tx_srlanguagemenu.selectionListSeparator}
 		list.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
 		list.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
+		list.onChangeAttribute = {$plugin.tx_srlanguagemenu.onChangeAttribute}
 
 		links.header = {$plugin.tx_srlanguagemenu.addLinksListHeader}
 		links.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}

@@ -260,6 +260,16 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	}
 
 	/**
+	 * Process redirection request
+	 *
+	 * @param string $uri: uri to redirect to
+	 * @return string empty string
+	 */
+	public function redirectAction($uri) {
+		$this->redirectToUri($uri);
+	}
+
+	/**
 	 * Reviews and adjusts plugin settings
 	 *
 	 * @return void

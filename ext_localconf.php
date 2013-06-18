@@ -20,7 +20,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\CMS\Extbase\Persistence\Gen
 	// An array holding the controller-action-combinations that are accessible
 	// The first controller and its first action will be the default
 	array (
-		'Menu' => 'index',
+		'Menu' => 'index,redirect',
 	),
 	// An array of non-cachable controller-action-combinations (they must already be enabled)
 	array(

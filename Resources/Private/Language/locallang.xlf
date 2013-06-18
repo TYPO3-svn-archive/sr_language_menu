@@ -12,6 +12,9 @@
 			<trans-unit id="form_select_label" xml:space="preserve">
 				<source>Choose a language</source>
 			</trans-unit>
+			<trans-unit id="form_submit" xml:space="preserve">
+				<source>Go</source>
+			</trans-unit>
 			<trans-unit id="translationNotAvailable" xml:space="preserve">
 				<source>This page is not available in %1$s</source>
 			</trans-unit>

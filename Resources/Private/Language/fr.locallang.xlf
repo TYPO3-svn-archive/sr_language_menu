@@ -15,6 +15,10 @@
 				<source>Choose a language</source>
 				<target>Choisissez une langue</target>
 			</trans-unit>
+			<trans-unit id="form_submit" xml:space="preserve">
+				<source>Go</source>
+				<target>Aller</target>
+			</trans-unit>
 			<trans-unit id="translationNotAvailable" xml:space="preserve">
 				<source>This page is not available in %1$s</source>
 				<target>Cette page n'est pas disponible en %1$s</target>
