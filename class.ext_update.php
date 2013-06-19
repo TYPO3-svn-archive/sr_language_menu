@@ -77,6 +77,9 @@ class ext_update {
                 <field index="settings.languages">
                     <value index="vDEF">' . $row['tx_srlanguagemenu_languages'] . '</value>
                 </field>
+                <field index="settings.positionOfDefaultLanguage">
+                    <value index="vDEF">0</value>
+                </field>
                 <field index="settings.languageTitle">
                     <value index="vDEF">0</value>
                 </field>

@@ -9,7 +9,6 @@ plugin.tx_srlanguagemenu {
 		defaultLanguageISOCode = {$plugin.tx_srlanguagemenu.defaultLanguageISOCode}
 		defaultCountryISOCode = {$plugin.tx_srlanguagemenu.defaultCountryISOCode}
 		languagesUidsList = {$plugin.tx_srlanguagemenu.languagesUidsList}
-		languages = {$plugin.tx_srlanguagemenu.languagesUidsList}
 
 		hideIfNoAltLanguages = {$plugin.tx_srlanguagemenu.hideIfNoAltLanguages}
 

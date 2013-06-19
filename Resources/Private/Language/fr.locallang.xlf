@@ -39,6 +39,10 @@
 				<source>Languages to select from:</source>
 				<target>Langues qui peuvent être choisies:</target>
 			</trans-unit>
+			<trans-unit id="settings.positionOfDefaultLanguage" xml:space="preserve">
+				<source>Position of default language (starting at 0):</source>
+				<target>Position de la langue par défaut (débutant à 0):</target>
+			</trans-unit>
 			<trans-unit id="settings.layout.I.0" xml:space="preserve" approved="yes">
 				<source>Flags</source>
 				<target>Drapeaux</target>

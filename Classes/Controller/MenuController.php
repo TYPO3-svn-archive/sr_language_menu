@@ -112,7 +112,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	 * Initialize the action when rendering as a widget
 	 * @return void
 	 */
-	public function initializeAction() {
+	public function initializeIndexAction() {
 		if (is_array($this->widgetConfiguration)) {
 			$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, $this->extensionName);
 			if (isset($this->widgetConfiguration['languages'])) {
@@ -176,6 +176,9 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		$options = array();
 		// If $this->settings['languages'] is not empty, the languages will be sorted in the order it specifies
 		$languages = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['languages'], TRUE);
+		if (!empty($languages) && !in_array(0, $languages)) {
+			array_unshift($languages, 0);
+		}
 		$index = 0;
 		foreach ($systemLanguages as $systemLanguage) {
 			$option = array(
@@ -233,14 +236,9 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			$option['isCurrent'] = ($option['uid'] == $GLOBALS['TSFE']->sys_language_uid);
 
 			// If $this->settings['languages'] is not empty, the languages will be sorted in the order it specifies
-			if ($option['isoCodeA2'] != $defaultLanguageISOCode || $option['countryIsoCodeA2'] != $defaultCountryISOCode) {
-				$index++;
-				$key = array_search($option['uid'], $languages);
-				$key = ($key !== FALSE) ? $key+1 : $index;
-				$options[$key] = $option;
-			} else {
-				$options[0] = $option;
-			}
+			$key = array_search($option['uid'], $languages);
+			$key = ($key !== FALSE) ? $key : count($languages) + $index++;
+			$options[$key] = $option;
 		}
 		ksort($options);
 
@@ -276,10 +274,19 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	 * @api
 	 */
 	protected function processSettings() {
-		// Backward compatibility settings
-		if (!isset($this->settings['languages'])) {
-			$this->settings['languages'] = $this->settings['languagesUidsList'];
+		// Set the list of language uid's
+		if (!$this->settings['languages']) {
+			// Take the list from TypoScript, if any
+			$this->settings['languages'] = strval($this->settings['languagesUidsList']);
+		} else {
+			// The list was set in the flexform
+			$languagesArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['languages'], TRUE);
+			$positionOfDefaultLanguage = min(intval($this->settings['positionOfDefaultLanguage']), count($languagesArray));
+			array_splice($languagesArray, $positionOfDefaultLanguage, 0, array('0'));
+			$this->settings['languages'] = implode(',', $languagesArray);
 		}
+
+		// Backward compatibility settings for language labels
 		if (!isset($this->settings['languageTitle']) || !in_array($this->settings['languageTitle'], array(0, 1, 2, 3))) {
 			if ($this->settings['useSysLanguageTitle']) {
 				$this->settings['languageTitle'] = 2;

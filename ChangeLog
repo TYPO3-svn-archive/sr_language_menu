@@ -2,6 +2,7 @@
 
 	* Fixed bug #49232: Page language overlay may refer to a deleted Website language
 	* Added feature #4707: Language Dropdown: Customizable, no onchange event, submit button
+	* Fixed bug #31963: Not able to set a position for the default language
 
 2013-06-17  Stanislas Rolland  <typo3@sjbr.ca>
 
