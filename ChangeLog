@@ -1,6 +1,7 @@
 2013-06-20  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Cleanup in ext_tables.php
+	* Follow-up to feature #49074: Incorrect paths set in class.ext_update.php
 
 2013-06-18  Stanislas Rolland  <typo3@sjbr.ca>
 

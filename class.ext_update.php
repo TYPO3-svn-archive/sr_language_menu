@@ -91,10 +91,10 @@ class ext_update {
                     <value index="vDEF">EXT:sr_language_menu/Resources/Private/Templates/</value>
                 </field>
                 <field index="view.partialRootPath">
-                    <value index="vDEF">EXT:sr_language_menu/Resources/Private/Templates/Partials</value>
+                    <value index="vDEF">EXT:sr_language_menu/Resources/Private/Partials/</value>
                 </field>
                 <field index="view.layoutRootPath">
-                    <value index="vDEF">EXT:sr_language_menu/Resources/Private/Templates/Layouts</value>
+                    <value index="vDEF">EXT:sr_language_menu/Resources/Private/Layouts/</value>
                 </field>
             </language>
         </sheet>
