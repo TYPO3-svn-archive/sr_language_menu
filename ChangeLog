@@ -1,3 +1,7 @@
+2013-06-20  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Cleanup in ext_tables.php
+
 2013-06-18  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fixed bug #49232: Page language overlay may refer to a deleted Website language

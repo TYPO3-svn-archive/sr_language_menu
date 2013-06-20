@@ -16,7 +16,7 @@ if (!defined ('TYPO3_MODE')) {
 	// A unique name of the plugin in UpperCamelCase
 	'LanguageMenu',
 	// A title shown in the backend dropdown field
-	'LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xml:pi1_title'
+	'LLL:EXT:sr_language_menu/Resources/Private/Language/locallang.xlf:pi1_title'
 	//'Language selection menu'
 );
 if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 6001000) {
