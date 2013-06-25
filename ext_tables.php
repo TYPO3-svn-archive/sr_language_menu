@@ -52,7 +52,7 @@ $tempColumns = Array (
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $tempColumns, 1);
 
 $pluginSignature = strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY)) . '_languagemenu';
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/form.xml', $pluginSignature);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('*', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/form.xml', $pluginSignature);
 
 $GLOBALS['TCA']['tt_content']['types'][$pluginSignature]['showitem'] = '--palette--;LLL:EXT:cms/locallang_ttc.xml:palette.general;general';
 $GLOBALS['TCA']['tt_content']['types'][$pluginSignature]['showitem'] .= ', --palette--;LLL:EXT:cms/locallang_ttc.xml:palette.headers;headers';

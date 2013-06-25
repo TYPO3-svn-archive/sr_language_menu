@@ -60,12 +60,13 @@ class ext_update {
 		$pluginInstances = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'*',
 			'tt_content',
-			'CType = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr('tx_srlanguagemenu_pi1', 'tt_content')
+			'CType = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr('sr_language_menu_pi1', 'tt_content')
 		);
 
 		foreach ($pluginInstances as $row) {
 			$update = array(
                     		'CType' => 'srlanguagemenu_languagemenu',
+                    		'list_type' => '',
                     		'pi_flexform' => '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3FlexForms>
     <data>
@@ -123,10 +124,10 @@ class ext_update {
 		$count = 0;
 		foreach ($tsTemplates as $row) {
 			if (strstr($row['constants'], 'tx_srlanguagemenu_pi1') !== FALSE || strstr($row['config'], 'tx_srlanguagemenu_pi1') !== FALSE) {
-				$update = array(
-					'constants' => str_replace('tx_srlanguagemenu_pi1', 'tx_srlanguagemenu', $row['constants']),
-					'config' => str_replace('plugin.tx_srlanguagemenu_pi1', 'plugin.tx_srlanguagemenu.settings', $row['config'])
-				);
+				$update = array();
+				$update['constants'] = str_replace('tx_srlanguagemenu_pi1', 'tx_srlanguagemenu', $row['constants']);
+				$update['config'] = str_replace('$plugin.tx_srlanguagemenu_pi1', '$plugin.tx_srlanguagemenu', $row['config']);
+				$update['config'] = str_replace('plugin.tx_srlanguagemenu_pi1', 'plugin.tx_srlanguagemenu.settings', $update['config']);
 				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_template', 'uid=' . intval($row['uid']), $update);
 				$count++;
 			}
