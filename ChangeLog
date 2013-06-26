@@ -1,3 +1,7 @@
+2013-06-26  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Set version to 6.0.0
+
 2013-06-25  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Fixed bug #49403: Incorrect update to TypoScript templates by ext_update.php

@@ -1,16 +1,16 @@
 <?php
 
-########################################################################
-# Extension Manager/Repository config file for ext "sr_language_menu".
-#
-# Auto generated 23-02-2010 23:17
-#
-# Manual updates:
-# Only the data in the array - everything else is removed by next
-# writing. "version" and "dependencies" must not be touched!
-########################################################################
+/***************************************************************
+ * Extension Manager/Repository config file for ext "sr_language_menu".
+ *
+ * Auto generated 26-06-2013 13:42
+ *
+ * Manual updates:
+ * Only the data in the array - everything else is removed by next
+ * writing. "version" and "dependencies" must not be touched!
+ ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = array (
 	'title' => 'Language Selection',
 	'description' => 'A plugin to display a list of languages to select from. Clicking on a language links to the corresponding version of the page.',
 	'category' => 'plugin',
@@ -30,15 +30,19 @@ $EM_CONF[$_EXTKEY] = array(
 	'author_company' => 'SJBR',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
-	'constraints' => array(
-		'depends' => array(
+	'constraints' => 
+	array (
+		'depends' => 
+		array (
 			'php' => '5.3.0-0.0.0',
 			'typo3' => '6.0.6-6.1.99',
 			'static_info_tables' => '6.0.4-6.1.99',
 		),
-		'conflicts' => array(
+		'conflicts' => 
+		array (
 		),
-		'suggests' => array(
+		'suggests' => 
+		array (
 		),
 	),
 	'_md5_values_when_last_written' => '',
