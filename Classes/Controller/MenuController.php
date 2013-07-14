@@ -183,8 +183,8 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		foreach ($systemLanguages as $systemLanguage) {
 			$option = array(
 				'uid' => $systemLanguage->getUid() ? $systemLanguage->getUid() : 0,
-				'isoCodeA2' => $systemLanguage->getIsoLanguage()->getIsoCodeA2(),
-				'countryIsoCodeA2' => $systemLanguage->getIsoLanguage()->getCountryIsoCodeA2()
+				'isoCodeA2' => is_object($systemLanguage->getIsoLanguage()) ? $systemLanguage->getIsoLanguage()->getIsoCodeA2() : '',
+				'countryIsoCodeA2' => is_object($systemLanguage->getIsoLanguage()) ? $systemLanguage->getIsoLanguage()->getCountryIsoCodeA2(): ''
 			);
 			// Set combined ISO code
 			$option['combinedIsoCode'] = strtolower($option['isoCodeA2']) . ($option['countryIsoCodeA2'] ? '_' . $option['countryIsoCodeA2'] : '');
@@ -192,10 +192,10 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			// Set the label
 			switch ($this->settings['languageTitle']) {
 				case '0':
-					$option['title'] = $systemLanguage->getIsoLanguage()->getNameLocalized();
+					$option['title'] = is_object($systemLanguage->getIsoLanguage()) ? $systemLanguage->getIsoLanguage()->getNameLocalized() : '';
 					break;
 				case '1':
-					$option['title'] = $systemLanguage->getIsoLanguage()->getLocalName();
+					$option['title'] = is_object($systemLanguage->getIsoLanguage()) ? $systemLanguage->getIsoLanguage()->getLocalName() : '';
 					break;
 				case '2':
 					$option['title'] = $systemLanguage->getTitle();
@@ -203,6 +203,9 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				case '3':
 					$option['title'] = strtoupper($option['combinedIsoCode']);
 					break;
+			}
+			if (!$option['title']) {
+				$option['title'] = $systemLanguage->getTitle();
 			}
 			
 			// Set paths to flags
@@ -215,7 +218,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			if (!$option['isAvailable']) {
 				// Switch localization target language
 				\SJBR\SrLanguageMenu\Utility\LocalizationUtility::setAlternateLanguage($option['combinedIsoCode'], $this->extensionName);
-				$option['notAvailableTitle'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('translationNotAvailable', $this->extensionName, array($systemLanguage->getIsoLanguage()->getLocalName()));
+				$option['notAvailableTitle'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('translationNotAvailable', $this->extensionName, array($systemLanguage->getIsoLanguage() ? $systemLanguage->getIsoLanguage()->getLocalName() : $option['title']));
 				// Restore configured localization target language
 				\SJBR\SrLanguageMenu\Utility\LocalizationUtility::restoreConfiguredLanguage($this->extensionName);
 			}

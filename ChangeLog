@@ -1,3 +1,7 @@
+2013-07-14  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Fixed bug #49848: Fatal error: __clone method called on non-object
+
 2013-06-26  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Set version to 6.0.0

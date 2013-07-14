@@ -36,7 +36,7 @@ class SystemLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/**
 	 * @var \SJBR\StaticInfoTables\Domain\Model\Language
 	 */
-	protected $isoLanguage;
+	protected $isoLanguage = NULL;
 
 	/**
 	 * Sets the language name
@@ -73,7 +73,11 @@ class SystemLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @return \SJBR\StaticInfoTables\Domain\Model\Language
 	 */
 	public function getIsoLanguage() {
-		return clone $this->isoLanguage;
+		if ($this->isoLanguage !== NULL) {
+			return clone $this->isoLanguage;
+		} else {
+			return $this->isoLanguage;
+		}
 	}
 }
 ?>
