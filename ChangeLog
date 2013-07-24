@@ -1,7 +1,8 @@
 2013-07-24  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Revert fix to issue #49077: Extend Extbase class until issue #47192 is fixed in core
-	* Require TYPO3 6.0.7
+	* Require TYPO3 6.0.7 (or 6.1.2)
+	* Set version to 6.0.2
 
 2013-07-18  Stanislas Rolland  <typo3@sjbr.ca>
 
