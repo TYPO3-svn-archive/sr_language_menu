@@ -47,7 +47,7 @@
 	height: 13px;
 	width: 20px;
 }
-.tx-srlanguagemenu .tx-srlanguagemenu-flag-unlinked {
+.tx-srlanguagemenu img.tx-srlanguagemenu-flag-unlinked {
 	filter: grayscale(100%); /* Current draft standard */
 	-webkit-filter: grayscale(100%); /* New WebKit */
 	-moz-filter: grayscale(100%);

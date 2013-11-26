@@ -337,6 +337,10 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			// Add disallowed parameters to parameters to remove
 			$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
 		}
+		
+		// Identify IE > 9
+		$browserInfo = \TYPO3\CMS\Core\Utility\ClientUtility::getBrowserInfo(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_USER_AGENT'));
+		$this->settings['isIeGreaterThan9'] =  $browserInfo['browser'] == 'msie' && intval($browserInfo['version']) > 9 ? 1 : 0;
 	}
 
 	/**

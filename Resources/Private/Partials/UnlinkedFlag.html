@@ -1,3 +1,18 @@
 <f:comment>Rendering of unlinked flag</f:comment>
-<img src="{f:uri.image(src: '{option.flagFile}')}" title="{option.notAvailableTitle}" alt="{option.title}" class="tx-srlanguagemenu-flag-unlinked" />
+<f:if condition="{settings.isIeGreaterThan9}">
+	<f:then>
+		<svg xmlns="http://www.w3.org/2000/svg" id="svgroot" viewBox="0 0 20 13" class="tx-srlanguagemenu-flag-unlinked">
+			<defs>
+				<filter id="filtersPicture">
+					<feComposite result="inputTo_38" in="SourceGraphic" in2="SourceGraphic" operator="arithmetic" k1="0" k2="1" k3="0" k4="0" />
+					<feColorMatrix id="filter_38" type="saturate" values="0" data-filterid="38" />
+				</filter>
+			</defs>
+			<image filter="url('#filtersPicture')" x="0" y="0" width="20" height="13" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{f:uri.image(src: '{option.flagFile}')}" title="{option.notAvailableTitle}" alt="{option.title}" />
+		</svg>
+	</f:then>
+	<f:else>
+		<img src="{f:uri.image(src: '{option.flagFile}')}" title="{option.notAvailableTitle}" alt="{option.title}" class="tx-srlanguagemenu-flag-unlinked" />
+	</f:else>
+</f:if>
 <f:if condition="{settings.showLinkWithFlag}">{option.notAvailableTitle}</f:if>
