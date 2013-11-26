@@ -1,3 +1,7 @@
+2013-11-26  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves issue #51293: Extend Extbase class until issue #47192 is fixed in core (related issue #49077)
+
 2013-07-24  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Revert fix to issue #49077: Extend Extbase class until issue #47192 is fixed in core

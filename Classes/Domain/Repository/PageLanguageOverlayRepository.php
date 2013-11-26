@@ -39,6 +39,7 @@ class PageLanguageOverlayRepository extends \TYPO3\CMS\Extbase\Persistence\Repos
 		$querySettings = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings');
 		$querySettings->setRespectStoragePage(FALSE);
 		$querySettings->setRespectSysLanguage(FALSE);
+		$querySettings->setPreventLanguageOverlay(TRUE);
 		$this->setDefaultQuerySettings($querySettings);
 	}
 
