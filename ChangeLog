@@ -2,6 +2,7 @@
 
 	* Resolves issue #54010: Missing parameter in constructor of PageLanguageOverlayRepository in TYPO3 6.2
 	* Enable in TYPO3 6.2
+	* Update version to 6.0.3
 
 2013-11-26  Stanislas Rolland  <typo3@sjbr.ca>
 

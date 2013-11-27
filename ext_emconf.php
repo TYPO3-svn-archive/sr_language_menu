@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "sr_language_menu".
  *
- * Auto generated 24-07-2013 10:32
+ * Auto generated 27-11-2013 16:12
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'A plugin to display a list of languages to select from. Clicking on a language links to the corresponding version of the page.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '6.0.2',
+	'version' => '6.0.3',
 	'priority' => '',
 	'loadOrder' => '',
 	'module' => '',
