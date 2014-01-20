@@ -1,3 +1,7 @@
+2014-01-20  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves issue #55036: addLinksListHeader not working
+
 2013-11-27  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves issue #54010: Missing parameter in constructor of PageLanguageOverlayRepository in TYPO3 6.2

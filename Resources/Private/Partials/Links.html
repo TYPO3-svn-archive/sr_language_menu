@@ -1,5 +1,5 @@
 <div class="tx-srlanguagemenu tx-srlanguagemenu-links">
-	<f:if condition="settings.links.header">
+	<f:if condition="{settings.links.header}">
 		<div class="links-list-header">{f:translate(key:'select_language')}</div>
 	</f:if>
 	<f:for each="{options}" iteration="optionIterator" as="option">
