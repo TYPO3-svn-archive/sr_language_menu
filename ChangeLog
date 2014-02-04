@@ -1,3 +1,7 @@
+2014-02-04  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Escape backslashes in class names in ext_localconf.php
+
 2014-01-20  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves issue #55036: addLinksListHeader not working
