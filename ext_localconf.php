@@ -25,11 +25,8 @@ if (!defined ('TYPO3_MODE')) {
 );
 
 // Exclassing Extbase to prevent language overlays
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings'] = array(
-	'className' => 'SJBR\\SrLanguageMenu\\Xclass\\Extbase\\Persistence\\Generic\\Typo3QuerySettings'
-);
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbBackend'] = array(
-	'className' => 'SJBR\\SrLanguageMenu\\Xclass\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbBackend'
+	'className' => 'SJBR\\SrLanguageMenu\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbBackend'
 );
 
 ?>

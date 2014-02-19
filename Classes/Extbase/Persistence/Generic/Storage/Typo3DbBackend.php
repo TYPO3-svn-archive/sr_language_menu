@@ -1,5 +1,5 @@
 <?php
-namespace SJBR\SrLanguageMenu\Xclass\Extbase\Persistence\Generic\Storage;
+namespace SJBR\SrLanguageMenu\Extbase\Persistence\Generic\Storage;
 
 /***************************************************************
  *  Copyright notice
@@ -67,7 +67,7 @@ class Typo3DbBackend extends \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo
 			$overlayedRows = array();
 			foreach ($rows as $row) {
 				// If current row is a translation select its parent
-				if (!$querySettings->getPreventLanguageOverlay()
+				if (!(method_exists($querySettings, 'getPreventLanguageOverlay' ) && $querySettings->getPreventLanguageOverlay())
 					&& isset($tableName) && isset($GLOBALS['TCA'][$tableName])
 					&& isset($GLOBALS['TCA'][$tableName]['ctrl']['languageField'])
 					&& isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'])
@@ -87,7 +87,7 @@ class Typo3DbBackend extends \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo
 				if ($pageRepository->versioningPreview && isset($row['_ORIG_uid'])) {
 					$row['uid'] = $row['_ORIG_uid'];
 				}
-				if (!$querySettings->getPreventLanguageOverlay()) {
+				if (!(method_exists($querySettings, 'getPreventLanguageOverlay' ) && $querySettings->getPreventLanguageOverlay())) {
 					if ($tableName == 'pages') {
 						$row = $pageRepository->getPageOverlay($row, $querySettings->getSysLanguageUid());
 					} elseif (isset($GLOBALS['TCA'][$tableName]['ctrl']['languageField'])

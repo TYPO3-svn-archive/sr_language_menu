@@ -1,3 +1,7 @@
+2014-02-18  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves 53686: Undefined method in TYPO3 6.1 when extension yag is installed
+
 2014-02-04  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Escape backslashes in class names in ext_localconf.php

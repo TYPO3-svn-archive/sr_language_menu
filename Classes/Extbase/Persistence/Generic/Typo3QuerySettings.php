@@ -1,5 +1,5 @@
 <?php
-namespace SJBR\SrLanguageMenu\Xclass\Extbase\Persistence\Generic;
+namespace SJBR\SrLanguageMenu\Extbase\Persistence\Generic;
 
 /***************************************************************
  *  Copyright notice
