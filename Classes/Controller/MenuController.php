@@ -151,7 +151,11 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				$defaultIsoLanguage = $this->languageRepository->findOneByIsoCodes($defaultLanguageISOCode);
 			}
 		}
-		$defaultSystemLanguage = $this->objectManager->create('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
+		if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 6001000) {
+			$defaultSystemLanguage = $this->objectManager->create('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
+		} else {
+			$defaultSystemLanguage = $this->objectManager->get('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
+		}
 		$defaultSystemLanguage->setIsoLanguage($defaultIsoLanguage);
 		$defaultSystemLanguage->setTitle($defaultSystemLanguage->getIsoLanguage()->getNameLocalized());
 		array_unshift($systemLanguages, $defaultSystemLanguage);

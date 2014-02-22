@@ -89,13 +89,21 @@ class Typo3DbBackend extends \TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo
 				}
 				if (!(method_exists($querySettings, 'getPreventLanguageOverlay' ) && $querySettings->getPreventLanguageOverlay())) {
 					if ($tableName == 'pages') {
-						$row = $pageRepository->getPageOverlay($row, $querySettings->getSysLanguageUid());
+						if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 6002000) {
+							$row = $pageRepository->getPageOverlay($row, $querySettings->getSysLanguageUid());
+						} else {
+							$row = $pageRepository->getPageOverlay($row, $querySettings->getLanguageUid());
+						}
 					} elseif (isset($GLOBALS['TCA'][$tableName]['ctrl']['languageField'])
 						&& $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] !== ''
 					) {
 						if (in_array($row[$GLOBALS['TCA'][$tableName]['ctrl']['languageField']], array(-1, 0))) {
 							$overlayMode = $languageMode === 'strict' ? 'hideNonTranslated' : '';
-							$row = $pageRepository->getRecordOverlay($tableName, $row, $querySettings->getSysLanguageUid(), $overlayMode);
+							if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 6002000) {
+								$row = $pageRepository->getRecordOverlay($tableName, $row, $querySettings->getSysLanguageUid(), $overlayMode);
+							} else {
+								$row = $pageRepository->getRecordOverlay($tableName, $row, $querySettings->getLanguageUid(), $overlayMode);
+							}
 						}
 					}
 				}
