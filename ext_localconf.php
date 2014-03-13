@@ -24,9 +24,4 @@ if (!defined ('TYPO3_MODE')) {
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
-// Exclassing Extbase to prevent language overlays
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbBackend'] = array(
-	'className' => 'SJBR\\SrLanguageMenu\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbBackend'
-);
-
 ?>
