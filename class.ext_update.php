@@ -57,10 +57,10 @@ class ext_update {
 	 */
 	protected function updatePluginInstances() {
 
-		$pluginInstances = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+		$pluginInstances = $this->getDatabaseConnection()->exec_SELECTgetRows(
 			'*',
 			'tt_content',
-			'CType = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr('sr_language_menu_pi1', 'tt_content')
+			'CType = ' . $this->getDatabaseConnection()->fullQuoteStr('sr_language_menu_pi1', 'tt_content')
 		);
 
 		foreach ($pluginInstances as $row) {
@@ -102,7 +102,7 @@ class ext_update {
     </data>
 </T3FlexForms>'
 			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tt_content', 'uid=' . intval($row['uid']), $update);
+			$this->getDatabaseConnection()->exec_UPDATEquery('tt_content', 'uid=' . intval($row['uid']), $update);
 		}
 
 		$message = LocalizationUtility::translate('update.elementsUpdated', 'SrLanguageMenu', array(count($pluginInstances)));
@@ -116,7 +116,7 @@ class ext_update {
 	 */
 	protected function updateTsTemplates() {
 
-		$tsTemplates = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+		$tsTemplates = $this->getDatabaseConnection()->exec_SELECTgetRows(
 			'*',
 			'sys_template',
 			'1=1'
@@ -128,7 +128,7 @@ class ext_update {
 				$update['constants'] = str_replace('tx_srlanguagemenu_pi1', 'tx_srlanguagemenu', $row['constants']);
 				$update['config'] = str_replace('$plugin.tx_srlanguagemenu_pi1', '$plugin.tx_srlanguagemenu', $row['config']);
 				$update['config'] = str_replace('plugin.tx_srlanguagemenu_pi1', 'plugin.tx_srlanguagemenu.settings', $update['config']);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_template', 'uid=' . intval($row['uid']), $update);
+				$this->getDatabaseConnection()->exec_UPDATEquery('sys_template', 'uid=' . intval($row['uid']), $update);
 				$count++;
 			}
 		}
@@ -138,6 +138,15 @@ class ext_update {
 
 	public function access() {
 		return TRUE;
+	}
+
+	/**
+	 * Returns an instance of the Database Connection object
+	 *
+	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+	 */
+	protected function getDatabaseConnection() {
+		return $GLOBALS['TYPO3_DB'];
 	}
 }
 ?>

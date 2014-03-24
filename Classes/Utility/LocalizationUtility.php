@@ -5,6 +5,7 @@ namespace SJBR\SrLanguageMenu\Utility;
  *  Copyright notice
  *
  *  (c) 2010-2013 Extbase Team (http://forge.typo3.org/projects/typo3v4-mvc)
+ *  (c) 2013-2014 Stanislas Rolland <typo3(arobas)sjbr.ca>
  *  Extbase is a backport of TYPO3 Flow. All credits go to the TYPO3 Flow team.
  *  All rights reserved
  *
@@ -51,8 +52,8 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
 		if (self::$configuredLanguage) {
 			self::restoreConfiguredLanguage($extensionName);
 		}
-		self::$configuredLanguage = $GLOBALS['TSFE']->config['config']['language'];
-		$GLOBALS['TSFE']->config['config']['language'] = $language;
+		self::$configuredLanguage = self::getFrontendObject()->config['config']['language'];
+		self::getFrontendObject()->config['config']['language'] = $language;
 		unset(parent::$LOCAL_LANG[$extensionName]);
 	}
 
@@ -64,11 +65,18 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
 	 */
 	static public function restoreConfiguredLanguage($extensionName) {
 		if (self::$configuredLanguage) {
-			$GLOBALS['TSFE']->config['config']['language'] = self::$configuredLanguage;
+			self::getFrontendObject()->config['config']['language'] = self::$configuredLanguage;
 			unset(parent::$LOCAL_LANG[$extensionName]);
 			self::$configuredLanguage = '';
 		}
 	}
-}
 
-?>
+	/**
+	 * Returns an instance of the Frontend object.
+	 *
+	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 */
+	static protected function getFrontendObject() {
+		return $GLOBALS['TSFE'];
+	}
+}

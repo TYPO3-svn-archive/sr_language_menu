@@ -1,30 +1,30 @@
 <?php
 namespace SJBR\SrLanguageMenu\Controller;
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2013 Stanislas Rolland <typo3(arobas)sjbr.ca>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*  A copy is found in the textfile GPL.txt and important notices to the license
-*  from the author is found in LICENSE.txt distributed with these scripts.
-*
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2013-2014 Stanislas Rolland <typo3(arobas)sjbr.ca>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *  A copy is found in the textfile GPL.txt and important notices to the license
+ *  from the author is found in LICENSE.txt distributed with these scripts.
+ *
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 /**
  * Controls the rendering of the language menu as a normal content element or as a Fluid widget
  */
@@ -161,7 +161,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		array_unshift($systemLanguages, $defaultSystemLanguage);
 
 		// Get the available page language overlays
-		$page = $this->pageRepository->findByUid($GLOBALS['TSFE']->id);
+		$page = $this->pageRepository->findByUid($this->getFrontendObject()->id);
 		$pageLanguageOverlays = $this->pageLanguageOverlayRepository->findByPage($page)->toArray();
 		$availableOverlays = array();
 		// Add default language
@@ -240,7 +240,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			}
 
 			// Set current language indicator
-			$option['isCurrent'] = ($option['uid'] == $GLOBALS['TSFE']->sys_language_uid);
+			$option['isCurrent'] = ($option['uid'] == $this->getFrontendObject()->sys_language_uid);
 
 			// If $this->settings['languages'] is not empty, the languages will be sorted in the order it specifies
 			$key = array_search($option['uid'], $languages);
@@ -251,7 +251,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 		// Show current language first, if configured
 		if ($this->settings['showCurrentFirst']) {
-			$key = array_search($GLOBALS['TSFE']->sys_language_uid, $languages);
+			$key = array_search($this->getFrontendObject()->sys_language_uid, $languages);
 			if ($key) {
 				$option = $options[$key];
 				unset($options[$key]);
@@ -322,11 +322,11 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		// Flags directory
 		$this->settings['flagsDirectory'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->extensionKey) . 'Resources/Public/Images/Flags/';
 		if ($this->settings['englishFlagFile']) {
-			$this->settings['flagsDirectory'] = dirname($GLOBALS['TSFE']->tmpl->getFileName(trim($this->settings['englishFlagFile']))) . '/';
+			$this->settings['flagsDirectory'] = dirname($this->getFrontendObject()->tmpl->getFileName(trim($this->settings['englishFlagFile']))) . '/';
 		}
 
 		// 'Hide default translation of page' configuration option
-		$this->settings['hideIfDefaultLanguage'] = \TYPO3\CMS\Core\Utility\GeneralUtility::hideIfDefaultLanguage($GLOBALS['TSFE']->page['l18n_cfg']);
+		$this->settings['hideIfDefaultLanguage'] = \TYPO3\CMS\Core\Utility\GeneralUtility::hideIfDefaultLanguage($this->getFrontendObject()->page['l18n_cfg']);
 
 		// Adjust parameters to remove
 		$this->settings['removeParams'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['removeParams'], TRUE);
@@ -336,7 +336,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		if ($this->settings['allowedParams']) {
 			$allowedParams = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['allowedParams'], TRUE);
 			$allowedParams = array_merge($allowedParams, array('L', 'id', 'type', 'MP'));
-			$allowedParams = array_merge($allowedParams, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $GLOBALS['TSFE']->config['config']['linkVars'], TRUE));
+			$allowedParams = array_merge($allowedParams, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->getFrontendObject()->config['config']['linkVars'], TRUE));
 			$disallowedParams = array_diff(array_keys($GLOBALS['HTTP_GET_VARS']), $allowedParams);
 			// Add disallowed parameters to parameters to remove
 			$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
@@ -379,6 +379,15 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		} else {
 			\TYPO3\CMS\Extbase\Mvc\Controller\ActionController::setViewConfiguration($view);
 		}
+	}
+
+	/**
+	 * Returns an instance of the Frontend object.
+	 *
+	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 */
+	protected function getFrontendObject() {
+		return $GLOBALS['TSFE'];
 	}
 }
 class_alias('SJBR\SrLanguageMenu\Controller\MenuController', 'Tx_SrLanguageMenu_Controller_MenuController');

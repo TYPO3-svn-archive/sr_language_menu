@@ -1,3 +1,7 @@
+2014-03-23  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Wrap frontend and database connection globals
+
 2014-03-13  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves 53686: Undefined method in TYPO3 6.1 when extension yag is installed
