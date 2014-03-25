@@ -1,3 +1,7 @@
+2014-03-25  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Cleanup in domain model
+
 2014-03-23  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Wrap frontend and database connection globals

@@ -3,7 +3,7 @@ namespace SJBR\SrLanguageMenu\Domain\Model;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2013 Stanislas Rolland <typo3(arobas)sjbr.ca>
+*  (c) 2013-2014 Stanislas Rolland <typo3(arobas)sjbr.ca>
 *
 *  All rights reserved
 *
@@ -63,7 +63,7 @@ class SystemLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 * @param \SJBR\StaticInfoTables\Domain\Model\Language $isoLanguage
 	 * @return void
 	 */
-	public function setIsoLanguage($isoLanguage) {
+	public function setIsoLanguage(\SJBR\StaticInfoTables\Domain\Model\Language $isoLanguage) {
 		$this->isoLanguage = $isoLanguage;
 	}
 
@@ -80,4 +80,3 @@ class SystemLanguage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 		}
 	}
 }
-?>

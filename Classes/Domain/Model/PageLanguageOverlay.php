@@ -3,7 +3,7 @@ namespace SJBR\SrLanguageMenu\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Stanislas Rolland <typo3(arobas)sjbr.ca>
+ *  (c) 2013-2014 Stanislas Rolland <typo3(arobas)sjbr.ca>
  *  
  *  All rights reserved
  *
@@ -45,7 +45,7 @@ class PageLanguageOverlay extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	/**
 	 * Sets the page
 	 *
-	 * @return \SJBR\SrLanguageMenu\Domain\Model\Page $page
+	 * @param \SJBR\SrLanguageMenu\Domain\Model\Page $page
 	 * @return void
 	 */
 	public function setPage(\SJBR\SrLanguageMenu\Domain\Model\Page $page) {
@@ -64,7 +64,7 @@ class PageLanguageOverlay extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	/**
 	 * Sets the language
 	 *
-	 * @return \SJBR\SrLanguageMenu\Domain\Model\SystemLanguage $language
+	 * @param \SJBR\SrLanguageMenu\Domain\Model\SystemLanguage $language
 	 * @return void
 	 */
 	public function setLanguage(\SJBR\SrLanguageMenu\Domain\Model\SystemLanguage $language) {
@@ -74,7 +74,7 @@ class PageLanguageOverlay extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	/**
 	 * Returns the language
 	 *
-	 * @return \SJBR\SrLanguageMenu\Domain\Model\SystemLanguage
+	 * @return SystemLanguage
 	 */
 	public function getLanguage() {
 		return $this->language;
