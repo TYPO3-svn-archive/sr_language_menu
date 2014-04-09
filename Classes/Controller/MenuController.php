@@ -161,15 +161,21 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		array_unshift($systemLanguages, $defaultSystemLanguage);
 
 		// Get the available page language overlays
-		$page = $this->pageRepository->findByUid($this->getFrontendObject()->id);
-		$pageLanguageOverlays = $this->pageLanguageOverlayRepository->findByPage($page)->toArray();
 		$availableOverlays = array();
 		// Add default language
 		$availableOverlays[] = 0;
-		foreach ($pageLanguageOverlays as $pageLanguageOverlay) {
-			// The overlay may refer to a deleted Website language
-			if (is_object($pageLanguageOverlay->getLanguage())) {
-				$availableOverlays[] = $pageLanguageOverlay->getLanguage()->getUid();
+		$pageUid = $this->getFrontendObject()->id;
+		// Beware of inaccessible page
+		if ($pageUid) {
+			$page = $this->pageRepository->findByUid($this->getFrontendObject()->id);
+			$pageLanguageOverlays = $this->pageLanguageOverlayRepository->findByPage($page)->toArray();
+			// Add default language
+			$availableOverlays[] = 0;
+			foreach ($pageLanguageOverlays as $pageLanguageOverlay) {
+				// The overlay may refer to a deleted Website language
+				if (is_object($pageLanguageOverlay->getLanguage())) {
+					$availableOverlays[] = $pageLanguageOverlay->getLanguage()->getUid();
+				}
 			}
 		}
 		
