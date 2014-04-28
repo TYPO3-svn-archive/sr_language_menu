@@ -164,7 +164,6 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		$availableOverlays = array();
 		// Add default language
 		$availableOverlays[] = 0;
-		$pageUid = $this->getFrontendObject()->id;
 		// Beware of inaccessible page
 		$page = $this->pageRepository->findByUid($this->getFrontendObject()->id);
 		if ($page instanceof \SJBR\SrLanguageMenu\Domain\Model\Page) {
