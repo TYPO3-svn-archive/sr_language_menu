@@ -1,3 +1,7 @@
+2014-05-01  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Correction to the manual
+
 2014-04-28  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Follow-up to beware of inaccessible page
@@ -17,7 +21,7 @@
 
 2014-03-13  Stanislas Rolland  <typo3@sjbr.ca>
 
-	* Resolves 53686: Undefined method in TYPO3 6.1 when extension yag is installed
+	* Resolves #53686: Undefined method in TYPO3 6.1 when extension yag is installed
 
 2014-02-22  Stanislas Rolland  <typo3@sjbr.ca>
 
@@ -25,7 +29,7 @@
 
 2014-02-18  Stanislas Rolland  <typo3@sjbr.ca>
 
-	* Resolves 53686: Undefined method in TYPO3 6.1 when extension yag is installed
+	* Resolves #53686: Undefined method in TYPO3 6.1 when extension yag is installed
 
 2014-02-04  Stanislas Rolland  <typo3@sjbr.ca>
 
