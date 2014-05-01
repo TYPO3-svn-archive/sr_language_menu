@@ -2,6 +2,7 @@
 
 	* Correction to the manual
 	* Resolves #58217: PHP Warning when using the widget multiple times on a page
+	* Correction to widget default settings
 
 2014-04-28  Stanislas Rolland  <typo3@sjbr.ca>
 

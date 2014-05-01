@@ -60,7 +60,7 @@ plugin.tx_srlanguagemenu {
 		    extensionName = SrLanguageMenu
 		    controller = Menu
 		    action = index
-		    settings =< tx_srlanguagemenu.settings
+		    settings =< plugin.tx_srlanguagemenu.settings
   		}
   	}
 }
