@@ -332,17 +332,19 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		$this->settings['hideIfDefaultLanguage'] = \TYPO3\CMS\Core\Utility\GeneralUtility::hideIfDefaultLanguage($this->getFrontendObject()->page['l18n_cfg']);
 
 		// Adjust parameters to remove
-		$this->settings['removeParams'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['removeParams'], TRUE);
-		// Add L and cHash to url parameters to remove
-		$this->settings['removeParams'] = array_merge($this->settings['removeParams'], array('L', 'cHash'));
-		// Add disallowed url query parameters
-		if ($this->settings['allowedParams']) {
-			$allowedParams = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['allowedParams'], TRUE);
-			$allowedParams = array_merge($allowedParams, array('L', 'id', 'type', 'MP'));
-			$allowedParams = array_merge($allowedParams, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->getFrontendObject()->config['config']['linkVars'], TRUE));
-			$disallowedParams = array_diff(array_keys($GLOBALS['HTTP_GET_VARS']), $allowedParams);
-			// Add disallowed parameters to parameters to remove
-			$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
+		if (!is_array($this->settings['removeParams'])) {
+			$this->settings['removeParams'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['removeParams'], TRUE);
+			// Add L and cHash to url parameters to remove
+			$this->settings['removeParams'] = array_merge($this->settings['removeParams'], array('L', 'cHash'));
+			// Add disallowed url query parameters
+			if ($this->settings['allowedParams']) {
+				$allowedParams = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['allowedParams'], TRUE);
+				$allowedParams = array_merge($allowedParams, array('L', 'id', 'type', 'MP'));
+				$allowedParams = array_merge($allowedParams, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->getFrontendObject()->config['config']['linkVars'], TRUE));
+				$disallowedParams = array_diff(array_keys($GLOBALS['HTTP_GET_VARS']), $allowedParams);
+				// Add disallowed parameters to parameters to remove
+				$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
+			}
 		}
 		
 		// Identify IE > 9

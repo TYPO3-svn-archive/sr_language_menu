@@ -1,6 +1,7 @@
 2014-05-01  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Correction to the manual
+	* Resolves #58217: PHP Warning when using the widget multiple times on a page
 
 2014-04-28  Stanislas Rolland  <typo3@sjbr.ca>
 
