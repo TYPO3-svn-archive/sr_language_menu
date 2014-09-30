@@ -1,3 +1,7 @@
+2014-09-29  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #58757: useExternalUrl doesn't work properly
+
 2014-05-01  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Correction to the manual

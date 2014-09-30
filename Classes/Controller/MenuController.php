@@ -233,7 +233,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			// Add configured external url for missing overlay record
 			if ($this->settings['useExternalUrl'][$option['combinedIsoCode']] || is_array($this->settings['useExternalUrl'][$option['combinedIsoCode']])) {
 				if ($option['isAvailable']) {
-					if ($this->settings['forceUseOfExternalUrl'] || $this->settings['useExternalUrl'][$option['combinedIsoCode']]['force']) {
+					if ($this->settings['forceUseOfExternalUrl'] || (is_array($this->settings['useExternalUrl'][$option['combinedIsoCode']]) && $this->settings['useExternalUrl'][$option['combinedIsoCode']]['force'])) {
 						$option['externalUrl'] = is_array($this->settings['useExternalUrl'][$option['combinedIsoCode']]) ? $this->settings['useExternalUrl'][$option['combinedIsoCode']]['_typoScriptNodeValue'] : $this->settings['useExternalUrl'][$option['combinedIsoCode']];
 					}
 				} else {
