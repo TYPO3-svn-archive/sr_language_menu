@@ -1,6 +1,7 @@
 2014-09-29  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves #58757: useExternalUrl doesn't work properly
+	* Resolves #61382: Missing alt attribute in image tag for language icon
 
 2014-05-01  Stanislas Rolland  <typo3@sjbr.ca>
 
