@@ -67,6 +67,7 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
 		if (self::$configuredLanguage) {
 			self::getFrontendObject()->config['config']['language'] = self::$configuredLanguage;
 			unset(parent::$LOCAL_LANG[$extensionName]);
+			parent::initializeLocalization($extensionName);
 			self::$configuredLanguage = '';
 		}
 	}
