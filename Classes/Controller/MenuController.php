@@ -25,6 +25,16 @@ namespace SJBR\SrLanguageMenu\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use TYPO3\CMS\Core\Utility\ClientUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use SJBR\SrLanguageMenu\Utility\LocalizationUtility;
+
 /**
  * Controls the rendering of the language menu as a normal content element or as a Fluid widget
  */
@@ -114,7 +124,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	 */
 	public function initializeIndexAction() {
 		if (is_array($this->widgetConfiguration)) {
-			$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, $this->extensionName);
+			$this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, $this->extensionName);
 			if (isset($this->widgetConfiguration['languages'])) {
 				$this->settings['languages'] = $this->widgetConfiguration['languages'];
 			}
@@ -129,10 +139,16 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 	/**
 	 * Show the menu
-	 *
+	 * 
 	 * @return string empty string
 	 */
 	public function indexAction() {
+		
+		// Something is wrong: in the select box view case, the get parameters of the form action are never received...
+		$variables = GeneralUtility::_POST('tx_srlanguagemenu_languagemenu');
+		if ($variables['action'] === 'redirect' && $variables['uri']) {
+			$this->redirectAction($variables['uri']);
+		}
 
 		// Adjust settings
 		$this->processSettings();
@@ -151,7 +167,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				$defaultIsoLanguage = $this->languageRepository->findOneByIsoCodes($defaultLanguageISOCode);
 			}
 		}
-		if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 6001000) {
+		if (VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 6001000) {
 			$defaultSystemLanguage = $this->objectManager->create('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
 		} else {
 			$defaultSystemLanguage = $this->objectManager->get('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
@@ -182,7 +198,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		// Build language options
 		$options = array();
 		// If $this->settings['languages'] is not empty, the languages will be sorted in the order it specifies
-		$languages = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['languages'], TRUE);
+		$languages = GeneralUtility::trimExplode(',', $this->settings['languages'], TRUE);
 		if (!empty($languages) && !in_array(0, $languages)) {
 			array_unshift($languages, 0);
 		}
@@ -224,10 +240,10 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			$option['notAvailableTitle'] = $option['title'];
 			if (!$option['isAvailable']) {
 				// Switch localization target language
-				\SJBR\SrLanguageMenu\Utility\LocalizationUtility::setAlternateLanguage($option['combinedIsoCode'], $this->extensionName);
+				LocalizationUtility::setAlternateLanguage($option['combinedIsoCode'], $this->extensionName);
 				$option['notAvailableTitle'] = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('translationNotAvailable', $this->extensionName, array($systemLanguage->getIsoLanguage() ? $systemLanguage->getIsoLanguage()->getLocalName() : $option['title']));
 				// Restore configured localization target language
-				\SJBR\SrLanguageMenu\Utility\LocalizationUtility::restoreConfiguredLanguage($this->extensionName);
+				LocalizationUtility::restoreConfiguredLanguage($this->extensionName);
 			}
 
 			// Add configured external url for missing overlay record
@@ -243,7 +259,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			}
 
 			// Set current language indicator
-			$option['isCurrent'] = ($option['uid'] == $this->getFrontendObject()->sys_language_uid);
+			$option['isCurrent'] = ($option['uid'] == $this->getFrontendObject()->config['config']['sys_language_uid']);
 
 			// If $this->settings['languages'] is not empty, the languages will be sorted in the order it specifies
 			$key = array_search($option['uid'], $languages);
@@ -254,7 +270,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 		// Show current language first, if configured
 		if ($this->settings['showCurrentFirst']) {
-			$key = array_search($this->getFrontendObject()->sys_language_uid, $languages);
+			$key = array_search($this->getFrontendObject()->config['config']['sys_language_uid'], $languages);
 			if ($key) {
 				$option = $options[$key];
 				unset($options[$key]);
@@ -274,7 +290,9 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	 * @return string empty string
 	 */
 	public function redirectAction($uri) {
-		$this->redirectToUri($uri);
+		try {
+			$this->redirectToUri($uri);
+		} catch (StopActionException $e) {}
 	}
 
 	/**
@@ -290,7 +308,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			$this->settings['languages'] = strval($this->settings['languagesUidsList']);
 		} else {
 			// The list was set in the flexform
-			$languagesArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['languages'], TRUE);
+			$languagesArray = GeneralUtility::trimExplode(',', $this->settings['languages'], TRUE);
 			$positionOfDefaultLanguage = min(intval($this->settings['positionOfDefaultLanguage']), count($languagesArray));
 			array_splice($languagesArray, $positionOfDefaultLanguage, 0, array('0'));
 			$this->settings['languages'] = implode(',', $languagesArray);
@@ -323,24 +341,24 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		}
 
 		// Flags directory
-		$this->settings['flagsDirectory'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->extensionKey) . 'Resources/Public/Images/Flags/';
+		$this->settings['flagsDirectory'] = ExtensionManagementUtility::siteRelPath($this->extensionKey) . 'Resources/Public/Images/Flags/';
 		if ($this->settings['englishFlagFile']) {
 			$this->settings['flagsDirectory'] = dirname($this->getFrontendObject()->tmpl->getFileName(trim($this->settings['englishFlagFile']))) . '/';
 		}
 
 		// 'Hide default translation of page' configuration option
-		$this->settings['hideIfDefaultLanguage'] = \TYPO3\CMS\Core\Utility\GeneralUtility::hideIfDefaultLanguage($this->getFrontendObject()->page['l18n_cfg']);
+		$this->settings['hideIfDefaultLanguage'] = GeneralUtility::hideIfDefaultLanguage($this->getFrontendObject()->page['l18n_cfg']);
 
 		// Adjust parameters to remove
 		if (!is_array($this->settings['removeParams'])) {
-			$this->settings['removeParams'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['removeParams'], TRUE);
+			$this->settings['removeParams'] = GeneralUtility::trimExplode(',', $this->settings['removeParams'], TRUE);
 			// Add L and cHash to url parameters to remove
 			$this->settings['removeParams'] = array_merge($this->settings['removeParams'], array('L', 'cHash'));
 			// Add disallowed url query parameters
 			if ($this->settings['allowedParams']) {
-				$allowedParams = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->settings['allowedParams'], TRUE);
+				$allowedParams = GeneralUtility::trimExplode(',', $this->settings['allowedParams'], TRUE);
 				$allowedParams = array_merge($allowedParams, array('L', 'id', 'type', 'MP'));
-				$allowedParams = array_merge($allowedParams, \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->getFrontendObject()->config['config']['linkVars'], TRUE));
+				$allowedParams = array_merge($allowedParams, GeneralUtility::trimExplode(',', $this->getFrontendObject()->config['config']['linkVars'], TRUE));
 				$disallowedParams = array_diff(array_keys($GLOBALS['HTTP_GET_VARS']), $allowedParams);
 				// Add disallowed parameters to parameters to remove
 				$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
@@ -348,7 +366,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		}
 		
 		// Identify IE > 9
-		$browserInfo = \TYPO3\CMS\Core\Utility\ClientUtility::getBrowserInfo(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_USER_AGENT'));
+		$browserInfo = ClientUtility::getBrowserInfo(GeneralUtility::getIndpEnv('HTTP_USER_AGENT'));
 		$this->settings['isIeGreaterThan9'] =  $browserInfo['browser'] == 'msie' && intval($browserInfo['version']) > 9 ? 1 : 0;
 	}
 
@@ -364,7 +382,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		if (method_exists($request, 'getWidgetContext')) {
 			$this->widgetConfiguration = $request->getWidgetContext()->getWidgetConfiguration();
 		}
-		\TYPO3\CMS\Extbase\Mvc\Controller\ActionController::processRequest($request, $response);
+		ActionController::processRequest($request, $response);
 	}
 
 	/**
@@ -376,13 +394,13 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	 */
 	protected function setViewConfiguration(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
 		if (method_exists($this->request, 'getWidgetContext')) {
-			$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+			$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 			$widgetViewHelperClassName = $this->request->getWidgetContext()->getWidgetViewHelperClassName();
 			if (isset($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']) && strlen($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']) > 0 && method_exists($view, 'setTemplateRootPath')) {
-				$view->setTemplateRootPath(\TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']));
+				$view->setTemplateRootPath(GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']));
 			}
 		} else {
-			\TYPO3\CMS\Extbase\Mvc\Controller\ActionController::setViewConfiguration($view);
+			ActionController::setViewConfiguration($view);
 		}
 	}
 

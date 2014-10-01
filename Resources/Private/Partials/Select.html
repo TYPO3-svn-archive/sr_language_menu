@@ -3,7 +3,7 @@
 		<legend>{f:translate(key:'form_fieldset_legend')}</legend>
 		<label for="sr_language_menu_select">{f:translate(key:'form_select_label')}</label>
 		<img src="{f:uri.resource(path: 'Images/language.png')}" class="tx-srlanguagemenu-language-icon" alt="{f:translate(key: 'select_language', extensionName: 'SrLanguageMenu')}" />
-		<select id="sr_language_menu_select" name="tx_srlanguagemenu_languagemenu[uri]" title="{f:translate(key: 'select_language', extensionName: 'SrLanguageMenu')}" {f:if(condition: '{settings.list.onChangeAttribute}', then: 'onchange="if (this.options[this.selectedIndex].value == \'\') return; this.form.submit();"')}>
+		<select id="sr_language_menu_select" name="tx_srlanguagemenu_languagemenu[uri]" title="{f:translate(key: 'select_language', extensionName: 'SrLanguageMenu')}" {f:if(condition: '{settings.list.onChangeAttribute}', then: 'onchange="if (this.options[this.selectedIndex].value == \'\') return; location.href = this.options[this.selectedIndex].value;"')}>
 			<f:if condition="{settings.list.header}">
 				<option value ="">{f:translate(key:'select_language')}</option>
 				<f:if condition="{settings.list.separator}">
@@ -23,6 +23,7 @@
 				</f:if>
 			</f:for>
 		</select>
+		<input name="tx_srlanguagemenu_languagemenu[action]" value="redirect" type="hidden" />
 		<f:if condition="{settings.list.onChangeAttribute} == 0">
 			<f:form.submit value="{f:translate(key:'form_submit')}" />
 		</f:if>
