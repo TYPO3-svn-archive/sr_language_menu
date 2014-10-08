@@ -178,11 +178,15 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 		// Get the available page language overlays
 		$availableOverlays = array();
-		// Add default language
-		$availableOverlays[] = 0;
+
 		// Beware of inaccessible page
 		$page = $this->pageRepository->findByUid($this->getFrontendObject()->id);
 		if ($page instanceof \SJBR\SrLanguageMenu\Domain\Model\Page) {
+			// If "Hide default translation of page" is not set on the page...
+			if (!($page->getL18nCfg()&1)) {
+				// Add default language
+				$availableOverlays[] = 0;
+			}
 			$pageLanguageOverlays = $this->pageLanguageOverlayRepository->findByPage($page)->toArray();
 			foreach ($pageLanguageOverlays as $pageLanguageOverlay) {
 				// The overlay may refer to a deleted Website language
@@ -414,4 +418,3 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	}
 }
 class_alias('SJBR\SrLanguageMenu\Controller\MenuController', 'Tx_SrLanguageMenu_Controller_MenuController');
-?>

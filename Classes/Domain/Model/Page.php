@@ -3,7 +3,7 @@ namespace SJBR\SrLanguageMenu\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Stanislas Rolland <typo3(arobas)sjbr.ca>
+ *  (c) 2013-2014 Stanislas Rolland <typo3(arobas)sjbr.ca>
  *  
  *  All rights reserved
  *
@@ -24,8 +24,23 @@ namespace SJBR\SrLanguageMenu\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 /**
- * The Page Language Overlay model
+ * The Page model
  */
 class Page extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+
+	/**
+	 * l18n_cfg ("Hide default translation of page" and "Hide page if no translation for current language exists")
+	 *
+	 * @var integer
+	 */
+	protected $l18nCfg = 0;
+
+	/**
+	 * Returns the l18nCfg value
+	 *
+	 * @return integer
+	 */
+	public function getL18nCfg() {
+		return $this->l18nCfg;
+	}
 }
-?>

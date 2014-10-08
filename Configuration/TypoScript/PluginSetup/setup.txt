@@ -71,6 +71,9 @@ config.tx_extbase {
 			SJBR\SrLanguageMenu\Domain\Model\Page {
 				mapping {
 					tableName = pages
+					columns {
+						l18n_cfg.mapOnProperty = l18nCfg
+					}
 				}
 			}
 			SJBR\SrLanguageMenu\Domain\Model\PageLanguageOverlay {

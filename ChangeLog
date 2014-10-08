@@ -1,3 +1,7 @@
+2014-10-08  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #59719: Hide default translation of page
+
 2014-10-01  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves #61299: Language Selection widget in a Fluid template does not work with layout Select
