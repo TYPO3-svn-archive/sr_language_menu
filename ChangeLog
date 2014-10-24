@@ -1,6 +1,7 @@
 2014-10-24  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves #62447: Wrong requirement of static_info_tables breaks Extension Manager
+	* Update version to 6.0.7
 
 2014-10-08  Stanislas Rolland  <typo3@sjbr.ca>
 
