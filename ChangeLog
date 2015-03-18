@@ -3,6 +3,8 @@
 	* Move TCA settings to configuration folder
 	* Require TYPO3 CMS 6.2
 	* Enable in TYPO3 CMS 7
+	* Resolves #64948: The view configuration for TYPO3 CMS 7 has been changed
+	* Resolves #65771: Rootpath for Widget not working
 
 2014-11-16  Stanislas Rolland  <typo3@sjbr.ca>
 

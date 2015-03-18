@@ -46,16 +46,19 @@ plugin.tx_srlanguagemenu {
 	}
 
 	view {
-		templateRootPath = {$plugin.tx_srlanguagemenu.view.templateRootPath}
-		partialRootPath = {$plugin.tx_srlanguagemenu.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
-		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.templateRootPath = {$plugin.tx_srlanguagemenu.view.templateRootPath}
+		templateRootPaths.0 = {$plugin.tx_srlanguagemenu.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_srlanguagemenu.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
+		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.templateRootPaths.0 = {$plugin.tx_srlanguagemenu.view.templateRootPath}
+		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.partialRootPaths.0 = {$plugin.tx_srlanguagemenu.view.partialRootPath}
+		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.layoutRootPaths.0 = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
 	}
 
 	widgets {
   		menu = USER
   		menu {
 		    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		    vendorName = SJBR
 		    pluginName = LanguageMenu
 		    extensionName = SrLanguageMenu
 		    controller = Menu

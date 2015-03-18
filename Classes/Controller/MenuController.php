@@ -33,6 +33,8 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
+use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use SJBR\SrLanguageMenu\Utility\LocalizationUtility;
 
 /**
@@ -60,63 +62,27 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 	/**
 	 * @var \SJBR\SrLanguageMenu\Domain\Repository\SystemLanguageRepository
+	 * @inject
 	 */
 	protected $systemLanguageRepository;
 
 	/**
 	 * @var \SJBR\StaticInfoTables\Domain\Repository\LanguageRepository
+	 * @inject
 	 */
 	protected $languageRepository;
 
 	/**
-	 * @var \SJBR\StaticInfoTables\Domain\Repository\PageRepository
+	 * @var \SJBR\SrLanguageMenu\Domain\Repository\PageRepository
+	 * @inject
 	 */
 	protected $pageRepository;
 
 	/**
-	 * @var \SJBR\StaticInfoTables\Domain\Repository\PageLanguageOverlayRepository
+	 * @var \SJBR\SrLanguageMenu\Domain\Repository\PageLanguageOverlayRepository
+	 * @inject
 	 */
 	protected $pageLanguageOverlayRepository;
-
- 	/**
-	 * Dependency injection of the System Language Repository
- 	 *
-	 * @param \SJBR\SrLanguageMenu\Domain\Repository\LanguageRepository $languageRepository
- 	 * @return void
-	 */
-	public function injectSystemLanguageRepository(\SJBR\SrLanguageMenu\Domain\Repository\SystemLanguageRepository $systemLanguageRepository) {
-		$this->systemLanguageRepository = $systemLanguageRepository;
-	}
-
- 	/**
-	 * Dependency injection of the Static Language Repository
- 	 *
-	 * @param \SJBR\StaticInfoTables\Domain\Repository\LanguageRepository $languageRepository
- 	 * @return void
-	 */
-	public function injectLanguageRepository(\SJBR\StaticInfoTables\Domain\Repository\LanguageRepository $languageRepository) {
-		$this->languageRepository = $languageRepository;
-	}
-
-	/**
-	 * Dependency injection of the Page Repository
- 	 *
-	 * @param \SJBR\SrLanguageMenu\Domain\Repository\PageRepository $pageRepository
- 	 * @return void
-	 */
-	public function injectPageRepository(\SJBR\SrLanguageMenu\Domain\Repository\PageRepository $pageRepository) {
-		$this->pageRepository = $pageRepository;
-	}
-
- 	/**
-	 * Dependency injection of the Page Language Overlay Repository
- 	 *
-	 * @param \SJBR\SrLanguageMenu\Domain\Repository\PageLanguageOverlayRepository $pageLanguageOverlayRepository
- 	 * @return void
-	 */
-	public function injectPageLanguageOverlayRepository(\SJBR\SrLanguageMenu\Domain\Repository\PageLanguageOverlayRepository $pageLanguageOverlayRepository) {
-		$this->pageLanguageOverlayRepository = $pageLanguageOverlayRepository;
-	}
 
 	/**
 	 * Initialize the action when rendering as a widget
@@ -167,11 +133,8 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				$defaultIsoLanguage = $this->languageRepository->findOneByIsoCodes($defaultLanguageISOCode);
 			}
 		}
-		if (VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < 6001000) {
-			$defaultSystemLanguage = $this->objectManager->create('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
-		} else {
-			$defaultSystemLanguage = $this->objectManager->get('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
-		}
+
+		$defaultSystemLanguage = $this->objectManager->get('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
 		$defaultSystemLanguage->setIsoLanguage($defaultIsoLanguage);
 		$defaultSystemLanguage->setTitle($defaultSystemLanguage->getIsoLanguage()->getNameLocalized());
 		array_unshift($systemLanguages, $defaultSystemLanguage);
@@ -393,19 +356,83 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	 * Allows the widget template root path to be overriden via the framework configuration,
 	 * e.g. plugin.tx_extension.view.widget.<WidgetViewHelperClassName>.templateRootPath
 	 *
-	 * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
+	 * @param ViewInterface $view
 	 * @return void
 	 */
-	protected function setViewConfiguration(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
+	protected function setViewConfiguration(ViewInterface $view) {
 		if (method_exists($this->request, 'getWidgetContext')) {
-			$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-			$widgetViewHelperClassName = $this->request->getWidgetContext()->getWidgetViewHelperClassName();
-			if (isset($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']) && strlen($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']) > 0 && method_exists($view, 'setTemplateRootPath')) {
-				$view->setTemplateRootPath(GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName]['templateRootPath']));
-			}
+			$this->setWidgetViewConfiguration($view);
 		} else {
 			ActionController::setViewConfiguration($view);
 		}
+	}
+
+	/**
+	 * @param ViewInterface $view
+	 *
+	 * @return void
+	 */
+	protected function setWidgetViewConfiguration(ViewInterface $view) {
+		// Template Path Override
+		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(
+			ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK, $this->extensionName
+		);
+		// set TemplateRootPaths
+		$viewFunctionName = 'setTemplateRootPaths';
+		if (method_exists($view, $viewFunctionName)) {
+			$setting = 'templateRootPaths';
+			$parameter = $this->getWidgetViewProperty($extbaseFrameworkConfiguration, $setting);
+			// no need to bother if there is nothing to set
+			if (!empty($parameter)) {
+				$view->$viewFunctionName(array(GeneralUtility::getFileAbsFileName($parameter[0])));
+			}
+		}
+
+		// set LayoutRootPaths
+		$viewFunctionName = 'setLayoutRootPaths';
+		if (method_exists($view, $viewFunctionName)) {
+			$setting = 'layoutRootPaths';
+			$parameter = $this->getWidgetViewProperty($extbaseFrameworkConfiguration, $setting);
+			// no need to bother if there is nothing to set
+			if (!empty($parameter)) {
+				$view->$viewFunctionName(array(GeneralUtility::getFileAbsFileName($parameter[0])));
+			}
+		}
+
+		// set PartialRootPaths
+		$viewFunctionName = 'setPartialRootPaths';
+		if (method_exists($view, $viewFunctionName)) {
+			$setting = 'partialRootPaths';
+			$parameter = $this->getWidgetViewProperty($extbaseFrameworkConfiguration, $setting);
+			// no need to bother if there is nothing to set
+			if (!empty($parameter)) {
+				$view->$viewFunctionName(array(GeneralUtility::getFileAbsFileName($parameter[0])));
+			}
+		}
+	}
+
+	/**
+	 * Handles the widget path resolving for *rootPath(s)
+	 *
+	 * numerical arrays get ordered by key ascending
+	 *
+	 * @param array $extbaseFrameworkConfiguration
+	 * @param string $setting parameter name from TypoScript
+	 *
+	 * @return array
+	 */
+	protected function getWidgetViewProperty($extbaseFrameworkConfiguration, $setting) {
+		$values = array();
+		$widgetViewHelperClassName = $this->request->getWidgetContext()->getWidgetViewHelperClassName();
+		if (
+			!empty($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName][$setting])
+			&& is_array($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName][$setting])
+		) {
+			$values = ArrayUtility::sortArrayWithIntegerKeys($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName][$setting]);
+			$values = array_reverse($values, TRUE);
+		}
+
+		return $values;
 	}
 
 	/**
@@ -417,4 +444,3 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		return $GLOBALS['TSFE'];
 	}
 }
-class_alias('SJBR\SrLanguageMenu\Controller\MenuController', 'Tx_SrLanguageMenu_Controller_MenuController');
