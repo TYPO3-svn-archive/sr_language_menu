@@ -6,6 +6,7 @@
 	* Resolves #64948: The view configuration for TYPO3 CMS 7 has been changed
 	* Resolves #65771: Rootpath for Widget not working
 	* Update requirements in the user manual.
+	* Follow-up to #65771 and #64948: Rootpath for Widget not working (Thanks to Markus Klein)
 
 2014-11-16  Stanislas Rolland  <typo3@sjbr.ca>
 

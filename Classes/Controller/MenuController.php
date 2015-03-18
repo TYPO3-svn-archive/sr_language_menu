@@ -35,6 +35,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Utility\ArrayUtility;
+use TYPO3\CMS\Fluid\Core\Widget\WidgetRequest;
 use SJBR\SrLanguageMenu\Utility\LocalizationUtility;
 
 /**
@@ -346,93 +347,34 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 	 * @api
 	 */
 	public function processRequest(\TYPO3\CMS\Extbase\Mvc\RequestInterface $request, \TYPO3\CMS\Extbase\Mvc\ResponseInterface $response) {
-		if (method_exists($request, 'getWidgetContext')) {
+		if ($request instanceof WidgetRequest) {
 			$this->widgetConfiguration = $request->getWidgetContext()->getWidgetConfiguration();
 		}
 		ActionController::processRequest($request, $response);
 	}
 
 	/**
-	 * Allows the widget template root path to be overriden via the framework configuration,
-	 * e.g. plugin.tx_extension.view.widget.<WidgetViewHelperClassName>.templateRootPath
+	 * Allows the widget template root path to be overridden via the framework configuration,
+	 * e.g. plugin.tx_extension.view.widget.<WidgetViewHelperClassName>.templateRootPaths
 	 *
 	 * @param ViewInterface $view
 	 * @return void
+	 * @see \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetController in TYPO3 CMS 7
 	 */
 	protected function setViewConfiguration(ViewInterface $view) {
-		if (method_exists($this->request, 'getWidgetContext')) {
-			$this->setWidgetViewConfiguration($view);
-		} else {
-			ActionController::setViewConfiguration($view);
-		}
-	}
-
-	/**
-	 * @param ViewInterface $view
-	 *
-	 * @return void
-	 */
-	protected function setWidgetViewConfiguration(ViewInterface $view) {
-		// Template Path Override
-		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(
-			ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK, $this->extensionName
-		);
-		// set TemplateRootPaths
-		$viewFunctionName = 'setTemplateRootPaths';
-		if (method_exists($view, $viewFunctionName)) {
-			$setting = 'templateRootPaths';
-			$parameter = $this->getWidgetViewProperty($extbaseFrameworkConfiguration, $setting);
-			// no need to bother if there is nothing to set
-			if (!empty($parameter)) {
-				$view->$viewFunctionName(array(GeneralUtility::getFileAbsFileName($parameter[0])));
+		if ($this->request instanceof WidgetRequest) {
+			$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK, $this->extensionName);
+			$widgetViewHelperClassName = $this->request->getWidgetContext()->getWidgetViewHelperClassName();
+			if (isset($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName])) {
+				$configurationOverridden = $extbaseFrameworkConfiguration;
+				$configurationOverridden['view'] = array_replace_recursive($configurationOverridden['view'], $configurationOverridden['view']['widget'][$widgetViewHelperClassName]);
+				$this->configurationManager->setConfiguration($configurationOverridden);
+				ActionController::setViewConfiguration($view);
+				$this->configurationManager->setConfiguration($extbaseFrameworkConfiguration);
+			} else {
+				ActionController::setViewConfiguration($view);
 			}
 		}
-
-		// set LayoutRootPaths
-		$viewFunctionName = 'setLayoutRootPaths';
-		if (method_exists($view, $viewFunctionName)) {
-			$setting = 'layoutRootPaths';
-			$parameter = $this->getWidgetViewProperty($extbaseFrameworkConfiguration, $setting);
-			// no need to bother if there is nothing to set
-			if (!empty($parameter)) {
-				$view->$viewFunctionName(array(GeneralUtility::getFileAbsFileName($parameter[0])));
-			}
-		}
-
-		// set PartialRootPaths
-		$viewFunctionName = 'setPartialRootPaths';
-		if (method_exists($view, $viewFunctionName)) {
-			$setting = 'partialRootPaths';
-			$parameter = $this->getWidgetViewProperty($extbaseFrameworkConfiguration, $setting);
-			// no need to bother if there is nothing to set
-			if (!empty($parameter)) {
-				$view->$viewFunctionName(array(GeneralUtility::getFileAbsFileName($parameter[0])));
-			}
-		}
-	}
-
-	/**
-	 * Handles the widget path resolving for *rootPath(s)
-	 *
-	 * numerical arrays get ordered by key ascending
-	 *
-	 * @param array $extbaseFrameworkConfiguration
-	 * @param string $setting parameter name from TypoScript
-	 *
-	 * @return array
-	 */
-	protected function getWidgetViewProperty($extbaseFrameworkConfiguration, $setting) {
-		$values = array();
-		$widgetViewHelperClassName = $this->request->getWidgetContext()->getWidgetViewHelperClassName();
-		if (
-			!empty($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName][$setting])
-			&& is_array($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName][$setting])
-		) {
-			$values = ArrayUtility::sortArrayWithIntegerKeys($extbaseFrameworkConfiguration['view']['widget'][$widgetViewHelperClassName][$setting]);
-			$values = array_reverse($values, TRUE);
-		}
-
-		return $values;
 	}
 
 	/**
