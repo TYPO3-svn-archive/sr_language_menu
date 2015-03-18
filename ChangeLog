@@ -2,6 +2,7 @@
 
 	* Move TCA settings to configuration folder
 	* Require TYPO3 CMS 6.2
+	* Enable in TYPO3 CMS 7
 
 2014-11-16  Stanislas Rolland  <typo3@sjbr.ca>
 
