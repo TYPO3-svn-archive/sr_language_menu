@@ -1,3 +1,7 @@
+2015-03-18  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Move TCA settings to configuration folder
+
 2014-11-16  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Remove reference to deprecated feinterface
