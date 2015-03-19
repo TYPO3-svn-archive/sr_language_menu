@@ -200,8 +200,9 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			}
 			
 			// Set paths to flags
-			$partialFlagFileName = $this->settings['flagsDirectory'] . ($this->settings['alternateFlags'][$option['combinedIsoCode']] ? $this->settings['alternateFlags'][$option['combinedIsoCode']] : $option['combinedIsoCode']);
-			$option['flagFile'] = $partialFlagFileName . '.png';
+			$option['flagFile'] = $this->settings['flagsDirectory']
+				. ($this->settings['alternateFlags'][$option['combinedIsoCode']] ?: $option['combinedIsoCode'])
+				. '.' . $this->settings['flagsExtension'];
 
 			// Set availability of overlay
 			$option['isAvailable'] = in_array($option['uid'], $availableOverlays);
@@ -310,8 +311,11 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 		// Flags directory
 		$this->settings['flagsDirectory'] = ExtensionManagementUtility::siteRelPath($this->extensionKey) . 'Resources/Public/Images/Flags/';
+		$this->settings['flagsExtension'] = 'png';
 		if ($this->settings['englishFlagFile']) {
 			$this->settings['flagsDirectory'] = dirname($this->getFrontendObject()->tmpl->getFileName(trim($this->settings['englishFlagFile']))) . '/';
+			$this->settings['flagsExtension'] = pathinfo(trim($this->settings['englishFlagFile']), PATHINFO_EXTENSION);
+			
 		}
 
 		// 'Hide default translation of page' configuration option

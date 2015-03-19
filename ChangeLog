@@ -1,3 +1,7 @@
+2015-03-19  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #64145: plugin.tx_srlanguagemenu.englishFlagFile works wrong
+
 2015-03-18  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Move TCA settings to configuration folder
