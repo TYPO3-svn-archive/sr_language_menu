@@ -4,7 +4,7 @@ defined('TYPO3_MODE') or die();
 // Configuring the language menu plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
-	'SJBR' . '.' . $_EXTKEY,
+	'SJBR.' . $_EXTKEY,
 	// A unique name of the plugin in UpperCamelCase
 	'LanguageMenu',
 	// An array holding the controller-action-combinations that are accessible

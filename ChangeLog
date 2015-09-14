@@ -2,6 +2,7 @@
 
 	* Resolves #65991: Fatal error missing zh_CN flag
 	* Resolves #69464: DefaultLanguage Title not configurable
+	* Update version to 6.1.0
 
 2015-03-19  Stanislas Rolland  <typo3@sjbr.ca>
 

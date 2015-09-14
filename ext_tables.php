@@ -7,7 +7,7 @@ if (TYPO3_MODE === 'BE') {
 	 */
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 		// The extension name (in UpperCamelCase) or the extension key (in lower_underscore)
-		$_EXTKEY,
+		'SJBR.' . $_EXTKEY,
 		// A unique name of the plugin in UpperCamelCase
 		'LanguageMenu',
 		// A title shown in the backend dropdown field
