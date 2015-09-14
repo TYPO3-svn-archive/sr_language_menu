@@ -1,3 +1,7 @@
+2015-09-14  Stanislas Rolland  <typo3@sjbr.ca>
+
+	* Resolves #65991: Fatal error missing zh_CN flag
+
 2015-03-19  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves #64145: plugin.tx_srlanguagemenu.englishFlagFile works wrong
