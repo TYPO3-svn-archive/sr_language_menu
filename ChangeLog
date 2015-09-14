@@ -1,6 +1,7 @@
 2015-09-14  Stanislas Rolland  <typo3@sjbr.ca>
 
 	* Resolves #65991: Fatal error missing zh_CN flag
+	* Resolves #69464: DefaultLanguage Title not configurable
 
 2015-03-19  Stanislas Rolland  <typo3@sjbr.ca>
 

@@ -137,7 +137,12 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 		$defaultSystemLanguage = $this->objectManager->get('SJBR\\SrLanguageMenu\\Domain\\Model\\SystemLanguage');
 		$defaultSystemLanguage->setIsoLanguage($defaultIsoLanguage);
-		$defaultSystemLanguage->setTitle($defaultSystemLanguage->getIsoLanguage()->getNameLocalized());
+		if (trim($this->settings['defaultLanguageTitle'])) {
+			$defaultLanguageTitle = trim($this->settings['defaultLanguageTitle']);
+		} else {
+			$defaultLanguageTitle = $defaultSystemLanguage->getIsoLanguage()->getNameLocalized();
+		}
+		$defaultSystemLanguage->setTitle($defaultLanguageTitle);
 		array_unshift($systemLanguages, $defaultSystemLanguage);
 
 		// Get the available page language overlays
