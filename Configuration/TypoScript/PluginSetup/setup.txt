@@ -25,7 +25,7 @@ plugin.tx_srlanguagemenu {
 		flags.doNotLinkCurrent = {$plugin.tx_srlanguagemenu.doNotLinkCurrent}
 		flags.showInactive = {$plugin.tx_srlanguagemenu.showInactive}
 		flags.doNotLinkInactive = {$plugin.tx_srlanguagemenu.doNotLinkInactive}
-	
+
 		list.header = {$plugin.tx_srlanguagemenu.addSelectionListHeader}
 		list.separator =  {$plugin.tx_srlanguagemenu.selectionListSeparator}
 		list.showCurrent = {$plugin.tx_srlanguagemenu.showCurrent}
