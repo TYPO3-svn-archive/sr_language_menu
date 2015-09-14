@@ -65,6 +65,7 @@ plugin.tx_srlanguagemenu {
 		    controller = Menu
 		    action = index
 		    settings =< plugin.tx_srlanguagemenu.settings
+		    view =< plugin.tx_srlanguagemenu.view
   		}
   	}
 }
