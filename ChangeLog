@@ -5,6 +5,7 @@
 	* Update version to 6.1.0
 	* Add basic composer.json (Thanks to Markus Klein)
 	* Require Static Info Tables 6.2.1
+	* Cleanup in MenuController.php
 
 2015-03-19  Stanislas Rolland  <typo3@sjbr.ca>
 

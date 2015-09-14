@@ -29,13 +29,14 @@ namespace SJBR\SrLanguageMenu\Controller;
 use TYPO3\CMS\Core\Utility\ClientUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use TYPO3\CMS\Fluid\Core\Widget\WidgetRequest;
+use SJBR\SrLanguageMenu\Domain\Model\PageLanguageOverlay;
+use SJBR\SrLanguageMenu\Domain\Model\SystemLanguage;
 use SJBR\SrLanguageMenu\Utility\LocalizationUtility;
 
 /**
@@ -50,7 +51,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		'TYPO3\\CMS\\Extbase\\Mvc\\Request',
 		'TYPO3\\CMS\\Fluid\\Core\\Widget\\WidgetRequest'
 	);
-	
+
 	/**
 	 * @var string Name of the extension this controller belongs to
 	 */
@@ -106,11 +107,11 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 
 	/**
 	 * Show the menu
-	 * 
+	 *
 	 * @return string empty string
 	 */
 	public function indexAction() {
-		
+
 		// Something is wrong: in the select box view case, the get parameters of the form action are never received...
 		$variables = GeneralUtility::_POST('tx_srlanguagemenu_languagemenu');
 		if ($variables['action'] === 'redirect' && $variables['uri']) {
@@ -121,6 +122,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 		$this->processSettings();
 
 		// Get system languages
+		/** @var SystemLanguage[] $systemLanguages */
 		$systemLanguages = $this->systemLanguageRepository->findAllByUidInList($this->settings['languages'])->toArray();
 		// Add default language
 		$defaultLanguageISOCode = $this->settings['defaultLanguageISOCode'] ?  strtoupper($this->settings['defaultLanguageISOCode']) : 'EN';
@@ -156,6 +158,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				// Add default language
 				$availableOverlays[] = 0;
 			}
+			/** @var PageLanguageOverlay[] $pageLanguageOverlays */
 			$pageLanguageOverlays = $this->pageLanguageOverlayRepository->findByPage($page)->toArray();
 			foreach ($pageLanguageOverlays as $pageLanguageOverlay) {
 				// The overlay may refer to a deleted Website language
@@ -164,10 +167,10 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				}
 			}
 		}
-		
+
 		// Do not show menu if hideIfNoAltLanguages is set and there are no alternate languages
 		$this->settings['showMenu'] = !$this->settings['hideIfNoAltLanguages'] || (count($availableOverlays) > 1);
-			
+
 		// Build language options
 		$options = array();
 		// If $this->settings['languages'] is not empty, the languages will be sorted in the order it specifies
@@ -203,7 +206,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 			if (!$option['title']) {
 				$option['title'] = $systemLanguage->getTitle();
 			}
-			
+
 			// Set paths to flags
 			$option['flagFile'] = $this->settings['flagsDirectory']
 				. ($this->settings['alternateFlags'][$option['combinedIsoCode']] ?: $option['combinedIsoCode'])
@@ -300,7 +303,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				$this->settings['languageTitle'] = 0;
 			}
 		}
-		
+
 		// Map numeric layout to keyword
 		if (!isset($this->settings['layout'])) {
 			$this->settings['layout'] = $this->settings['defaultLayout'];
@@ -341,7 +344,7 @@ class MenuController extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetControll
 				$this->settings['removeParams'] = array_merge($this->settings['removeParams'], $disallowedParams);
 			}
 		}
-		
+
 		// Identify IE > 9
 		$browserInfo = ClientUtility::getBrowserInfo(GeneralUtility::getIndpEnv('HTTP_USER_AGENT'));
 		$this->settings['isIeGreaterThan9'] =  $browserInfo['browser'] == 'msie' && intval($browserInfo['version']) > 9 ? 1 : 0;
