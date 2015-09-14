@@ -1,0 +1,29 @@
+{
+  "name": "sjbr/sr_language_menu",
+  "description": "A plugin to display a list of languages to select from. Clicking on a language links to the corresponding version of the page.",
+  "version": "6.1.0",
+  "type": "typo3-cms-extension",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Stanislas Rolland",
+      "role": "Developer"
+    },
+    {
+      "name": "Reelworx GmbH",
+      "role": "Developer",
+      "homepage": "http://reelworx.at/"
+    }
+  ],
+  "replace": {
+    "sr_language_menu": "*"
+  },
+  "require": {
+    "typo3/cms-core": "~6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "SJBR\\SrLanguageMenu\\": "Classes/"
+    }
+  }
+}
