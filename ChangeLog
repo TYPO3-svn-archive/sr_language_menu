@@ -2,8 +2,9 @@
 
 	* Require Static Info Tables 6.3.1
 	* Update user manual
-	* Update version to 6.3.0
 	* Correction to composer.json
+	* Resolves #70638: Improve template handling
+	* Update version to 6.3.0
 
 2015-09-14  Stanislas Rolland  <typo3@sjbr.ca>
 

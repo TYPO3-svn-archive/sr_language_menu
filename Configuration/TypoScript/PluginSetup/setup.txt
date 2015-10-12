@@ -47,12 +47,30 @@ plugin.tx_srlanguagemenu {
 	}
 
 	view {
-		templateRootPaths.0 = {$plugin.tx_srlanguagemenu.view.templateRootPath}
-		partialRootPaths.0 = {$plugin.tx_srlanguagemenu.view.partialRootPath}
-		layoutRootPaths.0 = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
-		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.templateRootPaths.0 = {$plugin.tx_srlanguagemenu.view.templateRootPath}
-		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.partialRootPaths.0 = {$plugin.tx_srlanguagemenu.view.partialRootPath}
-		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.layoutRootPaths.0 = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
+		templateRootPaths {
+			0 = EXT:sr_language_menu/Resources/Private/Templates/
+			1 = {$plugin.tx_srlanguagemenu.view.templateRootPath}
+		}
+		partialRootPaths {
+			0 = EXT:sr_language_menu/Resources/Private/Partials/
+			1 = {$plugin.tx_srlanguagemenu.view.partialRootPath}
+		}
+		layoutRootPaths {
+			0 = EXT:sr_language_menu/Resources/Private/Layouts/
+			1 = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
+		}
+		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.templateRootPaths {
+			0 = EXT:sr_language_menu/Resources/Private/Templates/
+			1 = {$plugin.tx_srlanguagemenu.view.templateRootPath}
+		}
+		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.partialRootPaths {
+			0 = EXT:sr_language_menu/Resources/Private/Partials/
+			1 = {$plugin.tx_srlanguagemenu.view.partialRootPath}
+		}
+		widget.SJBR\SrLanguageMenu\ViewHelpers\Widget\MenuViewHelper.layoutRootPaths {
+			0 = EXT:sr_language_menu/Resources/Private/Layouts/
+			1 = {$plugin.tx_srlanguagemenu.view.layoutRootPath}
+		}
 	}
 
 	widgets {
