@@ -8,18 +8,14 @@
     {
       "name": "Stanislas Rolland",
       "role": "Developer"
-    },
-    {
-      "name": "Reelworx GmbH",
-      "role": "Developer",
-      "homepage": "http://reelworx.at/"
     }
   ],
   "replace": {
     "sr_language_menu": "*"
   },
   "require": {
-    "typo3/cms-core": "~6.2"
+    "typo3/cms-core": "~6.2",
+    "sjbr/static_info_tables": "~6.3.1"
   },
   "autoload": {
     "psr-4": {
